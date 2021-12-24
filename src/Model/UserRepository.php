@@ -80,8 +80,27 @@ class UserRepository extends AbstractRepository
      * @return array
      */
     public function findByUsername($str) {
-        $this->openDatabaseConnection();
         $sql = "SELECT * FROM User WHERE LOWER(username) LIKE :str";
+        return $this->findByStr($str, $sql);
+    }
+
+    /**
+     * @param $str
+     * @return array
+     */
+    public function findByEmail($str) {
+        $sql = "SELECT * FROM User WHERE LOWER(email) LIKE :str";
+        return $this->findByStr($str, $sql);
+    }
+
+    /**
+     * @param $str
+     * @param $sql
+     * @return array
+     */
+    private function findByStr($str, $sql)
+    {
+        $this->openDatabaseConnection();
         $str = '%' . strtolower($str) . '%';
         $statement = $this->connection->prepare($sql);
 

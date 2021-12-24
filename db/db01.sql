@@ -22,22 +22,30 @@ ALTER TABLE `Task` ADD FOREIGN KEY ( `userId` ) REFERENCES `User` (
 `id`
 );
 
-ALTER TABLE `Task` ADD FOREIGN KEY ( `projectId` ) REFERENCES `Project` (
-`id`
-);
-
+ALTER TABLE `Task` CHANGE `stopTime` `stopTime` DATETIME NULL;
 
 CREATE TABLE `Project` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `userId` INT NOT NULL ,
 `clientId` INT NULL ,
+`projectName` VARCHAR( 50 ) NOT NULL,
 `wage` DECIMAL( 10, 2 ) NOT NULL ,
 PRIMARY KEY ( `id` )
 ) ENGINE = INNODB CHARACTER SET utf32 COLLATE utf32_general_ci;
-ALTER TABLE `Project` ADD `projectName` VARCHAR( 50 ) CHARACTER SET utf32 COLLATE utf32_general_ci NOT NULL AFTER `clientId`
 ALTER TABLE `Project` ADD INDEX ( `userId` );
 ALTER TABLE `Project` ADD INDEX ( `clientId` );
 ALTER TABLE `Project` ADD FOREIGN KEY ( `userId` ) REFERENCES `User` (
+`id`
+);
+
+CREATE TABLE `Client` (
+`id` INT NOT NULL AUTO_INCREMENT ,
+`userId` INT NOT NULL ,
+`clientName` VARCHAR( 50 ) NOT NULL,
+PRIMARY KEY ( `id` )
+) ENGINE = INNODB CHARACTER SET utf32 COLLATE utf32_general_ci;
+ALTER TABLE `Client` ADD INDEX ( `userId` );
+ALTER TABLE `Client` ADD FOREIGN KEY ( `userId` ) REFERENCES `User` (
 `id`
 );
 
@@ -45,14 +53,6 @@ ALTER TABLE `Project` ADD FOREIGN KEY ( `clientId` ) REFERENCES `Client` (
 `id`
 );
 
-
-CREATE TABLE `Client` (
-`id` INT NOT NULL ,
-`userId` INT NOT NULL ,
-`clientName` VARCHAR( 50 ) NOT NULL
-) ENGINE = INNODB CHARACTER SET utf32 COLLATE utf32_general_ci;
-ALTER TABLE `Client` ADD PRIMARY KEY ( `id` )
-ALTER TABLE `Client` ADD INDEX ( `userId` )
-ALTER TABLE `Client` ADD FOREIGN KEY ( `userId` ) REFERENCES `User` (
+ALTER TABLE `Task` ADD FOREIGN KEY ( `projectId` ) REFERENCES `Project` (
 `id`
 );

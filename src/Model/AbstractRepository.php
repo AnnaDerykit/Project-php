@@ -19,7 +19,7 @@ abstract class AbstractRepository
             $this->connection = new PDO($config['dsn'], $config['username'], $config['password']);
         }
         catch (\PDOException $e) {
-            echo "PDOException was caught: {$e->getMessage()}.<br/>\n";
+            echo "PDOException was caught: {$e->getMessage()}";
             var_dump($e->getTraceAsString());
         }
     }
