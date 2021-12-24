@@ -5,21 +5,10 @@ use PDO;
 class UserRepository extends AbstractRepository
 {
     /**
-     * @param $id
-     * @return null|User
-     * @throws Exception
+     * @param $row
+     * @return User
      */
-    public function findById($id)
-    {
-        $sql = "SELECT * FROM User WHERE id = :id";
-        $statement = $this->pdo->prepare($sql);
-
-        $statement->execute(array('id' => $id));
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
-            return null;
-        }
-
+    protected function userFromRow($row) {
         $user = new User();
         $user
             ->setId($row['id'])
@@ -27,9 +16,35 @@ class UserRepository extends AbstractRepository
             ->setEmail($row['email'])
             ->setPassword($row['password'])
             ->setRole($row['role']);
-
         return $user;
     }
+
+    /**
+     * @param $id
+     * @return null|User
+     * @throws Exception
+     */
+    public function findById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array('id' => $id));
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (! $row) {
+            return null;
+        }
+        $user = $this->userFromRow($row);
+
+        $this->closeDatabaseConnection();
+        return $user;
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
     public function save($user) {
         if ($user->getId()) {
             $sql = "UPDATE User SET username = :username, email = :email, password = :password, role = :role WHERE id = :id";
@@ -50,11 +65,33 @@ class UserRepository extends AbstractRepository
                 'role' => $user->getRole()
             ];
         }
-        $statement = $this->pdo->prepare($sql);
+        $this->openDatabaseConnection();
+        $statement = $this->connection->prepare($sql);
         $statement->execute($params);
         if (! $user->getId()) {
-            $user->setId($this->pdo->lastInsertId());
+            $user->setId($this->connection->lastInsertId());
         }
+        $this->closeDatabaseConnection();
         return $user;
+    }
+
+    /**
+     * @param $str
+     * @return array
+     */
+    public function findByUsername($str) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE LOWER(username) LIKE :str";
+        $str = '%' . strtolower($str) . '%';
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array('str' => $str));
+        $users = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $users[] = $this->userFromRow($row);
+        }
+
+        $this->closeDatabaseConnection();
+        return $users;
     }
 }

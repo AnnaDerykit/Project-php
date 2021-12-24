@@ -5,15 +5,35 @@ use PDO;
 
 abstract class AbstractRepository
 {
-    protected $pdo;
-    public function __construct() {
+    /**
+     * @var
+     */
+    protected $connection;
+
+    /**
+     * @return void
+     */
+    protected function openDatabaseConnection() {
         global $config;
         try {
-            $this->pdo = new PDO($config['dsn'], $config['username'], $config['password']);
+            $this->connection = new PDO($config['dsn'], $config['username'], $config['password']);
         }
         catch (\PDOException $e) {
             echo "PDOException was caught: {$e->getMessage()}.<br/>\n";
             var_dump($e->getTraceAsString());
         }
     }
+
+    /**
+     * @return void
+     */
+    protected function closeDatabaseConnection() {
+        $this->connection = null;
+    }
+
+    /**
+     * @param $object
+     * @return mixed
+     */
+    abstract public function save($object);
 }
