@@ -42,6 +42,28 @@ class UserRepository extends AbstractRepository
     }
 
     /**
+     * @param $id
+     * @return null|User
+     * @throws Exception
+     */
+    public function findOneByEmail($email)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE email = :email";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array('email' => $email));
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (! $row) {
+            return null;
+        }
+        $user = $this->userFromRow($row);
+
+        $this->closeDatabaseConnection();
+        return $user;
+    }
+
+    /**
      * @param $user
      * @return mixed
      */
@@ -79,7 +101,7 @@ class UserRepository extends AbstractRepository
      * @param $str
      * @return array
      */
-    public function findByUsername($str) {
+    public function searchByUsername($str) {
         $sql = "SELECT * FROM User WHERE LOWER(username) LIKE :str";
         return $this->findByStr($str, $sql);
     }
@@ -88,7 +110,7 @@ class UserRepository extends AbstractRepository
      * @param $str
      * @return array
      */
-    public function findByEmail($str) {
+    public function searchByEmail($str) {
         $sql = "SELECT * FROM User WHERE LOWER(email) LIKE :str";
         return $this->findByStr($str, $sql);
     }
@@ -112,5 +134,30 @@ class UserRepository extends AbstractRepository
 
         $this->closeDatabaseConnection();
         return $users;
+    }
+
+    public function getUsernameById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT username FROM User WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array('id' => $id));
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (! $row) {
+            return null;
+        }
+        $this->closeDatabaseConnection();
+        return $row['username'];
+    }
+
+    public function getNumberOfUsers() {
+        $this->openDatabaseConnection();
+        $sql = "SELECT COUNT(*) AS number FROM User";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->closeDatabaseConnection();
+        return $row['number'];
     }
 }

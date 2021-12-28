@@ -1,0 +1,36 @@
+1. Logowanie
+	a. złe hasło 
+	b. nieistniejący użytkownik
+	c. zrobić żeby były gwiazdki zamiast hasła
+	d. ewentualnie skrót z hasła w bazie
+
+2. Rejestracja
+
+3. CSS
+	a. normalny
+	b. responsywny
+
+4. Śledzenie taska
+	a. klikanie "start" i "stop"
+	b. edytowalne pola
+	c. lista projektów do wyboru
+	d. wysyłanie wyników do bazy
+
+5. Dodawanie taska
+	a. edytowalne pola
+	b. wysyłanie wyników do bazy
+
+6. Dodawanie klientów
+	a. edytowalne pola
+	b. wysyłanie wyników do bazy
+
+7. Dodawanie projektów
+	a. lista klientów do wyboru
+	b. edytowalne pola
+	c. wysyłanie wyników do bazy
+
+8. Cały panel admina - sprawdzenie, czy użytkownik jest adminem, dodanie do menu linka do zarządzania użytkownikami, edytowalne zarządzanie użytkownikami
+
+9. Filtrowanie wszystkiego co się da
+
+10. Raporty
