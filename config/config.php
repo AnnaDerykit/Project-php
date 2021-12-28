@@ -1,5 +1,6 @@
+
 <?php
 $config = [];
-$config['dsn'] = 'mysql:dbname=; host=db.zut.edu.pl';
+$config['dsn'] = 'mysql:dbname=; host=';
 $config['username'] = '';
 $config['password'] = '';
