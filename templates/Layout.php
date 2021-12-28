@@ -36,15 +36,22 @@ class Layout {
             <?php
             $userRep = new UserRepository();
             $username = null;
+            $role = null;
             if (isset($_SESSION['uid'])) {
-                $username = $userRep->getUsernameById($_SESSION['uid']);
+                $u = $userRep->findById($_SESSION['uid']);
+                $username = $u->getUsername();
+                $role = $u->getRole();
             }
             ?>
             <?= isset($_SESSION['uid']) && $_SESSION['uid'] ? 'Logged in as ' . $username : 'Logged out' ?>
             <ul>
                 <?php
-                $names = ['My profile', 'My tasks', 'My projects', 'My clients', 'Log out'];
-                $actions = ['', 'show-tasks', 'show-projects', 'show-clients', 'logout'];
+                $names = array('My profile', 'My tasks', 'My projects', 'My clients', 'Log out');
+                $actions = array('show-profile', 'show-tasks', 'show-projects', 'show-clients', 'logout');
+                if ($role == 'admin') {
+                    array_splice($names, 4, 0, array('Users'));
+                    array_splice($actions, 4, 0, array('show-users'));
+                }
                 foreach (array_combine($actions, $names) as $action => $name): ?>
                 <li<?php if($_GET['action']==$action) { echo " class=\"active\""; } ?>>
                     <a <?= "href=?action=" . $action ?>><?=$name?></a>

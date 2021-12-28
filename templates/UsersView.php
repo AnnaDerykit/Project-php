@@ -1,15 +1,16 @@
 <?php
+
 namespace Templates;
 
 use App\Model\UserRepository;
 
-class ProfileView {
+class UsersView {
     public static function render() {
         ob_start();
         ?>
         <?= Layout::header() ?>
         <?= Layout::navbar() ?>
-        <h1>My profile</h1>
+        <h1>List of users</h1>
         <table>
             <tr>
                 <th>Username</th>
@@ -19,14 +20,15 @@ class ProfileView {
             </tr>
             <?php
             $usersRep = new UserRepository();
-            $user = $usersRep->findById($_SESSION['uid']);
-            ?>
-            <tr>
-                <td><?= $user->getUsername() ?></td>
-                <td><?= $user->getEmail() ?></td>
-                <td><?= $user->getPassword() ?></td>
-                <td><?= $user->getRole() ?></td>
-            </tr>
+            $users = $usersRep->getAllUsersExceptId($_SESSION['uid']);
+            foreach ($users as $user): ?>
+                <tr>
+                    <td><?= $user->getUsername() ?></td>
+                    <td><?= $user->getEmail() ?></td>
+                    <td><?= $user->getPassword() ?></td>
+                    <td><?= $user->getRole() ?></td>
+                </tr>
+            <?php endforeach ?>
         </table>
         <?= Layout::footer() ?>
         <?php

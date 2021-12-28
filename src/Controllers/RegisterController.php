@@ -4,23 +4,25 @@ namespace App\Controllers;
 
 use App\Model\UserRepository;
 use Templates\LoginView;
+use Templates\RegisterView;
 
-class LoginController {
+class RegisterController {
     public static function index() {
-        echo LoginView::render();
+        echo RegisterView::render();
         return;
     }
-
+    
     public static function set() {
-        $userRep = new \App\Model\UserRepository();
+        $userRep = new UserRepository();
         $user = $userRep->findOneByEmail($_REQUEST['email']);
-        if ($user && $user->getPassword() == $_REQUEST['password']) {
-            $_SESSION['uid'] = $user->getId();
-            header('Location: index.php?action=show-profile');
-        } elseif ($user) {
-            var_dump('Wrong password');
+        if ($user) {
+            var_dump("This email is already taken");
+        } elseif ($_REQUEST['rep-password'] == $_REQUEST['password']) {
+            var_dump('ok');
+//            $_SESSION['uid'] = $user->getId();
+//            header('Location: index.php?action=show-profile');
         } else {
-            var_dump('This user does not exist');
+            var_dump('Wrong password');
         }
 
         //die("Tu jest ustawianie sesji");

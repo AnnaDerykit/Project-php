@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Controllers;
-use Templates\TasksView;
 
-class TasksViewController {
+use Templates\ProfileView;
+
+class ProfileController {
     public static function index() {
-        echo TasksView::render();
+        echo ProfileView::render();
         return;
     }
 }

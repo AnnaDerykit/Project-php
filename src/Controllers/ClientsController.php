@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use Templates\ClientsView;
 
-class ClientsViewController {
+class ClientsController {
     public static function index() {
         echo ClientsView::render();
         return;

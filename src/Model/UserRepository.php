@@ -141,7 +141,6 @@ class UserRepository extends AbstractRepository
         $this->openDatabaseConnection();
         $sql = "SELECT username FROM User WHERE id = :id";
         $statement = $this->connection->prepare($sql);
-
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         if (! $row) {
@@ -159,5 +158,18 @@ class UserRepository extends AbstractRepository
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         $this->closeDatabaseConnection();
         return $row['number'];
+    }
+
+    public function getAllUsersExceptId($id) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE id != :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(array('id' => $id));
+        $users = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $users[] = $this->userFromRow($row);
+        }
+        $this->closeDatabaseConnection();
+        return $users;
     }
 }

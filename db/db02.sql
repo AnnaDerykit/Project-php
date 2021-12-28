@@ -62,7 +62,7 @@ NULL , '3', '5', 'Why', '14.30'
 UPDATE `Project` SET `clientId` = NULL WHERE `Project`.`id` =2;
 
 
-INSERT INTO `ka46535`.`Task` (
+INSERT INTO `Task` (
 `id` ,
 `userId` ,
 `projectId` ,
@@ -90,4 +90,15 @@ NULL , '2', '8', 'Jedzenie', '2021-12-15 16:18:31', '2021-12-22 16:18:34'
 NULL , '2', '9', 'Płacz', '2021-12-20 16:18:36', '2021-12-30 16:18:38'
 ), (
 NULL , '2', '7', 'Atak paniki', '2021-12-26 16:18:42', NULL
+);
+
+INSERT INTO `User` (
+`id` ,
+`username` ,
+`email` ,
+`password` ,
+`role`
 )
+VALUES (
+NULL , 'Martynka', 'martynka@mail.com', 'mar', 'admin'
+);

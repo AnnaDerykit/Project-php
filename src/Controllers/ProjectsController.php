@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Templates\ProjectsView;
 
-class ProjectsViewController {
+class ProjectsController {
     public static function index() {
         echo ProjectsView::render();
         return;

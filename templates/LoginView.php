@@ -7,8 +7,12 @@ class LoginView {
         ?>
             <?= Layout::header() ?>
             <form method="post" action="index.php?action=login-set">
-                <input type="text" name="email">
-                <input type="text" name="password">
+                <label for="email">Email: </label>
+                <input type="text" id="email" name="email">
+                <br>
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password">
+                <br>
                 <input type="submit" value="Log in">
             </form>
             <?= Layout::footer() ?>
