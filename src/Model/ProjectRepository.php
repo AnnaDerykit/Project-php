@@ -4,7 +4,7 @@ use PDO;
 
 class ProjectRepository extends AbstractRepository {
 
-    protected function projectFromRow($row) {
+    public static function projectFromRow($row) {
         $project = new Project();
         $project
             ->setId($row['id'])
@@ -93,9 +93,9 @@ class ProjectRepository extends AbstractRepository {
         return $projects;
     }
 
-    public function getClientNameById($id) {
+    public function getClientByProjectId($id) {
         $this->openDatabaseConnection();
-        $sql = "SELECT Client.clientName FROM Project JOIN Client ON Project.clientId = Client.id WHERE Project.id = :id";
+        $sql = "SELECT Client.id, Client.userId, Client.clientName FROM Project JOIN Client ON Project.clientId = Client.id WHERE Project.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
@@ -104,6 +104,6 @@ class ProjectRepository extends AbstractRepository {
             return null;
         }
         $this->closeDatabaseConnection();
-        return $row['clientName'];
+        return ClientRepository::clientFromRow($row);
     }
 }

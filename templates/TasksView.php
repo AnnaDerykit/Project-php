@@ -24,10 +24,14 @@ class TasksView {
             $tasks = $tasksRep->findByUserId($_SESSION['uid']);
             foreach ($tasks as $task): ?>
                 <tr>
+                    <?php
+                    $project = $tasksRep->getProjectByTaskId($task->getId());
+                    $client = $tasksRep->getClientByTaskId($task->getId());
+                    ?>
                     <td><?= $task->getTitle() ?></td>
-                    <td><?= $tasksRep->getProjectNameById($task->getId()) ?></td>
-                    <td><?= $tasksRep->getClientNameById($task->getId()) ?></td>
-                    <td><?= $tasksRep->getWageById($task->getId()) ?></td>
+                    <td><?= $project ? $project->getProjectName() : '' ?></td>
+                    <td><?= $client ? $client->getClientName() : '' ?></td>
+                    <td><?= $project ? $project->getWage() : '' ?></td>
                     <td><?= $task->getStartTime() ?></td>
                     <td><?= $task->getStopTime() ?></td>
                 </tr>

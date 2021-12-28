@@ -24,7 +24,10 @@ class ProjectsView {
             foreach ($projects as $project): ?>
                 <tr>
                     <td><?= $project->getProjectName() ?></td>
-                    <td><?= $projectsRep->getClientNameById($project->getId()) ?></td>
+                    <?php
+                    $client = $projectsRep->getClientByProjectId($project->getId());
+                    ?>
+                    <td><?= $client ? $client->getClientName() : '' ?></td>
                     <td><?= $project->getWage() ?></td>
                 </tr>
             <?php endforeach ?>

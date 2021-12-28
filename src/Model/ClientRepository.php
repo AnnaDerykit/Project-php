@@ -4,7 +4,7 @@ use PDO;
 
 class ClientRepository extends AbstractRepository {
 
-    protected function clientFromRow($row) {
+    public static function clientFromRow($row) {
         $client = new Client();
         $client
             ->setId($row['id'])

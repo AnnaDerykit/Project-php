@@ -80,9 +80,9 @@ class TaskRepository extends AbstractRepository {
         return $tasks;
     }
 
-    public function getProjectNameById($id) {
+    public function getProjectByTaskId($id) {
         $this->openDatabaseConnection();
-        $sql = "SELECT projectName FROM Task JOIN Project ON Task.projectId = Project.id WHERE Task.id = :id";
+        $sql = "SELECT Project.id, Project.userId, Project.clientId, Project.projectName, Project.wage FROM Task JOIN Project ON Task.projectId = Project.id WHERE Task.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
@@ -91,12 +91,12 @@ class TaskRepository extends AbstractRepository {
             return null;
         }
         $this->closeDatabaseConnection();
-        return $row['projectName'];
+        return ProjectRepository::projectFromRow($row);
     }
 
-    public function getClientNameById($id) {
+    public function getClientByTaskId($id) {
         $this->openDatabaseConnection();
-        $sql = "SELECT clientName FROM Task JOIN Project ON Task.projectId = Project.id JOIN Client ON Project.clientId = Client.id WHERE Task.id = :id";
+        $sql = "SELECT Client.id, Client.userId, Client.clientName FROM Task JOIN Project ON Task.projectId = Project.id JOIN Client ON Project.clientId = Client.id WHERE Task.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
@@ -105,7 +105,7 @@ class TaskRepository extends AbstractRepository {
             return null;
         }
         $this->closeDatabaseConnection();
-        return $row['clientName'];
+        return ClientRepository::clientFromRow($row);
     }
 
     public function getWageById($id) {

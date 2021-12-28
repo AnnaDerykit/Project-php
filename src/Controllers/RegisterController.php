@@ -11,7 +11,7 @@ class RegisterController {
         echo RegisterView::render();
         return;
     }
-    
+
     public static function set() {
         $userRep = new UserRepository();
         $user = $userRep->findOneByEmail($_REQUEST['email']);

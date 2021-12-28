@@ -8,7 +8,7 @@ class UserRepository extends AbstractRepository
      * @param $row
      * @return User
      */
-    protected function userFromRow($row) {
+    public static function userFromRow($row) {
         $user = new User();
         $user
             ->setId($row['id'])
