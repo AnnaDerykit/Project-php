@@ -2,17 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Framework\Response;
 use App\Model\UserRepository;
-use Templates\LoginView;
 use Templates\RegisterView;
 
 class RegisterController {
     public static function index() {
-        echo RegisterView::render();
-        return;
+        $response = new Response();
+        $response->setContent(RegisterView::render());
+        return $response;
     }
 
+    //TODO: walidacja, bo to się wywali
     public static function set() {
+        $response = new Response();
         $userRep = new UserRepository();
         $user = $userRep->findOneByEmail($_REQUEST['email']);
         if ($user) {
@@ -24,13 +27,7 @@ class RegisterController {
         } else {
             var_dump('Wrong password');
         }
-
+        return $response;
         //die("Tu jest ustawianie sesji");
-    }
-
-    public static function logout() {
-        session_unset();
-        session_destroy();
-        header('Location: index.php?action=front-page');
     }
 }

@@ -1,11 +1,13 @@
 <?php
 namespace App\Controllers;
 
+use App\Framework\Response;
 use Templates\ProfileView;
 
 class ProfileController {
     public static function index() {
-        echo ProfileView::render();
-        return;
+        $response = new Response();
+        $response->setContent(ProfileView::render());
+        return $response;
     }
 }

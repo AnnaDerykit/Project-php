@@ -16,7 +16,7 @@ class FrontpageView {
                 $names = ['Log in', 'Register'];
                 $actions = ['login', 'register'];
                 foreach (array_combine($actions, $names) as $action => $name): ?>
-                    <li<?php if($_GET['action']==$action) { echo " class=\"active\""; } ?>>
+                    <li>
                         <a <?= "href=?action=" . $action ?>><?=$name?></a>
                     </li>
                 <?php endforeach ?>

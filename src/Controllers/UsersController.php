@@ -1,17 +1,19 @@
 <?php
 namespace App\Controllers;
 
+use App\Framework\Response;
 use App\Model\UserRepository;
 use Templates\UsersView;
 
 class UsersController {
     public static function index() {
+        $response = new Response();
         if (self::checkIfAdmin()) {
-            echo UsersView::render();
+            $response->setContent(UsersView::render());
         } else {
-            header('Location: index.php?action=show-profile');
+            $response->addHeader('Location', 'index.php?action=show-profile');
         }
-        return;
+        return $response;
     }
 
     public static function checkIfAdmin() {
