@@ -63,4 +63,25 @@ class Layout {
         $html = ob_get_clean();
         return $html;
     }
+
+    public static function secondsToDays($seconds) {
+        $timeString = "";
+        $days = intval(intval($seconds) / (3600*24));
+        if($days> 0) {
+            $timeString .= "$days days ";
+        }
+        $hours = (intval($seconds) / 3600) % 24;
+        if($hours > 0) {
+            $timeString .= "$hours hours ";
+        }
+        $minutes = (intval($seconds) / 60) % 60;
+        if($minutes > 0) {
+            $timeString .= "$minutes minutes ";
+        }
+        $seconds = intval($seconds) % 60;
+        if ($seconds > 0) {
+            $timeString .= "$seconds seconds";
+        }
+        return $timeString;
+    }
 }

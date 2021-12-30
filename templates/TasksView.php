@@ -18,6 +18,8 @@ class TasksView {
                 <th>Wage</th>
                 <th>Started</th>
                 <th>Ended</th>
+                <th>Duration</th>
+                <th>Payout</th>
             </tr>
             <?php
             $tasksRep = new TaskRepository();
@@ -27,13 +29,19 @@ class TasksView {
                     <?php
                     $project = $tasksRep->getProjectByTaskId($task->getId());
                     $client = $tasksRep->getClientByTaskId($task->getId());
+                    $wage = $project ? $project->getWage() : null;
+                    $durationInSec = $task->getStopTime() ? strtotime($task->getStopTime()) - strtotime($task->getStartTime()) : null;
+                    $payout = ($durationInSec && $wage) ? number_format(round($wage * $durationInSec / 3600, 2), 2) : null;
+                    $timeFormatted = $durationInSec ? sprintf('%02d:%02d:%02d', ($durationInSec/3600),($durationInSec/60%60), $durationInSec%60) : null;
                     ?>
                     <td><?= $task->getTitle() ?></td>
                     <td><?= $project ? $project->getProjectName() : '' ?></td>
                     <td><?= $client ? $client->getClientName() : '' ?></td>
-                    <td><?= $project ? $project->getWage() : '' ?></td>
+                    <td><?= $wage ?: '' ?></td>
                     <td><?= $task->getStartTime() ?></td>
                     <td><?= $task->getStopTime() ?></td>
+                    <td><?= $timeFormatted ?: '' ?></td>
+                    <td><?= $payout ?: '' ?></td>
                 </tr>
             <?php endforeach ?>
         </table>

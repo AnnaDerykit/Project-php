@@ -31,33 +31,21 @@ class FrontpageView {
             $tasksRep = new TaskRepository();
             echo $tasksRep->getNumberOfTasks();
             ?></p>
-        <p>Total time of submitted tasks: <?php
-            echo self::secondsToDays($tasksRep->getTotalTasksTime());
+        <p>Time reported this week: <?php
+            echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('week'));
+            ?></p>
+        <p>Time reported this month: <?php
+            echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('month'));
+            ?></p>
+        <p>Time reported this year: <?php
+            echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('year'));
+            ?></p>
+        <p>Total time reported: <?php
+            echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod());
             ?></p>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();
         return $html;
-    }
-
-    public static function secondsToDays($seconds) {
-        $timeString = "";
-        $days = intval(intval($seconds) / (3600*24));
-        if($days> 0) {
-            $timeString .= "$days days ";
-        }
-        $hours = (intval($seconds) / 3600) % 24;
-        if($hours > 0) {
-            $timeString .= "$hours hours ";
-        }
-        $minutes = (intval($seconds) / 60) % 60;
-        if($minutes > 0) {
-            $timeString .= "$minutes minutes ";
-        }
-        $seconds = intval($seconds) % 60;
-        if ($seconds > 0) {
-            $timeString .= "$seconds seconds";
-        }
-        return $timeString;
     }
 }

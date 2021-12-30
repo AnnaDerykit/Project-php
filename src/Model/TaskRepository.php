@@ -132,9 +132,22 @@ class TaskRepository extends AbstractRepository {
         return $row['number'];
     }
 
-    public function getTotalTasksTime() {
+    public function getTotalTasksTimeThisPeriod($period = '') {
         $this->openDatabaseConnection();
-        $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, stopTime)) AS time FROM Task WHERE stopTime IS NOT NULL";
+        switch ($period) {
+            case 'week':
+                $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, stopTime)) AS time FROM Task WHERE stopTime IS NOT NULL AND WEEK(stopTime) = WEEK(CURDATE())";
+                break;
+            case 'month':
+                $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, stopTime)) AS time FROM Task WHERE stopTime IS NOT NULL AND MONTH(stopTime) = MONTH(CURDATE())";
+                break;
+            case 'year':
+                $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, stopTime)) AS time FROM Task WHERE stopTime IS NOT NULL AND YEAR(stopTime) = YEAR(CURDATE())";
+                break;
+            default:
+                $sql = "SELECT SUM(TIMESTAMPDIFF(SECOND, startTime, stopTime)) AS time FROM Task WHERE stopTime IS NOT NULL";
+                break;
+        }
         $statement = $this->connection->prepare($sql);
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
