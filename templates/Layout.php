@@ -65,6 +65,9 @@ class Layout {
     }
 
     public static function secondsToDays($seconds) {
+        if (! $seconds) {
+            return "0";
+        }
         $timeString = "";
         $days = intval(intval($seconds) / (3600*24));
         if($days> 0) {
