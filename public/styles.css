@@ -1,0 +1,157 @@
+/* layout */
+
+html {
+
+    background-color: #e1fafc;
+    margin: 0;
+    padding: 0;
+
+}
+body {
+
+    margin: 0;
+    padding: 0;
+}
+.header {
+    height: 100px;
+    width: 100%;
+    background-color: #806fe2;
+    text-align: center;
+}
+.title {
+    font-family: Bradley Hand, cursive;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: #020c99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin: 0;
+}
+
+.footer {
+    padding: 1em 0 1em 0;
+    background-color: #806fe2;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+}
+
+/* LoginView */
+
+.nag_log {
+    text-align: center;
+    font-size: 2em;
+}
+.data_log{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mail_log {
+    margin-bottom: 10px;
+}
+
+.haslo_log {
+    margin-bottom: 10px;
+}
+
+/* RegisterView */
+
+.nag_re {
+    text-align: center;
+    font-size: 2em;
+}
+.data_re {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name_re {
+    margin-bottom: 10px;
+}
+
+.mail_re {
+
+    margin-bottom: 10px;
+}
+
+.email_re {
+    margin-top: 10px;
+}
+
+.haslo_re {
+    margin-bottom: 10px;
+}
+
+.powtorzhaslo_re {
+    margin-bottom: 10px;
+}
+
+/* FrontpageView */
+
+.stats {
+    background-color: #989eec;
+    text-align: center;
+}
+
+.log_re {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.log_re ul {
+    list-style: none;
+}
+
+.choice {
+    font-size: 1.25em;;
+}
+
+.nag_stat {
+    font-size: 2em;
+}
+
+.statistics {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.p1 {
+    font-size: 1.25em;
+}
+
+.p2 {
+    font-size: 1.25em;
+}
+
+.p3 {
+    font-size: 1.25em;
+}
+
+.p4 {
+    font-size: 1.25em;
+}
+
+.p5 {
+    font-size: 1.25em;
+}
+
+.p6 {
+    font-size: 1.25em;
+}
+
+/*   */
+
