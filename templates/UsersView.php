@@ -26,7 +26,16 @@ class UsersView {
                     <td><?= $user->getUsername() ?></td>
                     <td><?= $user->getEmail() ?></td>
                     <td><?= $user->getPassword() ?></td>
-                    <td><?= $user->getRole() ?></td>
+                    <td>
+                        <select name="role">
+                            <option value="<?php echo $user->getRole() ?>"><?= $user->getRole() ?></option>
+                            <?php if ($user->getRole()=="user") { ?>
+                                <option value="admin">admin</option>
+                            <?php } else { ?>
+                                <option value="user">user</option>
+                            <?php } ?>
+                        </select>
+                    </td>
                 </tr>
             <?php endforeach ?>
         </table>
