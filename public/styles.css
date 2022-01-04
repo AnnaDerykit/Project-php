@@ -31,6 +31,28 @@ body {
     margin: 0;
 }
 
+.menu {
+    width: 10%;
+    height: 100%;
+    background-color: #c1d6fc;
+    position: absolute;
+
+
+}
+
+.point {
+    font-size: 1.5em;
+}
+
+.menulist {
+    min-height: 100%;
+}
+
+.element {
+    list-style: none;
+    margin-top: 13px;
+}
+
 .footer {
     padding: 1em 0 1em 0;
     background-color: #806fe2;
