@@ -14,8 +14,10 @@ class Layout {
             <link rel="stylesheet"  href="../public/styles.css">
         </head>
         <body>
-        <div class="header">
-            <h1 class="title">Über Clocker 3000</h1>
+        <div class="header d-flex ai-center">
+            <div class="title text-center">
+                <h1 class="title"><span>Über</span>Clocker<span>3000</span></h1>
+            </div>
         </div>
         <?php
         $html = ob_get_clean();
@@ -25,8 +27,11 @@ class Layout {
     public static function footer() {
         ob_start();
         ?>
-        <div class="footer">
-            <footer>Design &copy; 2021 Über Clocker 3000 Team</footer>
+        <div class="footer text-center">
+            <footer>
+                <span>Design &copy; 2021 Über Clocker 3000 Team</span>
+                <span></span>
+            </footer>
         </div>
         </body>
         </html>
@@ -38,7 +43,7 @@ class Layout {
     public static function navbar() {
         ob_start();
         ?>
-        <div class="menu">
+        <div class="container w-100 d-flex">
             <nav class="navig">
                 <?php
                 $userRep = new UserRepository();
@@ -60,8 +65,8 @@ class Layout {
                         array_splice($actions, 4, 0, array('show-users'));
                     }
                     foreach (array_combine($actions, $names) as $action => $name): ?>
-                        <li class="element"<?php if($_GET['action']==$action) { echo " class=\"active\""; } ?>>
-                            <a class="point"<?= "href=?action=" . $action ?>><?=$name?></a>
+                        <li <?php if($_GET['action']==$action) { echo " class=\"active\""; } ?>>
+                            <a <?= "href=?action=" . $action ?>><?=$name?></a>
                         </li>
                     <?php endforeach ?>
                 </ul>

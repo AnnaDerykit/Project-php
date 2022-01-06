@@ -24,7 +24,7 @@ class FrontpageView {
         </div>
 
         <div class="H2">
-            <h2 class="stats">Our stats</h2>
+            <h2 class="stats">Our statistics</h2>
         </div>
 
         <div class="numberus">
