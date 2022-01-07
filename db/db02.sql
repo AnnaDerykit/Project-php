@@ -6,11 +6,11 @@ INSERT INTO `User` (
 `role`
 )
 VALUES (
-NULL , 'Robert', 'rob@mail.com', '$2y$10$1KUmv4DpZ1mQRvczWvQbGeqA5YEtKaVqnha9VwSL869KimFSSLTYu', 'user'
+NULL , 'Robert', 'rob@mail.com', 'rob', 'user'
 ), (
-NULL , 'John', 'john@mail.com', '$2y$10$1KUmv4DpZ1mQRvczWvQbGeqA5YEtKaVqnha9VwSL869KimFSSLTYu', 'user'
+NULL , 'John', 'john@mail.com', 'john', 'user'
 ), (
-NULL , 'Bobert', 'bob@mail.com', '$2y$10$1KUmv4DpZ1mQRvczWvQbGeqA5YEtKaVqnha9VwSL869KimFSSLTYu', 'user'
+NULL , 'Bobert', 'bob@mail.com', 'bob', 'user'
 );
 
 INSERT INTO `Client` (

@@ -32,14 +32,13 @@ class LoginController
         } else {
             $repository = new UserRepository();
             $user = $repository->findOneByEmail($email);
-
             if (is_null($user)) {
                 $message = 'Podany użytkownik nie istnieje.';
             } else if (password_verify($password, $user->getPassword())) {
                 $_SESSION['uid'] = $user->getId();
                 header('Location: index.php?action=show-profile');
             } else {
-                $message = 'Podany użytkownik nie istnieje.';
+                $message = 'Incorrect password.';
             }
         }
 
