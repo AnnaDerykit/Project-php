@@ -1,8 +1,10 @@
 <?php
 namespace Templates;
 
-class LoginView {
-    public static function render($params = []) {
+class LoginView
+{
+    public static function render($params = [])
+    {
         ob_start();
         ?>
         <?= Layout::header() ?>
@@ -10,17 +12,24 @@ class LoginView {
             <h2 class="nag_log">Logowanie</h2>
         </div>
 
-        <form method="post" action="index.php?action=login-set">
+        <div class="validation-errors">
+            <?php
+            if (!empty($params['message'])) {
+                echo '<p class="color-red text-center">'. $params['message'] .'</p>';
+            }
+            ?>
+        </div>
 
+        <form method="POST" action="index.php?action=login-set">
             <div class="data_log">
                 <div class="mail_log">
                     <label for="email">Email: </label>
-                    <input type="text" id="email" name="email">
+                    <input type="text" id="email" name="email" value="<?= !empty($params['values']['email']) ? $params['values']['email'] : ''; ?>">
                 </div>
 
                 <div class="password_log">
                     <label for="password">Password:</label>
-                    <input type="text" id="password" name="password">
+                    <input type="password" id="password" name="password">
                 </div>
 
                 <div class="btm_log">
@@ -30,10 +39,7 @@ class LoginView {
         </form>
         <?= Layout::footer() ?>
         <?php
-        $html = ob_get_clean();
-        return $html;
+        return ob_get_clean();
     }
 }
 ?>
-
-

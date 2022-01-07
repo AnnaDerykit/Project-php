@@ -1,5 +1,6 @@
 <?php
 namespace App\Model;
+use Exception;
 use PDO;
 
 class UserRepository extends AbstractRepository
@@ -171,5 +172,23 @@ class UserRepository extends AbstractRepository
         }
         $this->closeDatabaseConnection();
         return $users;
+    }
+
+    public function findByName($username)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE username = :username";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(['username' => $username]);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return null;
+        }
+        $user = $this->userFromRow($row);
+
+        $this->closeDatabaseConnection();
+        return $user;
     }
 }

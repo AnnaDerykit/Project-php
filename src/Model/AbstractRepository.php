@@ -15,10 +15,10 @@ abstract class AbstractRepository
      */
     protected function openDatabaseConnection() {
         global $config;
+
         try {
             $this->connection = new PDO($config['dsn'], $config['username'], $config['password']);
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "PDOException was caught: {$e->getMessage()}";
             var_dump($e->getTraceAsString());
         }

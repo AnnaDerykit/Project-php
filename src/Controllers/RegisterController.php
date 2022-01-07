@@ -2,32 +2,75 @@
 
 namespace App\Controllers;
 
+use App\Dictionary\UserRoles;
 use App\Framework\Response;
+use App\Model\User;
 use App\Model\UserRepository;
 use Templates\RegisterView;
 
-class RegisterController {
-    public static function index() {
+class RegisterController
+{
+    const PASSWORD_LENGTH = 6;
+
+    public static function index()
+    {
         $response = new Response();
         $response->setContent(RegisterView::render());
+
         return $response;
     }
 
-    //TODO: walidacja, bo to się wywali
-    public static function set() {
+    public static function register()
+    {
+        $message = '';
         $response = new Response();
-        $userRep = new UserRepository();
-        $user = $userRep->findOneByEmail($_REQUEST['email']);
-        if ($user) {
-            var_dump("This email is already taken");
-        } elseif ($_REQUEST['rep-password'] == $_REQUEST['password']) {
-            var_dump('ok');
-//            $_SESSION['uid'] = $user->getId();
-//            header('Location: index.php?action=show-profile');
+
+        $username = trim(htmlspecialchars($_POST['username']));
+        $email = trim(htmlspecialchars($_POST['email']));
+        $password = trim(htmlspecialchars($_POST['password']));
+        $repeated_password = trim(htmlspecialchars($_POST['repeat_password']));
+
+        if (empty($username) || empty($email) || empty($password) || empty($repeated_password)) {
+            $message = 'Uzupełnij wszystkie pola formularza';
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = 'Wprowadź poprawny adres E-mail';
+        } else if (strlen($password) < self::PASSWORD_LENGTH) {
+            $message = 'Hasło musi zawierać co najmniej ' . self::PASSWORD_LENGTH . ' znaków.';
+        } else if ($password !== $repeated_password) {
+            $message = 'Wprowadzone hasła różnią się';
         } else {
-            var_dump('Wrong password');
+            $repository = new UserRepository();
+            $user = $repository->findOneByEmail($email);
+
+            // Sprawdzamy czy E-mail istnieje
+            if (!is_null($user)) {
+                $message = 'Podany adres E-mail jest zajęty.';
+            } else if (!is_null($repository->findByName($username))) {
+                $message = 'Podana nazwa użytkownika jest już w użyciu.';
+            } else {
+                $user = new User();
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+                $user->setRole(UserRoles::USER);
+
+                $newUser = $repository->save($user);
+
+                $_SESSION['uid'] = $newUser->getId();
+                header('Location: index.php?action=show-profile');
+            }
         }
+
+        $response->setContent(RegisterView::render([
+            'message' => $message,
+            'values' => [
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'repeat_password' => $repeated_password,
+            ],
+        ]));
+
         return $response;
-        //die("Tu jest ustawianie sesji");
     }
 }
