@@ -7,6 +7,7 @@ class Layout {
     public static function header() {
         ob_start();
         ?>
+        <!DOCTYPE html>
         <html lang="en">
         <head>
             <title>Über Clocker 3000</title>

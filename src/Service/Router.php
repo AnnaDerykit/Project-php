@@ -1,11 +1,16 @@
 <?php
 namespace App\Service;
 
-class Router {
-    public static function resolveRoute($action) {
+use App\Controllers\LoginController;
+use App\Controllers\RegisterController;
+
+class Router
+{
+    public static function resolveRoute($action)
+    {
         switch ($action) {
             case 'login-set':
-                $controllerName = 'App\Controllers\LoginController';
+                $controllerName = LoginController::class;
                 $actionName = 'set';
                 break;
             case 'login':
@@ -17,8 +22,8 @@ class Router {
                 $actionName = 'logout';
                 break;
             case 'register-set':
-                $controllerName = 'App\Controllers\RegisterController';
-                $actionName = 'set';
+                $controllerName = RegisterController::class;
+                $actionName = 'register';
                 break;
             case 'register':
                 $controllerName = 'App\Controllers\RegisterController';
@@ -49,6 +54,7 @@ class Router {
                 $actionName = 'index';
                 break;
         }
-        return array($controllerName, $actionName);
+
+        return [$controllerName, $actionName];
     }
 }
