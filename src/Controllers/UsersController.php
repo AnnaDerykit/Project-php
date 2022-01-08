@@ -24,6 +24,7 @@ class UsersController
 
     public static function editUser()
     {
+        //TODO: walidacja czy faktycznie $_POST ma to co trzeba
         $id = $_POST['id'];
         $username = $_POST['username'];
         $email = $_POST['email'];
@@ -39,6 +40,17 @@ class UsersController
         $user = UserRepository::userFromRow($row);
         $repository = new UserRepository();
         $repository->save($user);
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-users');
+        return $response;
+    }
+
+    public static function deleteUser()
+    {
+        //TODO: walidacja czy faktycznie $_POST ma to co trzeba
+        $id = $_POST['id'];
+        $repository = new UserRepository();
+        $repository->deleteById($id);
         $response = new Response();
         $response->addHeader('Location', 'index.php?action=show-users');
         return $response;

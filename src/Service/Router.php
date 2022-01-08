@@ -10,6 +10,10 @@ class Router
     public static function resolveRoute($action)
     {
         switch ($action) {
+            case 'delete-user':
+                $controllerName = UsersController::class;
+                $actionName = 'deleteUser';
+                break;
             case 'edit-user':
                 $controllerName = UsersController::class;
                 $actionName = 'editUser';

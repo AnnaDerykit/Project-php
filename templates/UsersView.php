@@ -29,13 +29,13 @@ class UsersView
                 ?>
                 <tr id=<?= $id ?>>
                     <td class="del">
-                        <a href="#" class="del_link">X</a>
+                        <a href="#" class="del_link" onclick=deleteOnClick(<?=$id?>)>X</a>
                     </td>
                     <td class="user_usr"><?= $user->getUsername() ?></td>
                     <td class="email_usr"><?= $user->getEmail() ?></td>
                     <td class="passw_usr"><?= $user->getPassword() ?></td>
                     <td class="role_usr">
-                        <select class="role_select" name="role" onfocusout=onFocusOut(<?=$id?>)>
+                        <select class="role_select" name="role" onfocusout=editOnFocusOut(<?=$id?>)>
                             <option value="<?php echo $user->getRole() ?>"><?= $user->getRole() ?></option>
                             <?php if ($user->getRole() == "user") { ?>
                                 <option value="admin">admin</option>

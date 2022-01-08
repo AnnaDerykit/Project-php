@@ -1,4 +1,4 @@
-function onFocusOut(ID) {
+function editOnFocusOut(ID) {
     let modifiedRow = document.getElementById(ID);
     let id = modifiedRow.id;
     let username = modifiedRow.getElementsByClassName('user_usr')[0].innerText;
@@ -17,5 +17,21 @@ function onFocusOut(ID) {
         mode: "same-origin",
         credentials: "same-origin",
         body: message
-    }).then(r => {});
+    }).then((r) => {
+        window.location.reload();
+    });
+}
+
+function deleteOnClick(id) {
+    // TODO: okienko "czy na pewno chcesz usunąć"
+    let message = new FormData();
+    message.append('id', id);
+    fetch('index.php?action=delete-user', {
+        method: 'POST',
+        mode: "same-origin",
+        credentials: "same-origin",
+        body: message
+    }).then((r) => {
+        window.location.reload();
+    });
 }
