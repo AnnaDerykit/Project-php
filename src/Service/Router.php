@@ -3,12 +3,17 @@ namespace App\Service;
 
 use App\Controllers\LoginController;
 use App\Controllers\RegisterController;
+use App\Controllers\UsersController;
 
 class Router
 {
     public static function resolveRoute($action)
     {
         switch ($action) {
+            case 'edit-user':
+                $controllerName = UsersController::class;
+                $actionName = 'editUser';
+                break;
             case 'login-set':
                 $controllerName = LoginController::class;
                 $actionName = 'set';

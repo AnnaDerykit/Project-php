@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use PDO;
+use PDOException;
 
 abstract class AbstractRepository
 {
@@ -18,7 +19,7 @@ abstract class AbstractRepository
 
         try {
             $this->connection = new PDO($config['dsn'], $config['username'], $config['password']);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo "PDOException was caught: {$e->getMessage()}";
             var_dump($e->getTraceAsString());
         }

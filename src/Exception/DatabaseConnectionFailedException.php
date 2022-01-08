@@ -1,6 +1,8 @@
 <?php
 namespace App\Exception;
 
-class DatabaseConnectionFailedException extends \Exception {
+use Exception;
+
+class DatabaseConnectionFailedException extends Exception {
 
 }

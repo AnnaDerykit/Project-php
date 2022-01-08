@@ -21,11 +21,11 @@ class ProfileView {
             $usersRep = new UserRepository();
             $user = $usersRep->findById($_SESSION['uid']);
             ?>
-            <tr>
+            <tr contenteditable="true">
                 <td><?= $user->getUsername() ?></td>
-                <td><?= $user->getEmail() ?></td>
+                <td contenteditable="false"><?= $user->getEmail() ?></td>
                 <td><?= $user->getPassword() ?></td>
-                <td><?= $user->getRole() ?></td>
+                <td contenteditable="true"><?= $user->getRole() ?></td>
             </tr>
         </table>
         <?= Layout::footer() ?>

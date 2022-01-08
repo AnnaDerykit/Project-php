@@ -1,10 +1,13 @@
 <?php
+
 namespace Templates;
 
 use App\Model\UserRepository;
 
-class Layout {
-    public static function header() {
+class Layout
+{
+    public static function header($params = [])
+    {
         ob_start();
         ?>
         <!DOCTYPE html>
@@ -12,7 +15,12 @@ class Layout {
         <head>
             <title>Über Clocker 3000</title>
             <meta charset="UTF-8">
-            <link rel="stylesheet"  href="../public/styles.css">
+            <link rel="stylesheet" href="../public/styles.css">
+            <?php
+            if (isset($params['script'])) {
+                echo '<script src=' . $params["script"] . '></script>';
+            }
+            ?>
         </head>
         <body>
         <div class="header d-flex ai-center">
@@ -25,7 +33,8 @@ class Layout {
         return $html;
     }
 
-    public static function footer() {
+    public static function footer()
+    {
         ob_start();
         ?>
         <div class="footer text-center">
@@ -41,7 +50,8 @@ class Layout {
         return $html;
     }
 
-    public static function navbar() {
+    public static function navbar()
+    {
         ob_start();
         ?>
         <div class="container w-100 d-flex">
@@ -66,8 +76,10 @@ class Layout {
                         array_splice($actions, 4, 0, array('show-users'));
                     }
                     foreach (array_combine($actions, $names) as $action => $name): ?>
-                        <li <?php if($_GET['action']==$action) { echo " class=\"active\""; } ?>>
-                            <a <?= "href=?action=" . $action ?>><?=$name?></a>
+                        <li <?php if ($_GET['action'] == $action) {
+                            echo " class=\"active\"";
+                        } ?>>
+                            <a <?= "href=?action=" . $action ?>><?= $name ?></a>
                         </li>
                     <?php endforeach ?>
                 </ul>
@@ -78,21 +90,22 @@ class Layout {
         return $html;
     }
 
-    public static function secondsToDays($seconds) {
-        if (! $seconds) {
+    public static function secondsToDays($seconds)
+    {
+        if (!$seconds) {
             return "0";
         }
         $timeString = "";
-        $days = intval(intval($seconds) / (3600*24));
-        if($days> 0) {
+        $days = intval(intval($seconds) / (3600 * 24));
+        if ($days > 0) {
             $timeString .= "$days days ";
         }
         $hours = (intval($seconds) / 3600) % 24;
-        if($hours > 0) {
+        if ($hours > 0) {
             $timeString .= "$hours hours ";
         }
         $minutes = (intval($seconds) / 60) % 60;
-        if($minutes > 0) {
+        if ($minutes > 0) {
             $timeString .= "$minutes minutes ";
         }
         $seconds = intval($seconds) % 60;

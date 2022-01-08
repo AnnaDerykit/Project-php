@@ -15,7 +15,7 @@ class ClientsView {
                 <th>Client name</th>
             </tr>
             <?php
-            $clientsRep = new \App\Model\ClientRepository();
+            $clientsRep = new ClientRepository();
             $clients = $clientsRep->findByUserId($_SESSION['uid']);
             foreach ($clients as $client): ?>
                 <tr>

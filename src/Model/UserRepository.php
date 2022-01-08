@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Model;
+
 use Exception;
 use PDO;
 
@@ -9,7 +11,8 @@ class UserRepository extends AbstractRepository
      * @param $row
      * @return User
      */
-    public static function userFromRow($row) {
+    public static function userFromRow($row)
+    {
         $user = new User();
         $user
             ->setId($row['id'])
@@ -33,7 +36,7 @@ class UserRepository extends AbstractRepository
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $user = $this->userFromRow($row);
@@ -55,7 +58,7 @@ class UserRepository extends AbstractRepository
 
         $statement->execute(array('email' => $email));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $user = $this->userFromRow($row);
@@ -68,7 +71,8 @@ class UserRepository extends AbstractRepository
      * @param $user
      * @return mixed
      */
-    public function save($user) {
+    public function save($user)
+    {
         if ($user->getId()) {
             $sql = "UPDATE User SET username = :username, email = :email, password = :password, role = :role WHERE id = :id";
             $params = [
@@ -78,8 +82,7 @@ class UserRepository extends AbstractRepository
                 'password' => $user->getPassword(),
                 'role' => $user->getRole()
             ];
-        }
-        else {
+        } else {
             $sql = "INSERT INTO User(username, email, password, role) VALUES (:username, :email, :password, :role)";
             $params = [
                 'username' => $user->getUsername(),
@@ -91,7 +94,7 @@ class UserRepository extends AbstractRepository
         $this->openDatabaseConnection();
         $statement = $this->connection->prepare($sql);
         $statement->execute($params);
-        if (! $user->getId()) {
+        if (!$user->getId()) {
             $user->setId($this->connection->lastInsertId());
         }
         $this->closeDatabaseConnection();
@@ -102,7 +105,8 @@ class UserRepository extends AbstractRepository
      * @param $str
      * @return array
      */
-    public function searchByUsername($str) {
+    public function searchByUsername($str)
+    {
         $sql = "SELECT * FROM User WHERE LOWER(username) LIKE :str";
         return $this->findByStr($str, $sql);
     }
@@ -111,7 +115,8 @@ class UserRepository extends AbstractRepository
      * @param $str
      * @return array
      */
-    public function searchByEmail($str) {
+    public function searchByEmail($str)
+    {
         $sql = "SELECT * FROM User WHERE LOWER(email) LIKE :str";
         return $this->findByStr($str, $sql);
     }
@@ -144,14 +149,15 @@ class UserRepository extends AbstractRepository
         $statement = $this->connection->prepare($sql);
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $this->closeDatabaseConnection();
         return $row['username'];
     }
 
-    public function getNumberOfUsers() {
+    public function getNumberOfUsers()
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT COUNT(*) AS number FROM User";
         $statement = $this->connection->prepare($sql);
@@ -161,7 +167,8 @@ class UserRepository extends AbstractRepository
         return $row['number'];
     }
 
-    public function getAllUsersExceptId($id) {
+    public function getAllUsersExceptId($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT * FROM User WHERE id != :id";
         $statement = $this->connection->prepare($sql);
@@ -190,5 +197,14 @@ class UserRepository extends AbstractRepository
 
         $this->closeDatabaseConnection();
         return $user;
+    }
+
+    function deleteById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "DELETE FROM User WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $this->closeDatabaseConnection();
     }
 }
