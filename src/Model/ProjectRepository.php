@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Model;
+
 use PDO;
 
-class ProjectRepository extends AbstractRepository {
-
-    public static function projectFromRow($row) {
+class ProjectRepository extends AbstractRepository
+{
+    public static function projectFromRow($row)
+    {
         $project = new Project();
         $project
             ->setId($row['id'])
@@ -15,7 +18,8 @@ class ProjectRepository extends AbstractRepository {
         return $project;
     }
 
-    public function save($project) {
+    public function save($project)
+    {
         if ($project->getId()) {
             $sql = "UPDATE Project SET userId = :userId, clientId = :clientId, projectName = :projectName, wage = :wage WHERE id = :id";
             $params = [
@@ -25,8 +29,7 @@ class ProjectRepository extends AbstractRepository {
                 'projectName' => $project->getProjectName(),
                 'wage' => $project->getWage()
             ];
-        }
-        else {
+        } else {
             $sql = "INSERT INTO Project(userId, clientId, projectName, wage) VALUES (:userId, :clientId, :projectName, :wage)";
             $params = [
                 'userId' => $project->getUserId(),
@@ -38,21 +41,22 @@ class ProjectRepository extends AbstractRepository {
         $this->openDatabaseConnection();
         $statement = $this->connection->prepare($sql);
         $statement->execute($params);
-        if (! $project->getId()) {
+        if (!$project->getId()) {
             $project->setId($this->connection->lastInsertId());
         }
         $this->closeDatabaseConnection();
         return $project;
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT * FROM Project WHERE id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $project = $this->projectFromRow($row);
@@ -93,14 +97,15 @@ class ProjectRepository extends AbstractRepository {
         return $projects;
     }
 
-    public function getClientByProjectId($id) {
+    public function getClientByProjectId($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT Client.id, Client.userId, Client.clientName FROM Project JOIN Client ON Project.clientId = Client.id WHERE Project.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $this->closeDatabaseConnection();

@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Model;
+
 use PDO;
 
-class ClientRepository extends AbstractRepository {
+class ClientRepository extends AbstractRepository
+{
 
-    public static function clientFromRow($row) {
+    public static function clientFromRow($row)
+    {
         $client = new Client();
         $client
             ->setId($row['id'])
@@ -13,7 +17,8 @@ class ClientRepository extends AbstractRepository {
         return $client;
     }
 
-    public function save($client) {
+    public function save($client)
+    {
         if ($client->getId()) {
             $sql = "UPDATE Client SET userId = :userId, clientName = :clientName WHERE id = :id";
             $params = [
@@ -21,8 +26,7 @@ class ClientRepository extends AbstractRepository {
                 'userId' => $client->getUserId(),
                 'clientName' => $client->getClientName()
             ];
-        }
-        else {
+        } else {
             $sql = "INSERT INTO Client(userId, clientName) VALUES (:userId, :clientName)";
             $params = [
                 'userId' => $client->getUserId(),
@@ -32,21 +36,22 @@ class ClientRepository extends AbstractRepository {
         $this->openDatabaseConnection();
         $statement = $this->connection->prepare($sql);
         $statement->execute($params);
-        if (! $client->getId()) {
+        if (!$client->getId()) {
             $client->setId($this->connection->lastInsertId());
         }
         $this->closeDatabaseConnection();
         return $client;
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT * FROM Client WHERE id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $client = $this->clientFromRow($row);

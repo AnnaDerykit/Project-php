@@ -31,22 +31,22 @@ class RegisterController
         $repeated_password = trim(htmlspecialchars($_POST['repeat_password']));
 
         if (empty($username) || empty($email) || empty($password) || empty($repeated_password)) {
-            $message = 'Uzupełnij wszystkie pola formularza';
+            $message = 'Please fill all the fields.';
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $message = 'Wprowadź poprawny adres E-mail';
+            $message = 'Your e-mail address is invalid.';
         } else if (strlen($password) < self::PASSWORD_LENGTH) {
-            $message = 'Hasło musi zawierać co najmniej ' . self::PASSWORD_LENGTH . ' znaków.';
+            $message = 'Password must be at least ' . self::PASSWORD_LENGTH . ' characters long.';
         } else if ($password !== $repeated_password) {
-            $message = 'Wprowadzone hasła różnią się';
+            $message = 'Passwords must match.';
         } else {
             $repository = new UserRepository();
             $user = $repository->findOneByEmail($email);
 
             // Sprawdzamy czy E-mail istnieje
             if (!is_null($user)) {
-                $message = 'Podany adres E-mail jest zajęty.';
+                $message = 'This e-mail is already taken.';
             } else if (!is_null($repository->findByName($username))) {
-                $message = 'Podana nazwa użytkownika jest już w użyciu.';
+                $message = 'This username is already taken.';
             } else {
                 $user = new User();
                 $user->setUsername($username);
@@ -57,7 +57,7 @@ class RegisterController
                 $newUser = $repository->save($user);
 
                 $_SESSION['uid'] = $newUser->getId();
-                header('Location: index.php?action=show-profile');
+                $response->addHeader('Location', 'index.php?action=show-profile');
             }
         }
 

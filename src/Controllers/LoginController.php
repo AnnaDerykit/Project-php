@@ -26,19 +26,19 @@ class LoginController
         $password = trim(htmlspecialchars($_POST['password']));
 
         if (empty($email) || empty($password)) {
-            $message = 'Uzupełnij wszystkie pola formularza';
+            $message = 'Please fill all the fields.';
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $message = 'Wprowadź poprawny adres E-mail';
+            $message = 'Your e-mail address is invalid.';
         } else {
             $repository = new UserRepository();
             $user = $repository->findOneByEmail($email);
             if (is_null($user)) {
-                $message = 'Podany użytkownik nie istnieje.';
+                $message = 'This user does not exist.';
             } else if (password_verify($password, $user->getPassword())) {
                 $_SESSION['uid'] = $user->getId();
                 header('Location: index.php?action=show-profile');
             } else {
-                $message = 'Incorrect password.';
+                $message = 'Your password is incorrect.';
             }
         }
 

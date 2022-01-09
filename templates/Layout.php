@@ -53,7 +53,7 @@ class Layout
         ?>
         <div class="footer text-center">
             <footer>
-                <span>Design &copy; 2021 Über Clocker 3000 Team</span>
+                <span>Design &copy; 2021-2022 Über Clocker 3000 Team</span>
                 <span></span>
             </footer>
         </div>

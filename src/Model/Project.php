@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Model;
 
-class Project {
+class Project
+{
     private $id;
     private $userId;
     private $clientId;

@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Model;
+
 use PDO;
 
-class TaskRepository extends AbstractRepository {
+class TaskRepository extends AbstractRepository
+{
 
-    protected function taskFromRow($row) {
+    protected function taskFromRow($row)
+    {
         $task = new Task();
         $task
             ->setId($row['id'])
@@ -16,7 +20,8 @@ class TaskRepository extends AbstractRepository {
         return $task;
     }
 
-    public function save($task) {
+    public function save($task)
+    {
         if ($task->getId()) {
             $sql = "UPDATE Task SET userId = :userId, projectId = :projectId, title = :title, startTime = :startTime, stopTime = :stopTime WHERE id = :id";
             $params = [
@@ -27,8 +32,7 @@ class TaskRepository extends AbstractRepository {
                 'startTime' => $task->getStartTime(),
                 'stopTime' => $task->getStopTime()
             ];
-        }
-        else {
+        } else {
             $sql = "INSERT INTO Task(userId, projectId, title, startTime, stopTime) VALUES (:userId, :projectId, :title, :startTime, :stopTime)";
             $params = [
                 'userId' => $task->getUserId(),
@@ -41,21 +45,22 @@ class TaskRepository extends AbstractRepository {
         $this->openDatabaseConnection();
         $statement = $this->connection->prepare($sql);
         $statement->execute($params);
-        if (! $task->getId()) {
+        if (!$task->getId()) {
             $task->setId($this->connection->lastInsertId());
         }
         $this->closeDatabaseConnection();
         return $task;
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT * FROM Task WHERE id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $task = $this->taskFromRow($row);
@@ -80,49 +85,53 @@ class TaskRepository extends AbstractRepository {
         return $tasks;
     }
 
-    public function getProjectByTaskId($id) {
+    public function getProjectByTaskId($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT Project.id, Project.userId, Project.clientId, Project.projectName, Project.wage FROM Task JOIN Project ON Task.projectId = Project.id WHERE Task.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $this->closeDatabaseConnection();
         return ProjectRepository::projectFromRow($row);
     }
 
-    public function getClientByTaskId($id) {
+    public function getClientByTaskId($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT Client.id, Client.userId, Client.clientName FROM Task JOIN Project ON Task.projectId = Project.id JOIN Client ON Project.clientId = Client.id WHERE Task.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $this->closeDatabaseConnection();
         return ClientRepository::clientFromRow($row);
     }
 
-    public function getWageById($id) {
+    public function getWageById($id)
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT wage FROM Task JOIN Project ON Task.projectId = Project.id WHERE Task.id = :id";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('id' => $id));
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
+        if (!$row) {
             return null;
         }
         $this->closeDatabaseConnection();
         return $row['wage'];
     }
 
-    public function getNumberOfTasks() {
+    public function getNumberOfTasks()
+    {
         $this->openDatabaseConnection();
         $sql = "SELECT COUNT(*) AS number FROM Task";
         $statement = $this->connection->prepare($sql);
@@ -132,7 +141,8 @@ class TaskRepository extends AbstractRepository {
         return $row['number'];
     }
 
-    public function getTotalTasksTimeThisPeriod($period = '') {
+    public function getTotalTasksTimeThisPeriod($period = '')
+    {
         $this->openDatabaseConnection();
         switch ($period) {
             case 'week':

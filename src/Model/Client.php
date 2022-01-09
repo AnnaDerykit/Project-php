@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Model;
 
-class Client {
+class Client
+{
     private $id;
     private $userId;
     private $clientName;

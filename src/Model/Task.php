@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Model;
 
-class Task {
+class Task
+{
     private $id;
     private $userId;
     private $projectId;
