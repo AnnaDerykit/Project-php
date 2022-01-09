@@ -3,11 +3,13 @@ namespace Templates;
 
 use App\Model\UserRepository;
 
-class ProfileView {
-    public static function render() {
+class ProfileView
+{
+    public static function render($params = [])
+    {
         ob_start();
         ?>
-        <?= Layout::header() ?>
+        <?= Layout::header($params) ?>
         <?= Layout::navbar() ?>
         <div class="thing">
             <div class="nag_task">
@@ -24,13 +26,14 @@ class ProfileView {
             <?php
             $usersRep = new UserRepository();
             $user = $usersRep->findById($_SESSION['uid']);
+            $id = $user->getId();
             ?>
-            <tr contenteditable="true">
-                <td><?= $user->getUsername() ?></td>
-                <td contenteditable="false"><?= $user->getEmail() ?></td>
-                <td><?= $user->getPassword() ?></td>
-                <td contenteditable="true"><?= $user->getRole() ?></td>
-            </tr>
+                <tr contenteditable="true" onfocusout=editOnFocusOut(<?=$id?>) id=<?= $id ?>>
+                    <td class="user_prfl" contenteditable="true"><?= $user->getUsername() ?></td>
+                    <td class="email_prfl" contenteditable="false"><?= $user->getEmail() ?></td>
+                    <td class="passw_prfl" contenteditable="true"><?= $user->getPassword() ?></td>
+                    <td class="role_prfl" contenteditable="false"><?= $user->getRole() ?></td>
+                </tr>
         </table>
         </div>
         </div>

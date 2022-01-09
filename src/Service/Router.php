@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Controllers\LoginController;
+use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
 use App\Controllers\UsersController;
 
@@ -13,6 +14,10 @@ class Router
             case 'delete-user':
                 $controllerName = UsersController::class;
                 $actionName = 'deleteUser';
+                break;
+            case 'edit-profile':
+                $controllerName = ProfileController::class;
+                $actionName = 'editProfile';
                 break;
             case 'edit-user':
                 $controllerName = UsersController::class;
