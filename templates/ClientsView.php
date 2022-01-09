@@ -9,8 +9,12 @@ class ClientsView {
         ?>
         <?= Layout::header() ?>
         <?= Layout::navbar() ?>
-        <h1>List of clients</h1>
-        <table>
+        <div class="thing">
+            <div class="nag_task">
+                <h2>List of clients</h2>
+            </div>
+        <div class="task-table">
+        <table id="task">
             <tr>
                 <th>Client name</th>
             </tr>
@@ -23,6 +27,10 @@ class ClientsView {
                 </tr>
             <?php endforeach ?>
         </table>
+        </div>
+        </div>
+        </div>
+        </div>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();

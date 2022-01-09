@@ -10,8 +10,12 @@ class ProjectsView {
         ?>
         <?= Layout::header() ?>
         <?= Layout::navbar() ?>
-        <h1>List of projects</h1>
-        <table>
+        <div class="thing">
+        <div class="nag_task">
+            <h2>List of projects</h2>
+        </div>
+            <div class="task-table">
+                <table id="task">
             <tr>
                 <th>Project name</th>
                 <th>Client name</th>
@@ -32,6 +36,10 @@ class ProjectsView {
                 </tr>
             <?php endforeach ?>
         </table>
+        </div>
+        </div>
+        </div>
+        </div>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();

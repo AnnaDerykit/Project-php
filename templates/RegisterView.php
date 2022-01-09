@@ -9,10 +9,10 @@ class RegisterView
         ob_start();
         ?>
         <?= Layout::header() ?>
-
-        <div class="h2">
-            <h2 class="nag_re">Rejestracja</h2>
-        </div>
+<div class="thing register">
+    <div class="nag_task">
+        <h2>Rejestracja</h2>
+    </div>
 
         <div class="validation-errors">
             <?php
@@ -45,11 +45,14 @@ class RegisterView
                 </div>
 
                 <div class="btm_re">
-                    <input class="register" type="submit" value="Register">
+                    <input class="register btn btn-purple" type="submit" value="Register">
                 </div>
 
             </div>
         </form>
+</div>
+</div>
+</div>
         <?= Layout::footer() ?>
         <?php
         return ob_get_clean();

@@ -10,10 +10,6 @@ class TasksView {
         <?= Layout::header() ?>
         <?= Layout::navbar() ?>
 
-        <div class="nag_task"></div>
-            <h2>List of tasks</h2>
-        </div>
-
         <div class="thing">
             <div class="tasks">
                 <div class="new-task d-flex">
@@ -24,7 +20,6 @@ class TasksView {
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="task-table">
             <table id="task">
@@ -66,6 +61,8 @@ class TasksView {
                     </tbody>
                 <?php endforeach ?>
             </table>
+        </div>
+        </div>
         </div>
         <?= Layout::footer() ?>
         <?php

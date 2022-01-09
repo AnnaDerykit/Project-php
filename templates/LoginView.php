@@ -8,9 +8,10 @@ class LoginView
         ob_start();
         ?>
         <?= Layout::header() ?>
-        <div class="h2">
-            <h2 class="nag_log">Logowanie</h2>
-        </div>
+<div class="thing register">
+    <div class="nag_task">
+        <h2>Logowanie</h2>
+    </div>
 
         <div class="validation-errors">
             <?php
@@ -33,10 +34,13 @@ class LoginView
                 </div>
 
                 <div class="btm_log">
-                    <input class="login" type="submit" value="Log in">
+                    <input class="login btn btn-purple" type="submit" value="Log in">
                 </div>
             </div>
         </form>
+</div>
+</div>
+</div>
         <?= Layout::footer() ?>
         <?php
         return ob_get_clean();

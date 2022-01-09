@@ -10,8 +10,8 @@ class FrontpageView {
         ob_start();
         ?>
         <?= Layout::header() ?>
-        <div class="log_re">
-            <ul>
+        <nav class="navig">
+            <ul class="menulist">
                 <?php
                 $names = ['Log in', 'Register'];
                 $actions = ['login', 'register'];
@@ -21,11 +21,11 @@ class FrontpageView {
                     </li>
                 <?php endforeach ?>
             </ul>
-        </div>
-
-        <div class="H2">
-            <h2 class="stats">Our statistics</h2>
-        </div>
+        </nav>
+        <div class="thing">
+            <div class="nag_task">
+                <h2>Our statistics</h2>
+            </div>
 
         <div class="numberus">
             <p class="p1">Number of registered users: <?php
@@ -64,7 +64,9 @@ class FrontpageView {
                 echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod());
                 ?></p>
         </div>
-
+        </div>
+        </div>
+        </div>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();

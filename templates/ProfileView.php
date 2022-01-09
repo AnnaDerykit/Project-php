@@ -9,8 +9,12 @@ class ProfileView {
         ?>
         <?= Layout::header() ?>
         <?= Layout::navbar() ?>
-        <h1>My profile</h1>
-        <table>
+        <div class="thing">
+            <div class="nag_task">
+              <h2>My profile</h2>
+            </div>
+        <div class="task-table">
+            <table id="task">
             <tr>
                 <th>Username</th>
                 <th>Email</th>
@@ -28,6 +32,10 @@ class ProfileView {
                 <td contenteditable="true"><?= $user->getRole() ?></td>
             </tr>
         </table>
+        </div>
+        </div>
+        </div>
+        </div>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();
