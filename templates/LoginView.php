@@ -10,7 +10,7 @@ class LoginView
         <?= Layout::header() ?>
 <div class="thing register">
     <div class="nag_task">
-        <h2>Logowanie</h2>
+        <h2>Log in</h2>
     </div>
 
         <div class="validation-errors">

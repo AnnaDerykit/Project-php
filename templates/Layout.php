@@ -3,6 +3,7 @@
 namespace Templates;
 
 use App\Model\UserRepository;
+use App\Dictionary;
 
 class Layout
 {
@@ -25,7 +26,7 @@ class Layout
         <body>
         <div class="header d-flex ai-center">
             <div class="title text-left">
-                <h1 class="title"><span>Über</span>Clocker<span>3000</span></h1>
+                <a <?= "href=?"?>" class="link-clear"><h1 class="title"><span>Über</span>Clocker<span>3000</span></h1></a>
             </div>
             <div class="hello-user text-right">
                 <?php
@@ -51,10 +52,10 @@ class Layout
     {
         ob_start();
         ?>
-        <div class="footer text-center">
+        <div class="footer text-left">
             <footer>
+                <span>Contact us at <em><?= Dictionary\OfficialEmail::OFFICIAL_EMAIL ?></em></span><br>
                 <span>Design &copy; 2021-2022 Über Clocker 3000 Team</span>
-                <span></span>
             </footer>
         </div>
         </body>

@@ -1,16 +1,16 @@
-1. Logowanie
-	a. złe hasło 
+[done] 1. Logowanie
+	a. złe hasło
 	b. nieistniejący użytkownik
 	c. zrobić żeby były gwiazdki zamiast hasła
 	d. ewentualnie skrót z hasła w bazie
 
-2. Rejestracja
+[done] 2. Rejestracja
 	a. walidacja: niepuste pola, długość hasła, unikalny email
 	b. obsługa błędów
 	c. zapis do bazy 
 
 3. CSS
-	a. normalny
+	[done] a. normalny
 	b. responsywny
 
 4. Śledzenie taska
@@ -33,7 +33,7 @@
 	b. edytowalne pola
 	c. wysyłanie wyników do bazy
 
-8. Panel admina
+[done] 8. Panel admina
 	a. edytowalne pola
 	b. wysyłanie wyników do bazy
 
