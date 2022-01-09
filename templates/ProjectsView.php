@@ -16,7 +16,8 @@ class ProjectsView {
         </div>
             <div class="task-table">
                 <table id="task">
-            <tr>
+                    <tr>
+                <th></th>
                 <th>Project name</th>
                 <th>Client name</th>
                 <th>Wage</th>
@@ -27,6 +28,9 @@ class ProjectsView {
             $projects = $projectsRep->findByUserId($_SESSION['uid']);
             foreach ($projects as $project): ?>
                 <tr>
+                    <td class="del">
+                        <a href="#" class="del_link" onclick=deleteOnClick()>X</a>
+                    </td>
                     <td><?= $project->getProjectName() ?></td>
                     <?php
                     $client = $projectsRep->getClientByProjectId($project->getId());

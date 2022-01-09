@@ -12,8 +12,12 @@ class UsersView
         ?>
         <?= Layout::header($params) ?>
         <?= Layout::navbar() ?>
-        <h1>List of users</h1>
-        <table>
+        <div class="thing">
+        <div class="nag_task">
+            <h2>List of users</h2>
+        </div>
+            <div class="task-table">
+                <table id="task">
             <tr>
                 <th></th>
                 <th>Username</th>
@@ -27,9 +31,9 @@ class UsersView
             foreach ($users as $user):
                 $id = $user->getId();
                 ?>
-                <tr id=<?= $id ?>>
+                <tr>
                     <td class="del">
-                        <a href="#" class="del_link" onclick=deleteOnClick(<?=$id?>)>X</a>
+                        <a href="#" class="del_link" onclick=deleteOnClick()>X</a>
                     </td>
                     <td class="user_usr"><?= $user->getUsername() ?></td>
                     <td class="email_usr"><?= $user->getEmail() ?></td>
@@ -47,6 +51,10 @@ class UsersView
                 </tr>
             <?php endforeach ?>
         </table>
+        </div>
+        </div>
+        </div>
+        </div>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();

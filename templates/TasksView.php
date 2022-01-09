@@ -24,7 +24,7 @@ class TasksView {
         <div class="task-table">
             <table id="task">
                 <thead>
-                    <tr>
+                        <th></th>
                         <th>Title</th>
                         <th>Project name</th>
                         <th>Client name</th>
@@ -49,6 +49,9 @@ class TasksView {
                             $payout = ($durationInSec && $wage) ? number_format(round($wage * $durationInSec / 3600, 2), 2) : null;
                             $timeFormatted = $durationInSec ? sprintf('%02d:%02d:%02d', ($durationInSec/3600),($durationInSec/60%60), $durationInSec%60) : null;
                             ?>
+                            <td class="del">
+                                <a href="#" class="del_link" onclick=deleteOnClick()>X</a>
+                            </td>
                             <td><?= $task->getTitle() ?></td>
                             <td><?= $project ? $project->getProjectName() : '' ?></td>
                             <td><?= $client ? $client->getClientName() : '' ?></td>

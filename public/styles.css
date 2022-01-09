@@ -35,6 +35,12 @@ body {
 .text-right {
     text-align: right;
 }
+.navig ul li a:hover {
+    color: darkgray;
+}
+.navig ul li[class='active'] a {
+    text-decoration: underline;
+}
 /* icon */
 .icon {
     object-fit: contain;
@@ -268,8 +274,6 @@ input {
         margin-bottom: 20px;
     }
     .btn {
-        height: -webkit-fit-content;
-        height: -moz-fit-content;
         height: fit-content;
         padding: 10px 20px;
         font-size: 14px;

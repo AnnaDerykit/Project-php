@@ -16,6 +16,7 @@ class ClientsView {
         <div class="task-table">
         <table id="task">
             <tr>
+                <th></th>
                 <th>Client name</th>
             </tr>
             <?php
@@ -23,6 +24,9 @@ class ClientsView {
             $clients = $clientsRep->findByUserId($_SESSION['uid']);
             foreach ($clients as $client): ?>
                 <tr>
+                    <td class="del">
+                        <a href="#" class="del_link" onclick=deleteOnClick()>X</a>
+                    </td>
                     <td><?= $client->getClientName() ?></td>
                 </tr>
             <?php endforeach ?>
