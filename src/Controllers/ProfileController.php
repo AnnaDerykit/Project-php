@@ -46,4 +46,10 @@ class ProfileController
         $response->addHeader('Location', 'index.php?action=show-profile');
         return $response;
     }
+
+    //TODO
+    public static function changePassword()
+    {
+
+    }
 }

@@ -33,12 +33,12 @@ class LoginController
             $repository = new UserRepository();
             $user = $repository->findOneByEmail($email);
             if (is_null($user)) {
-                $message = 'This user does not exist.';
+                $message = 'Your email or password is incorrect.';
             } else if (password_verify($password, $user->getPassword())) {
                 $_SESSION['uid'] = $user->getId();
                 header('Location: index.php?action=show-profile');
             } else {
-                $message = 'Your password is incorrect.';
+                $message = 'Your email or password is incorrect.';
             }
         }
 

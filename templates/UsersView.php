@@ -32,6 +32,7 @@ class UsersView
             $users = $usersRep->getAllUsersExceptId($_SESSION['uid']);
             foreach ($users as $user):
                 $id = $user->getId();
+                //TODO: wywalić hasło, żeby funkcja dalej działała
                 ?>
                 <tr  id=<?= $id ?>>
                     <td class="del">
@@ -39,7 +40,7 @@ class UsersView
                     </td>
                     <td class="user_usr"><?= $user->getUsername() ?></td>
                     <td class="email_usr"><?= $user->getEmail() ?></td>
-                    <td class="passw_usr" contenteditable="true" onfocusout=editOnFocusOut(<?=$id?>)><?= $user->getPassword() ?></td>
+                    <td class="passw_usr"><a href="index.php?action=password-change-form">Change password</a></td>
                     <td class="role_usr">
                         <select class="role_select" name="role" onfocusout=editOnFocusOut(<?=$id?>)>
                             <option value="<?php echo $user->getRole() ?>"><?= $user->getRole() ?></option>

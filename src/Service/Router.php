@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Controllers\ChangePasswordController;
 use App\Controllers\LoginController;
 use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
@@ -34,6 +35,10 @@ class Router
             case 'logout':
                 $controllerName = 'App\Controllers\LoginController';
                 $actionName = 'logout';
+                break;
+            case 'password-change-form':
+                $controllerName = ChangePasswordController::class;
+                $actionName = 'index';
                 break;
             case 'register-set':
                 $controllerName = RegisterController::class;

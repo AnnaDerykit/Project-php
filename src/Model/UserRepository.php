@@ -101,6 +101,36 @@ class UserRepository extends AbstractRepository
         return $user;
     }
 
+    public function savePassword($user)
+    {
+        $sql = "UPDATE User SET password = :password WHERE id = :id";
+        $params = [
+            'id' => $user->getId(),
+            'password' => $user->getPassword(),
+        ];
+
+        $this->openDatabaseConnection();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute($params);
+        $this->closeDatabaseConnection();
+        return $user;
+    }
+
+    public function saveUsername($user)
+    {
+        $sql = "UPDATE User SET username = :username WHERE id = :id";
+        $params = [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+        ];
+
+        $this->openDatabaseConnection();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute($params);
+        $this->closeDatabaseConnection();
+        return $user;
+    }
+
     /**
      * @param $str
      * @return array
