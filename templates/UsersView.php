@@ -40,7 +40,12 @@ class UsersView
                     </td>
                     <td class="user_usr"><?= $user->getUsername() ?></td>
                     <td class="email_usr"><?= $user->getEmail() ?></td>
-                    <td class="passw_usr"><a href="index.php?action=password-change-form">Change password</a></td>
+                    <td class="passw_usr">
+                        <form method="POST" action="index.php?action=password-change-form">
+                            <input type="hidden" id="id" name="id" value=<?= $id ?>>
+                            <input type="submit" id="submit" name="submit" value="Change password">
+                        </form>
+                    </td>
                     <td class="role_usr">
                         <select class="role_select" name="role" onfocusout=editOnFocusOut(<?=$id?>)>
                             <option value="<?php echo $user->getRole() ?>"><?= $user->getRole() ?></option>
