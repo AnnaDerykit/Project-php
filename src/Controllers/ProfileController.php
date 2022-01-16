@@ -18,9 +18,30 @@ class ProfileController
     }
 
 
-    public static function editProfile()
+    public static function editProfileExceptPassword()
     {
         //TODO: walidacja czy faktycznie $_POST ma to co trzeba
+        $id = $_POST['id'];
+        $repository = new UserRepository();
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $role = $_POST['role'];
+        $row = [
+            'id' => $id,
+            'username' => $username,
+            'email' => $email,
+            'role' => $role
+        ];
+        $user = UserRepository::userFromRowExceptPassword($row);
+        $repository->saveExceptPassword($user);
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-profile');
+        return $response;
+    }
+
+    /*//TODO
+    public static function changeProfilePassword()
+    {
         $id = $_POST['id'];
         $repository = new UserRepository();
         $oldUser = $repository->findById($id);
@@ -30,26 +51,5 @@ class ProfileController
             $password = trim(htmlspecialchars($password));
             $password = password_hash($password, PASSWORD_BCRYPT);
         }
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $role = $_POST['role'];
-        $row = [
-            'id' => $id,
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            'role' => $role
-        ];
-        $user = UserRepository::userFromRow($row);
-        $repository->save($user);
-        $response = new Response();
-        $response->addHeader('Location', 'index.php?action=show-profile');
-        return $response;
-    }
-
-    //TODO
-    public static function changePassword()
-    {
-
-    }
+    }*/
 }

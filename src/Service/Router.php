@@ -12,17 +12,21 @@ class Router
     public static function resolveRoute($action)
     {
         switch ($action) {
+            case 'change-password':
+                $controllerName = ChangePasswordController::class;
+                $actionName = 'changePassword';
+                break;
             case 'delete-user':
                 $controllerName = UsersController::class;
                 $actionName = 'deleteUser';
                 break;
-            case 'edit-profile':
+            case 'edit-profile-except-password':
                 $controllerName = ProfileController::class;
-                $actionName = 'editProfile';
+                $actionName = 'editProfileExceptPassword';
                 break;
-            case 'edit-user':
+            case 'edit-user-except-password':
                 $controllerName = UsersController::class;
-                $actionName = 'editUser';
+                $actionName = 'editUserExceptPassword';
                 break;
             case 'login-set':
                 $controllerName = LoginController::class;

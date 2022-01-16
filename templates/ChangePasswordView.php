@@ -1,13 +1,15 @@
 <?php
 namespace Templates;
 
+use App\Model\UserRepository;
+
 class ChangePasswordView
 {
     public static function render($params = [])
     {
         ob_start();
         ?>
-        <?= Layout::header() ?>
+        <?= Layout::header($params) ?>
         <div class="thing register">
             <div class="nag_task">
                 <h2>Change password</h2>
@@ -21,8 +23,14 @@ class ChangePasswordView
                 ?>
             </div>
 
-            <form method="POST" action="?action=password-change">
-                <div class="data_log">
+            <?php
+            $userRep = new UserRepository();
+            $user = $userRep->findById($_SESSION['uid']);
+            $id = $user->getId();
+            ?>
+
+            <form method="POST" action="?action=change-password">
+                <div class="data_log" id=<?=$id?>>
                     <div class="haslo_re">
                         <label for="password">New password:</label>
                         <input type="password" id="password" name="password"
@@ -36,7 +44,7 @@ class ChangePasswordView
                     </div>
 
                     <div class="btm_re">
-                        <input class="register btn btn-purple" type="submit" value="Submit">
+                        <input class="register btn btn-purple" type="submit" onclick="changeOnClick(<?=$id?>)" value="Submit">
                     </div>
                 </div>
             </form>

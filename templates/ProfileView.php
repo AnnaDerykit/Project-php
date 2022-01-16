@@ -33,7 +33,7 @@ class ProfileView
                     <tr contenteditable="true" onfocusout=editOnFocusOut(<?= $id ?>) id=<?= $id ?>>
                         <td class="user_prfl" contenteditable="true"><?= $user->getUsername() ?></td>
                         <td class="email_prfl" contenteditable="false"><?= $user->getEmail() ?></td>
-                        <td class="passwd_prfl"><a href="?action=password-change-form">Change password</a></td>
+                        <td class="passwd_prfl" contenteditable="false"><a href="index.php?action=password-change-form">Change password</a></td>
                         <td class="role_prfl" contenteditable="false"><?= $user->getRole() ?></td>
                     </tr>
                 </table>

@@ -23,6 +23,17 @@ class UserRepository extends AbstractRepository
         return $user;
     }
 
+    public static function userFromRowExceptPassword($row)
+    {
+        $user = new User();
+        $user
+            ->setId($row['id'])
+            ->setUsername($row['username'])
+            ->setEmail($row['email'])
+            ->setRole($row['role']);
+        return $user;
+    }
+
     /**
      * @param $id
      * @return null|User
@@ -101,6 +112,34 @@ class UserRepository extends AbstractRepository
         return $user;
     }
 
+    public function saveExceptPassword($user)
+    {
+        if ($user->getId()) {
+            $sql = "UPDATE User SET username = :username, email = :email, role = :role WHERE id = :id";
+            $params = [
+                'id' => $user->getId(),
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRole()
+            ];
+        } else {
+            $sql = "INSERT INTO User(username, email, role) VALUES (:username, :email, :role)";
+            $params = [
+                'username' => $user->getUsername(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRole()
+            ];
+        }
+        $this->openDatabaseConnection();
+        $statement = $this->connection->prepare($sql);
+        $statement->execute($params);
+        if (!$user->getId()) {
+            $user->setId($this->connection->lastInsertId());
+        }
+        $this->closeDatabaseConnection();
+        return $user;
+    }
+
     public function savePassword($user)
     {
         $sql = "UPDATE User SET password = :password WHERE id = :id";
@@ -116,7 +155,7 @@ class UserRepository extends AbstractRepository
         return $user;
     }
 
-    public function saveUsername($user)
+    /*public function saveUsername($user)
     {
         $sql = "UPDATE User SET username = :username WHERE id = :id";
         $params = [
@@ -129,7 +168,7 @@ class UserRepository extends AbstractRepository
         $statement->execute($params);
         $this->closeDatabaseConnection();
         return $user;
-    }
+    }*/
 
     /**
      * @param $str

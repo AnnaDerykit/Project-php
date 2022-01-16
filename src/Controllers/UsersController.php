@@ -23,19 +23,12 @@ class UsersController
         return $response;
     }
 
-    public static function editUser()
+    public static function editUserExceptPassword()
     {
         //TODO: walidacja czy faktycznie $_POST ma to co trzeba
         if (self::checkIfAdmin()) {         //pozwoli edytować tylko adminowi; szarego usera przekieruje na my profile
             $id = $_POST['id'];
             $repository = new UserRepository();
-            $oldUser = $repository->findById($id);
-            $oldPassword = $oldUser->getPassword();
-            $password = $_POST['password'];
-            if ($oldPassword != $password) {
-                $password = trim(htmlspecialchars($password));
-                $password = password_hash($password, PASSWORD_BCRYPT);
-            }
             $username = $_POST['username'];
             $email = $_POST['email'];
             $role = $_POST['role'];
@@ -43,11 +36,10 @@ class UsersController
                 'id' => $id,
                 'username' => $username,
                 'email' => $email,
-                'password' => $password,
                 'role' => $role
             ];
-            $user = UserRepository::userFromRow($row);
-            $repository->save($user);
+            $user = UserRepository::userFromRowExceptPassword($row);
+            $repository->saveExceptPassword($user);
             $response = new Response();
             $response->addHeader('Location', 'index.php?action=show-users');
         } else {
@@ -56,6 +48,19 @@ class UsersController
         }
         return $response;
     }
+
+    /*public static function changeUserPassword()
+    {
+        $id = $_POST['id'];
+        $repository = new UserRepository();
+        $oldUser = $repository->findById($id);
+        $oldPassword = $oldUser->getPassword();
+        $password = $_POST['password'];
+        if ($oldPassword != $password) {
+            $password = trim(htmlspecialchars($password));
+            $password = password_hash($password, PASSWORD_BCRYPT);
+        }
+    }*/
 
     public static function deleteUser()
     {
