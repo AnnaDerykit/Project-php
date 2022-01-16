@@ -83,6 +83,12 @@ body {
 .btn .icon {
     margin-right: 8px;
 }
+
+.icon-table {
+    filter: unset !important;
+    height: 24px;
+    width: 24px;
+}
 /* btn */
 .btn-purple {
     background-color: #412a4c;
