@@ -7,7 +7,6 @@ use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
 use App\Controllers\ReportController;
 use App\Controllers\UsersController;
-use function Couchbase\defaultDecoder;
 
 class Router
 {
