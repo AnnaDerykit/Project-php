@@ -14,7 +14,7 @@ class ProfileView
         <?= Layout::navbar() ?>
         <div class="thing">
             <div class="nag_task">
-                <h2>My profile</h2>
+                <h2>My profile - <a style="font-size: 20px;" href="index.php?action=display-reports">My reports</a></h2>
             </div>
             <div class="task-table">
                 <table id="task">
@@ -36,7 +36,7 @@ class ProfileView
                         <td class="passwd_prfl" contenteditable="false">
                             <form method="POST" action="index.php?action=password-change-form">
                                 <input type="hidden" id="id" name="id" value=<?= $id ?>>
-                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Change password">
+                                <input type="submit" id="submit" name="submit" value="Change password">
                             </form>
                         </td>
                         <td class="role_prfl" contenteditable="false"><?= $user->getRole() ?></td>
@@ -48,7 +48,6 @@ class ProfileView
         </div>
         <?= Layout::footer() ?>
         <?php
-        $html = ob_get_clean();
-        return $html;
+        return ob_get_clean();
     }
 }

@@ -12,10 +12,7 @@ class ChangePasswordView
         <?= Layout::header($params) ?>
         <div class="thing register">
             <div class="nag_task">
-                <?php $changeId = isset($_POST['id']) ? $_POST['id'] : null;
-                if (! $changeId) {
-                    header('Location: index.php?');
-                }
+                <?php $changeId = $_POST['id'];
                 $uid = $_SESSION['uid'];
                 if ($changeId == $uid) { ?>
                     <h2>Change password</h2>

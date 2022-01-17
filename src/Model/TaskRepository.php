@@ -164,4 +164,20 @@ class TaskRepository extends AbstractRepository
         $this->closeDatabaseConnection();
         return $row['time'];
     }
+
+    public function filterTasksByTime($date_from, $date_to, $userId)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Task t JOIN Project p ON t.projectId = p.id WHERE t.startTime > :dateFrom AND t.stopTime < :dateTo AND t.userId = :userId";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(['dateFrom' => $date_from, 'dateTo' => $date_to, 'userId' => $userId]);
+        $tasks = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $tasks[] = $row;
+        }
+
+        $this->closeDatabaseConnection();
+        return $tasks;
+    }
 }
