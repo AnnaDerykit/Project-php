@@ -75,4 +75,37 @@ class ClientRepository extends AbstractRepository
         $this->closeDatabaseConnection();
         return $clients;
     }
+
+    public function getClientProjects($userId)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT Client.id, Client.userId, Client.clientName FROM Project JOIN Client ON Project.clientId = Client.id WHERE Project.id = :id";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(['userId' => $userId]);
+        $clients = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $clients[] = $this->clientFromRow($row);
+        }
+
+        $this->closeDatabaseConnection();
+        return $clients;
+    }
+
+
+    public function findByName($name)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Client WHERE clientName = :clientName";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(['clientName' => $name]);
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+
+        return $this->clientFromRow($row);
+    }
 }

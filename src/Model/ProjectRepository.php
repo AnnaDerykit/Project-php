@@ -81,13 +81,13 @@ class ProjectRepository extends AbstractRepository
         return $projects;
     }
 
-    public function findByClientId($clientId)
+    public function findByClientAndUserId($clientId, $userId)
     {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Project WHERE clientId = :clientId";
+        $sql = "SELECT * FROM Project WHERE clientId = :clientId AND userId = :userId";
         $statement = $this->connection->prepare($sql);
 
-        $statement->execute(array('clientId' => $clientId));
+        $statement->execute(['clientId' => $clientId, 'userId' => $userId]);
         $projects = [];
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             $projects[] = $this->projectFromRow($row);

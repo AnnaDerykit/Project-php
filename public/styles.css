@@ -261,6 +261,26 @@ input {
     -webkit-transition: .3s ease;
     transition: .3s ease;
 }
+
+.report-container caption {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.search-form-header {
+    font-size: 30px;
+    text-align: center;
+}
+
+.report-search-submit {
+    width: 100%;
+    margin: 20px auto auto auto;
+}
+
+.report-table {
+    margin-top: 130px;
+}
+
 /* respo */
 @media only screen and (max-width: 600px) {
     .container {

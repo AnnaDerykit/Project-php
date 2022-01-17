@@ -5,7 +5,9 @@ use App\Controllers\ChangePasswordController;
 use App\Controllers\LoginController;
 use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
+use App\Controllers\ReportController;
 use App\Controllers\UsersController;
+use function Couchbase\defaultDecoder;
 
 class Router
 {
@@ -71,6 +73,14 @@ class Router
             case 'show-users':
                 $controllerName = 'App\Controllers\UsersController';
                 $actionName = 'index';
+                break;
+            case 'display-reports':
+                $controllerName = ReportController::class;
+                $actionName = 'index';
+                break;
+            case 'reports-generator':
+                $controllerName = ReportController::class;
+                $actionName = 'generate';
                 break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';

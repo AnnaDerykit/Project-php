@@ -22,13 +22,13 @@ class ChangePasswordController
     public static function changePassword()
     {
         //TODO: tylko admin/użytkownik zalogowany na siebie może to zrobić
-        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $id = $_POST['id'];
         $uid = $_SESSION['uid'];
-        $response = new Response();
-        $message = '';
         if ($id == $uid) {
             $password = $_POST['password'];
             $repeated_password = $_POST['repeat_password'];
+            $response = new Response();
+            $message = '';
             if (empty($password) || empty($repeated_password)) {
                 $message = 'Please fill all the fields.';
             } else if (strlen($password) < self::PASSWORD_LENGTH) {
@@ -53,9 +53,12 @@ class ChangePasswordController
                 'message' => $message
             ]));
 
-        } elseif (UsersController::checkIfAdmin()) {
+        } else {
+            if (UsersController::checkIfAdmin()) {
                 $password = $_POST['password'];
                 $repeated_password = $_POST['repeat_password'];
+                $response = new Response();
+                $message = '';
                 if (empty($password) || empty($repeated_password)) {
                     $message = 'Please fill all the fields.';
                 } else if (strlen($password) < self::PASSWORD_LENGTH) {
@@ -71,7 +74,7 @@ class ChangePasswordController
                         ->setPassword($password);
                     $repository = new UserRepository();
                     $repository->savePassword($user);
-                    $response->addHeader('Location', 'index.php?action=show-users');
+                    $response->addHeader('Location', 'index.php?action=show-profile');
 
                     return $response;
                 }
@@ -81,13 +84,13 @@ class ChangePasswordController
                 ]));
 
             } else {
-//                $message = 'Insufficient rights to perform the action';
-                $response->addHeader('Location', 'index.php?');
+                $message = 'Insufficient rights to perform the action';
             }
 
             $response->setContent(ChangePasswordView::render([
                 'message' => $message
             ]));
+        }
 
         return $response;
     }
