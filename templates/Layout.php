@@ -80,8 +80,8 @@ class Layout
                         $username = $u->getUsername();
                         $role = $u->getRole();
                     }
-                    $names = array('My profile', 'My tasks', 'My projects', 'My clients', 'Log out');
-                    $actions = array('show-profile', 'show-tasks', 'show-projects', 'show-clients', 'logout');
+                    $names = array('My profile', 'My tasks', 'My projects', 'My clients', 'Reports', 'Log out');
+                    $actions = array('show-profile', 'show-tasks', 'show-projects', 'show-clients', 'show-reports', 'logout');
                     if ($role == 'admin') {
                         array_splice($names, 4, 0, array('Users'));
                         array_splice($actions, 4, 0, array('show-users'));

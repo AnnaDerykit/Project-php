@@ -6,6 +6,7 @@ use App\Controllers\LoginController;
 use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
 use App\Controllers\UsersController;
+use App\Controllers\ReportsController;
 
 class Router
 {
@@ -72,6 +73,9 @@ class Router
                 $controllerName = 'App\Controllers\UsersController';
                 $actionName = 'index';
                 break;
+            case 'show-reports':
+                $controllerName = 'App\Controllers\ReportsController';
+                $actionName = 'index';
             default:
                 $controllerName = 'App\Controllers\FrontpageController';
                 $actionName = 'index';
