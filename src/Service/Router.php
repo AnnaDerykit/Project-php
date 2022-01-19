@@ -76,6 +76,7 @@ class Router
             case 'show-reports':
                 $controllerName = 'App\Controllers\ReportsController';
                 $actionName = 'index';
+                break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';
                 $actionName = 'index';
