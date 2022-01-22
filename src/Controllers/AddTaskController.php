@@ -59,7 +59,17 @@ class AddTaskController
                     ]));
                     return $response;
                 }
-            }elseif($ProjectId==-1){
+            }elseif($Time_stop>=$data=gmdate('Y-m-d h:i')){
+                if(!empty($Time_stop)){
+                    $response = new Response();
+                    $message = 'Invalid time.';
+                    $response->setContent(AddTaskView::render([
+                        'message' => $message
+                    ]));
+                    return $response;
+                }
+            }
+            elseif($ProjectId==-1){
                 if(!empty($Time_stop)){
                     $response = new Response();
                     $message = 'There is no match for this project.';
