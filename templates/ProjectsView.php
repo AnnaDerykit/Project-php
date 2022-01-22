@@ -15,8 +15,24 @@ class ProjectsView
         <?= Layout::navbar() ?>
         <div class="thing">
             <div class="nag_task">
-                <h2>List of projects</h2>
+                <table>
+                    <tr>
+                        <th><h2>List of projects</h2></th>
+                        <th><form method="POST" action="index.php?action=Show-Add-Project">
+                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Add-Project">
+                        </form></th>
+                    </tr>
+                </table>
             </div>
+            <form method="POST" action="index.php?action=Add-Project">
+                <div class="validation-errors">
+                    <?php
+                    if (!empty($params['message'])) {
+                        echo '<p class="color-red text-center">' . $params['message'] . '</p>';
+                    }
+                    ?>
+                </div>
+
             <div class="task-table">
                 <table id="task">
                     <tr>

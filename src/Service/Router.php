@@ -7,6 +7,7 @@ use App\Controllers\ProfileController;
 use App\Controllers\RegisterController;
 use App\Controllers\UsersController;
 use App\Controllers\ReportsController;
+use App\Controllers\AddProjectController;
 
 class Router
 {
@@ -76,6 +77,14 @@ class Router
             case 'show-reports':
                 $controllerName = 'App\Controllers\ReportsController';
                 $actionName = 'index';
+                break;
+            case 'Show-Add-Project':
+                $controllerName='App\Controllers\AddProjectController';
+                $actionName='index';
+                break;
+            case 'Add-Project':
+                $controllerName = AddProjectController::class;
+                $actionName = 'add_project';
                 break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';
