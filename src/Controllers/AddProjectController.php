@@ -15,9 +15,7 @@ class AddProjectController
     public static function index()
     {
         $response = new Response();
-        $response->setContent(AddProjectView::render([
-            'script' => '../../public/javascript/AddProject.js'
-        ]));
+        $response->setContent(AddProjectView::render());
         return $response;
     }
     public static function add_project()
@@ -71,29 +69,5 @@ class AddProjectController
             $response->addHeader('Location', 'index.php?action=show-profile');
             return $response;
         }
-    }
-    public static function add_project2()
-    {   
-        $repository=new ProjectRepository();
-        $usersRep = new UserRepository();
-        $user = $usersRep->findById($_SESSION['uid']);
-        $ClientRep = new ClientRepository();
-
-        $Clientname = trim(htmlspecialchars($_POST['Client_Name']));
-        $Projectname = trim(htmlspecialchars($_POST['Project-Name']));
-        $Wage = trim(htmlspecialchars($_POST['Wage']));
-        $Userid = $user->getId();
-        $ClientId=$ClientRep->findByUserId($Clientname);  
-
-        $project = new Project();
-        $project->setUserId($Userid);
-        $project->setClientId($ClientId);
-        $project->setProjectName($Projectname);
-        $project->setWage($Wage);
-        $repository->save($project);
-
-        $response = new Response();
-        $response->addHeader('Location', 'index.php?action=show-profile');
-        return $response;
     }
 }

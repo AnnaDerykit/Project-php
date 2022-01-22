@@ -33,7 +33,9 @@ class TasksView
             <div class="task-table">
                 <table id="task">
                     <thead>
-                    <th></th>
+                    <th><form method="POST" action="index.php?action=Show-Add-Task">
+                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Add">
+                        </form></th>
                     <th>Title</th>
                     <th>Project name</th>
                     <th>Client name</th>

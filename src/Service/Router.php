@@ -8,6 +8,7 @@ use App\Controllers\RegisterController;
 use App\Controllers\UsersController;
 use App\Controllers\ReportsController;
 use App\Controllers\AddProjectController;
+use App\Controllers\AddTaskController;
 
 class Router
 {
@@ -85,6 +86,14 @@ class Router
             case 'Add-Project':
                 $controllerName = AddProjectController::class;
                 $actionName = 'add_project';
+                break;
+            case 'Show-Add-Task':
+                $controllerName='App\Controllers\AddTaskController';
+                $actionName='index';
+                break;
+            case 'Add-Task':
+                $controllerName=AddTaskController::class;
+                $actionName='add_task';
                 break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';
