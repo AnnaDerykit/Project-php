@@ -12,7 +12,7 @@ use App\Controllers\UsersController;
 use App\Controllers\ReportsController;
 use App\Controllers\AddProjectController;
 use App\Controllers\AddTaskController;
-
+use App\Controllers\AddClientController;
 class Router
 {
     public static function resolveRoute($action)
@@ -109,6 +109,14 @@ class Router
             case 'Add-Task':
                 $controllerName=AddTaskController::class;
                 $actionName='add_task';
+                break;
+            case 'Show-Add-Client':
+                $controllerName='App\Controllers\AddClientController';
+                $actionName='index';
+                break;
+            case 'Add-Client':
+                $controllerName=AddClientController::class;
+                $actionName='add_client';
                 break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';

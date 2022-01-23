@@ -19,7 +19,9 @@ class ClientsView
             <div class="task-table">
                 <table id="task">
                     <tr>
-                        <th></th>
+                        <th><form method="POST" action="index.php?action=Show-Add-Client">
+                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Add">
+                        </form></th>
                         <th>Client name</th>
                     </tr>
                     <?php
