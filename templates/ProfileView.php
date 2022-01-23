@@ -28,7 +28,6 @@ class ProfileView
                     $usersRep = new UserRepository();
                     $user = $usersRep->findById($_SESSION['uid']);
                     $id = $user->getId();
-                    //TODO: wywalić hasło, żeby funkcja dalej działała; nie może być cały wiersz contenteditable bo link nie działa
                     ?>
                     <tr contenteditable="true" onfocusout=editOnFocusOut(<?= $id ?>) id=<?= $id ?>>
                         <td class="user_prfl" contenteditable="true"><?= $user->getUsername() ?></td>

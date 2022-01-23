@@ -21,7 +21,6 @@ class ChangePasswordController
 
     public static function changePassword()
     {
-        //TODO: tylko admin/użytkownik zalogowany na siebie może to zrobić
         $id = isset($_POST['id']) ? $_POST['id'] : null;
         $uid = $_SESSION['uid'];
         $response = new Response();

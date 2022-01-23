@@ -2,9 +2,12 @@
 namespace App\Service;
 
 use App\Controllers\ChangePasswordController;
+use App\Controllers\ClientsController;
 use App\Controllers\LoginController;
 use App\Controllers\ProfileController;
+use App\Controllers\ProjectsController;
 use App\Controllers\RegisterController;
+use App\Controllers\TasksController;
 use App\Controllers\UsersController;
 use App\Controllers\ReportsController;
 use App\Controllers\AddProjectController;
@@ -23,9 +26,21 @@ class Router
                 $controllerName = UsersController::class;
                 $actionName = 'deleteUser';
                 break;
+            case 'edit-client':
+                $controllerName = ClientsController::class;
+                $actionName = 'editClient';
+                break;
             case 'edit-profile-except-password':
                 $controllerName = ProfileController::class;
                 $actionName = 'editProfileExceptPassword';
+                break;
+            case 'edit-project':
+                $controllerName = ProjectsController::class;
+                $actionName = 'editProject';
+                break;
+            case 'edit-task':
+                $controllerName = TasksController::class;
+                $actionName = 'editTask';
                 break;
             case 'edit-user-except-password':
                 $controllerName = UsersController::class;

@@ -25,7 +25,6 @@ function editOnFocusOut(ID) {
 }*/
 
 function deleteOnClick(id) {
-    // TODO: okienko "czy na pewno chcesz usunąć"
     let confirmation = confirm("Do you really want to delete this user?");
     if (confirmation) {
         let message = new FormData();

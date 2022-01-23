@@ -7,7 +7,7 @@ use PDO;
 class TaskRepository extends AbstractRepository
 {
 
-    protected function taskFromRow($row)
+    public static function taskFromRow($row)
     {
         $task = new Task();
         $task
