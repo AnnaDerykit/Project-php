@@ -27,12 +27,18 @@ class TasksController
         $response = new Response();
         $repository = new TaskRepository();
         $projectRep = new ProjectRepository();
-        $projectId = $_POST['project'];
-        $project = $projectRep->findById($projectId);
-        if ($project) {
+        $projectName = $_POST['project'];
+        $projectId = null;
+        $projects = $projectRep->findByUserId($_SESSION['uid']);
+        foreach($projects as $project):
+            if ($project->getProjectName()==$projectName){
+                $projectId=$project->getId();
+            }
+        endforeach;
+        if ($projectName == '' || !(is_null($projectId))) {
             $title = $_POST['title'];
             $startTime = $_POST['start'];
-            $stopTime = $_POST['stop'];
+            $stopTime = $_POST['stop'] ? $_POST['stop'] : null;
             $task = $repository->findById($id);
             $task
                 ->setProjectId($projectId)
@@ -48,6 +54,18 @@ class TasksController
             return $response;
         }
         $response->addHeader('Location', 'index.php?action=show-tasks');
+        return $response;
+    }
+
+    public static function deleteTask()
+    {
+        //TODO: walidacja czy faktycznie $_POST ma to co trzeba
+        $id = $_POST['id'];
+        $repository = new TaskRepository();
+        $repository->deleteById($id);
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-tasks');
+
         return $response;
     }
 }

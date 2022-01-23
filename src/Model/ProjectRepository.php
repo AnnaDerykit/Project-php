@@ -111,4 +111,13 @@ class ProjectRepository extends AbstractRepository
         $this->closeDatabaseConnection();
         return ClientRepository::clientFromRow($row);
     }
+
+    function deleteById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "DELETE FROM Project WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $this->closeDatabaseConnection();
+    }
 }

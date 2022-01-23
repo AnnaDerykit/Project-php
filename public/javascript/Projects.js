@@ -18,3 +18,22 @@ function editOnFocusOut(ID) {
         window.location.reload();
     });
 }
+
+
+function deleteOnClick(id) {
+    let confirmation = confirm("Do you really want to delete this project?");
+    if (confirmation) {
+        let message = new FormData();
+        message.append('id', id);
+        fetch('index.php?action=delete-project', {
+            method: 'POST',
+            mode: "same-origin",
+            credentials: "same-origin",
+            body: message
+        }).then((r) => {
+            window.location.reload();
+        });
+    } else {
+        alert("Deleting cancelled");
+    }
+}

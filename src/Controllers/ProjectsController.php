@@ -27,10 +27,16 @@ class ProjectsController
         $response = new Response();
         $repository = new ProjectRepository();
         $clientRep = new ClientRepository();
-        $projectName = $_POST['projectName'];
-        $clientId = $_POST['client'];
-        $client = $clientRep->findById($clientId);
-        if ($client) {
+        $clientName = $_POST['client'];
+        $clientId = null;
+        $clients = $clientRep->findByUserId($_SESSION['uid']);
+        foreach($clients as $client):
+            if ($client->getClientName()==$clientName){
+                $clientId=$client->getId();
+            }
+        endforeach;
+        if ($clientName == '' || !(is_null($clientId))) {
+            $projectName = $_POST['projectName'];
             $wage = $_POST['wage'];
             $project = $repository->findById($id);
             $project
@@ -46,6 +52,19 @@ class ProjectsController
             return $response;
         }
         $response->addHeader('Location', 'index.php?action=show-projects');
+        return $response;
+    }
+
+
+    public static function deleteProject()
+    {
+        //TODO: walidacja czy faktycznie $_POST ma to co trzeba
+        $id = $_POST['id'];
+        $repository = new ProjectRepository();
+        $repository->deleteById($id);
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-projects');
+
         return $response;
     }
 }

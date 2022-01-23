@@ -75,4 +75,13 @@ class ClientRepository extends AbstractRepository
         $this->closeDatabaseConnection();
         return $clients;
     }
+
+    function deleteById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "DELETE FROM Client WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $this->closeDatabaseConnection();
+    }
 }
