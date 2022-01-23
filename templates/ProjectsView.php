@@ -15,14 +15,12 @@ class ProjectsView
         <?= Layout::navbar() ?>
         <div class="thing">
             <div class="nag_task">
-                <table>
-                    <tr>
-                        <th><h2>List of projects</h2></th>
-                        <th><form method="POST" action="index.php?action=Show-Add-Project">
-                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Add-Project">
-                            </form></th>
-                    </tr>
-                </table>
+                <h2>List of projects</h2>
+                <div class="btn-pro">
+                <form method="POST" action="index.php?action=Show-Add-Project">
+                    <input type="submit" id="submit" class="btn btn-purple" name="submit" value="Add-Project">
+                </form>
+                </div>
             </div>
             <form method="POST" action="index.php?action=Add-Project">
                 <div class="validation-errors">

@@ -20,7 +20,7 @@ class ClientsView
                 <table id="task">
                     <tr>
                         <th><form method="POST" action="index.php?action=Show-Add-Client">
-                                <input type="submit" id="submit" class="btn-peach" name="submit" value="Add">
+                                <input type="submit" id="submit" class="btn-purple client" name="submit" value="Add">
                         </form></th>
                         <th>Client name</th>
                     </tr>

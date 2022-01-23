@@ -96,18 +96,26 @@ body
     background: white;
     color: #412a4c;
 }
+.btn-pro {
+    margin-bottom: 30px;
+}
+.btn-re {
+    margin-top: 20px;
+}
+.add, .client {
+    border-radius: 50px;
+    border: 1px solid #fff;
+}
+.client {
+    max-width: 150px;
+    min-width: 100px;
+}
 .btn {
     font-size: 1rem;
     border: 1px solid #fff;
     max-width: 200px;
     min-width: 150px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     height: 52px;
     cursor: pointer;
@@ -190,9 +198,11 @@ input {
     line-height: 1.5;
     font-size: clamp( 1rem * 0.95, 1vw, 1rem );
     flex-basis:66.66%;
-    height: 350px;
     overflow-y:scroll;
     Overflow-x:hidden;
+}
+.new-tab {
+    margin-bottom: 70px;
 }
 .link-clear, .link-clear:link, .link-clear:visited, .link-clear:hover, .link-clear:active {
     text-decoration: none;
@@ -249,15 +259,8 @@ input {
 .footer
 {
     line-height: 1.35;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-transition: .3s ease;
     transition: .3s ease;
 }
 footer
@@ -308,7 +311,7 @@ footer span
     }
     .navig ul li
     {
-        padding: 6,5px;
+        padding: 6.5px;
         border: 1px solid #E57CD8;
     }
     .tasks, .task-table {
@@ -335,4 +338,25 @@ footer span
         text-align: center;
         margin-bottom: 20px;
     }
+}
+
+.f-wrap {
+    flex-wrap: wrap;
+}
+
+.f-form .item {
+    margin-left: 20px;
+    padding: 15px;
+}
+
+.project-name, .client-name, .started, .ended {
+    margin-bottom: 30px;
+}
+
+.f-header {
+    padding: 15px;
+    text-align: left;
+    background-color: #fad0b9;
+    color: #2c1338;
+    font-weight: 600;
 }
