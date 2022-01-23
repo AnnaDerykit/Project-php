@@ -68,7 +68,7 @@ class AddProjectController
                 $repository->save($project);
 
                 $response = new Response();
-                $response->addHeader('Location', 'index.php?action=show-profile');
+                $response->addHeader('Location', 'index.php?action=show-projects');
                 return $response;
             }else{
                 $response = new Response();
@@ -93,7 +93,7 @@ class AddProjectController
             $repository->save($project);
 
             $response = new Response();
-            $response->addHeader('Location', 'index.php?action=show-profile');
+            $response->addHeader('Location', 'index.php?action=show-projects');
             return $response;
         }
     }

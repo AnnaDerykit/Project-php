@@ -72,7 +72,7 @@ class TasksView
                             </td>
                             <td onfocusout=editOnFocusOut(<?= $id ?>) class="title_tsk"><?= $task->getTitle() ?></td>
                             <td onfocusout=editOnFocusOut(<?= $id ?>)>
-                                <input class="project_tsk" list="Projects" value="<?= $project ? $project->getProjectName() : '' ?>" >
+                                <input class="project_tsk input-compact" list="Projects" value="<?= $project ? $project->getProjectName() : '' ?>" >
                                 <datalist id="Projects">
                                     <?php
                                     $ProjectsRep = new ProjectRepository();
@@ -85,13 +85,13 @@ class TasksView
                             <td contenteditable="false" class="client_tsk"><?= $client ? $client->getClientName() : '' ?></td>
                             <td contenteditable="false" class="wage_tsk"><?= $wage ?: '' ?></td>
                             <td>
-                                <input type="datetime-local" class="start_tsk" name="startTime" onfocusout=editOnFocusOut(<?= $id ?>) value="<?= $startTime ?>" step="1">
+                                <input type="datetime-local" class="start_tsk input-compact" name="startTime" onfocusout=editOnFocusOut(<?= $id ?>) value="<?= $startTime ?>" step="1">
                             </td>
                             <td>
                                 <?php if ($stopTime == 'T') {
                                     echo '';
                                 } else { ?>
-                                    <input type="datetime-local" class="stop_tsk" name="stopTime" onfocusout=editOnFocusOut(<?= $id ?>) value="<?= $stopTime ?>" step="1">
+                                    <input type="datetime-local" class="stop_tsk input-compact" name="stopTime" onfocusout=editOnFocusOut(<?= $id ?>) value="<?= $stopTime ?>" step="1">
                                 <?php } ?>
                             </td>
                             <td contenteditable="false" class="duration_tsk"><?= $timeFormatted ?: '' ?></td>

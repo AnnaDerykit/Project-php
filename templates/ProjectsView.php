@@ -55,7 +55,7 @@ class ProjectsView
                                 $client = $projectsRep->getClientByProjectId($id);
                                 ?>
                                 <td>
-                                    <input class="client_prj" list="Clients" value="<?= $client ? $client->getClientName() : '' ?>" >
+                                    <input class="client_prj input-compact" list="Clients" value="<?= $client ? $client->getClientName() : '' ?>" >
                                     <datalist id="Clients">
                                         <?php
                                         $ClientsRep = new ClientRepository();

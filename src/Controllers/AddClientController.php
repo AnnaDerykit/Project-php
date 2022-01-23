@@ -43,7 +43,7 @@ class AddClientController
         $repository->save($client);
 
         $response = new Response();
-        $response->addHeader('Location', 'index.php?action=show-profile');
+        $response->addHeader('Location', 'index.php?action=show-clients');
         return $response;
     }
 }

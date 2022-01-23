@@ -109,7 +109,7 @@ class AddTaskController
             $repository->save($task);
 
             $response = new Response();
-            $response->addHeader('Location', 'index.php?action=show-profile');
+            $response->addHeader('Location', 'index.php?action=show-tasks');
             return $response;
         }
         }
@@ -122,7 +122,7 @@ class AddTaskController
         $repository->save($task);
 
         $response = new Response();
-        $response->addHeader('Location', 'index.php?action=show-profile');
+        $response->addHeader('Location', 'index.php?action=show-tasks');
         return $response;
         
     }
