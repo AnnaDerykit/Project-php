@@ -25,10 +25,9 @@ class ReportsView
                     <div class="project-name d-flex f-wrap">
                         <div class="f-header">Project Name</div>
                         <?php
-                        $tasksRep = new TaskRepository();
-                        $tasks = $tasksRep->findByUserId($_SESSION['uid']);
-                        foreach ($tasks as $task):
-                        $project = $tasksRep->getProjectByTaskId($task->getId());
+                        $projectsRep = new ProjectRepository();
+                        $projects = $projectsRep->findByUserId($_SESSION['uid']);
+                        foreach ($projects as $project):
                             ?>
                             <div class="item"><input type="checkbox"><?= $project ? $project->getProjectName() : '' ?></div>
                         <?php endforeach; ?>
@@ -37,10 +36,9 @@ class ReportsView
                     <div class="client-name d-flex f-wrap">
                         <div class="f-header">Client name</div>
                         <?php
-                        $tasksRep = new TaskRepository();
-                        $tasks = $tasksRep->findByUserId($_SESSION['uid']);
-                        foreach ($tasks as $task):
-                            $client = $tasksRep->getClientByTaskId($task->getId());
+                        $clientsRep = new ClientRepository();
+                        $clients = $clientsRep->findByUserId($_SESSION['uid']);
+                        foreach ($clients as $client):
                             ?>
                             <div class="item"><input type="checkbox"><?= $client ? $client->getClientName() : '' ?></div>
                         <?php endforeach; ?>
