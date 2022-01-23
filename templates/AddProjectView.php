@@ -36,7 +36,8 @@ class AddProjectView
                             value="<?= !empty($params['values']['Project-Name']) ? $params['values']['Project-Name'] : ''; ?>"/>
                         </td>
                         <td>
-                            <input class="Client_select" type="text" list="Clients" id="Client_name" name="Client_Name" />
+                            <input class="Client_select" type="text" list="Clients" id="Client_Name" name="Client_Name"
+                            value="<?= !empty($params['values']['Client_Name']) ? $params['values']['Client_Name'] : ''; ?>" />
                                 <datalist id="Clients">
                                     <?php
                                     $clientsRep = new ClientRepository();

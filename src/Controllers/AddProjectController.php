@@ -39,7 +39,12 @@ class AddProjectController
             $response = new Response();
             $message = 'Please fill all the fields.';
             $response->setContent(AddprojectView::render([
-                'message' => $message
+                'message' => $message,
+                'values' => [
+                    'Project-Name' => $Projectname,
+                    'Wage' => $Wage,
+                    'Client_Name'=>$Clientname,
+                ],
             ]));
             return $response;
         }
@@ -47,16 +52,38 @@ class AddProjectController
             $response = new Response();
             $message = 'Please fill all the fields with correct values.';
             $response->setContent(AddprojectView::render([
-                'message' => $message
+                'message' => $message,
+                'values' => [
+                    'Project-Name' => $Projectname,
+                    'Wage' => $Wage,
+                    'Client_Name'=>$Clientname,
+                ],
             ]));
             return $response;
-        }elseif( $ClientId==0 ){
-            $response = new Response();
-            $message = 'There is no match for this client.';
-            $response->setContent(AddprojectView::render([
-                'message' => $message
-            ]));
-            return $response;
+        }elseif( empty($ClientId)){
+            if(empty($Clientname)){
+                $project->setUserId($uid);
+                $project->setProjectName($Projectname);
+                $project->setWage($Wage);
+                $repository->save($project);
+
+                $response = new Response();
+                $response->addHeader('Location', 'index.php?action=show-profile');
+                return $response;
+            }else{
+                $response = new Response();
+                $message = 'There is no match for this client.';
+                $response->setContent(AddprojectView::render([
+                    'message' => $message,
+                    'values' => [
+                        'Project-Name' => $Projectname,
+                        'Wage' => $Wage,
+                        'Client_Name'=>$Clientname,
+                    ],
+                ]));
+                return $response;
+            }
+            
         }
         else{
             $project->setUserId($uid);

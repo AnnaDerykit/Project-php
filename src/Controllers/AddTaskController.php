@@ -34,62 +34,96 @@ class AddTaskController
         $Time_stop = trim(htmlspecialchars($_POST['Time_stop']));
         $Project=$ProjectRep->findByUserId($uid);
         $ProjectId=-1;
+        $date = gmdate('Y-m-d H:i:s');
         
         foreach($Project as $project):
             if ($project->getProjectName()==$Projectname){
                 $ProjectId=$project->getId();
             }
         endforeach;
-            $task=new Task();
 
-            if( empty($Time_start) || empty($Task_title)){
+        $task=new Task();
+        if(empty($Task_title) || empty($Time_start)){
+            $response = new Response();
+            $message = 'Please fill all the fiels.';
+            $response->setContent(AddTaskView::render([
+                'message' => $message,
+                'values' => [
+                    'Project_Name' => $Projectname,
+                    'Task-title' => $Task_title,
+                    'Time_start'=>$Time_start,
+                    'Time_stop'=>$Time_stop,
+                ],
+            ]));
+            return $response;
+        }
+        if($Time_start>$date){
+            $response = new Response();
+            $message = 'Invalid time.';
+            $response->setContent(AddTaskView::render([
+                'message' => $message,
+                'values' => [
+                    'Project_Name' => $Projectname,
+                    'Task-title' => $Task_title,
+                    'Time_start'=>$Time_start,
+                    'Time_stop'=>$Time_stop,
+                ],
+            ]));
+            return $response;
+        }
+        if(!empty($Time_stop)){
+            if($Time_stop>$date || $Time_start>$Time_stop){
                 $response = new Response();
-                $message = 'Please fill all the fields.';
+                $message = 'Invalid time.';
                 $response->setContent(AddTaskView::render([
-                    'message' => $message
+                    'message' => $message,
+                    'values' => [
+                        'Project_Name' => $Projectname,
+                        'Task-title' => $Task_title,
+                        'Time_start'=>$Time_start,
+                        'Time_stop'=>$Time_stop,
+                    ],
                 ]));
                 return $response;
             }
-            elseif($Time_start>=$Time_stop){
-                if(!empty($Time_stop)){
-                    $response = new Response();
-                    $message = 'Invalid time.';
-                    $response->setContent(AddTaskView::render([
-                        'message' => $message
-                    ]));
-                    return $response;
-                }
-            }elseif($Time_stop>=$data=gmdate('Y-m-d h:i')){
-                if(!empty($Time_stop)){
-                    $response = new Response();
-                    $message = 'Invalid time.';
-                    $response->setContent(AddTaskView::render([
-                        'message' => $message
-                    ]));
-                    return $response;
-                }
-            }
-            elseif($ProjectId==-1){
-                if(!empty($Time_stop)){
-                    $response = new Response();
-                    $message = 'There is no match for this project.';
-                    $response->setContent(AddTaskView::render([
-                        'message' => $message
-                    ]));
-                    return $response;
-                }
-            }
-            else{
-                $task->setUserId($uid);
-                $task->setProjectId($ProjectId);
-                $task->setTitle($Task_title);
-                $task->setStartTime($Time_start);
-                $task->setStopTime($Time_stop);
-                $repository->save($task);
-
+        }
+        if($ProjectId==-1){
+            if(!empty($Projectname)){
                 $response = new Response();
-                $response->addHeader('Location', 'index.php?action=show-profile');
+                $message = 'There is no match for this project.';
+                $response->setContent(AddTaskView::render([
+                    'message' => $message,
+                    'values' => [
+                        'Project_Name' => $Projectname,
+                        'Task-title' => $Task_title,
+                        'Time_start'=>$Time_start,
+                        'Time_stop'=>$Time_stop,
+                    ],
+                ]));
                 return $response;
-            }
+        }else{
+            $task->setUserId($uid);
+            $task->setTitle($Task_title);
+            $task->setStartTime($Time_start);
+            $task->setStopTime($Time_stop);
+            $repository->save($task);
+
+            $response = new Response();
+            $response->addHeader('Location', 'index.php?action=show-profile');
+            return $response;
+        }
+        }
+        
+        $task->setUserId($uid);
+        $task->setProjectId($ProjectId);
+        $task->setTitle($Task_title);
+        $task->setStartTime($Time_start);
+        $task->setStopTime($Time_stop);
+        $repository->save($task);
+
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-profile');
+        return $response;
+        
     }
 }

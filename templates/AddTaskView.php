@@ -30,7 +30,8 @@ class AddTaskView
                     value="<?= !empty($params['values']['Task-title']) ? $params['values']['Task-title'] : ''; ?>"/>
 
                     <label for="Project_Name">Project Name</label>
-                    <input class="Project_Name" type="text" list="Projects" id="Project_Name" name="Project_Name" />
+                    <input class="Project_Name" type="text" list="Projects" id="Project_Name" name="Project_Name"
+                    value="<?= !empty($params['values']['Project_Name']) ? $params['values']['Project_Name'] : ''; ?>" />
                         <datalist id="Projects">
                             <?php
                             $ProjectsRep = new ProjectRepository();
