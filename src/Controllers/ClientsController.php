@@ -31,4 +31,16 @@ class ClientsController
         $response->addHeader('Location', 'index.php?action=show-clients');
         return $response;
     }
+
+    public static function deleteClient()
+    {
+        //TODO: walidacja czy faktycznie $_POST ma to co trzeba
+        $id = $_POST['id'];
+        $repository = new ClientRepository();
+        $repository->deleteById($id);
+        $response = new Response();
+        $response->addHeader('Location', 'index.php?action=show-clients');
+
+        return $response;
+    }
 }

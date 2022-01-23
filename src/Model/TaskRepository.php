@@ -164,4 +164,13 @@ class TaskRepository extends AbstractRepository
         $this->closeDatabaseConnection();
         return $row['time'];
     }
+
+    function deleteById($id)
+    {
+        $this->openDatabaseConnection();
+        $sql = "DELETE FROM Task WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $this->closeDatabaseConnection();
+    }
 }

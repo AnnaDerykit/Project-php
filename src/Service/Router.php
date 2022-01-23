@@ -22,6 +22,18 @@ class Router
                 $controllerName = ChangePasswordController::class;
                 $actionName = 'changePassword';
                 break;
+            case 'delete-client':
+                $controllerName = ClientsController::class;
+                $actionName = 'deleteClient';
+                break;
+            case 'delete-project':
+                $controllerName = ProjectsController::class;
+                $actionName = 'deleteProject';
+                break;
+            case 'delete-task':
+                $controllerName = TasksController::class;
+                $actionName = 'deleteTask';
+                break;
             case 'delete-user':
                 $controllerName = UsersController::class;
                 $actionName = 'deleteUser';
