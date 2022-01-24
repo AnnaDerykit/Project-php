@@ -13,7 +13,7 @@ class AddClientView
         <?= Layout::header() ?>
         <div class="thing register">
             <div class="nag_Client">
-                <h2>Add Project</h2>
+                <h2>Add Client</h2>
             </div>
 
             <form method="POST" action="index.php?action=Add-Client">

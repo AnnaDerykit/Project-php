@@ -14,7 +14,7 @@ function changeOnClick(ID) {
             credentials: "same-origin",
             body: message
         }).then((r) => {
-            window.location.replace('index.php?=action=show-profile');
+            window.location.replace('index.php?action=show-profile');
         });
     }
 }

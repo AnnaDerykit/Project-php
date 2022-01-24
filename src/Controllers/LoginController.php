@@ -36,7 +36,7 @@ class LoginController
                 $message = 'Your email or password is incorrect.';
             } else if (password_verify($password, $user->getPassword())) {
                 $_SESSION['uid'] = $user->getId();
-                header('Location: index.php?action=show-profile');
+                $response->addHeader('Location', 'index.php?action=show-profile');
             } else {
                 $message = 'Your email or password is incorrect.';
             }

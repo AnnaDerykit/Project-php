@@ -42,7 +42,7 @@ class UsersView
                             <td class="passw_usr">
                                 <form method="POST" action="index.php?action=password-change-form">
                                     <input type="hidden" id="id" name="id" value=<?= $id ?>>
-                                    <input type="submit" id="submit" class="btn-peach" name="submit" value="Change password">
+                                    <input type="submit" id="submit" class="btn-peach input-compact" name="submit" value="Change password">
                                 </form>
                             </td>
                             <td class="role_usr">

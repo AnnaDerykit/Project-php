@@ -315,8 +315,11 @@ footer span
 }
 
 /* respons */
-@media only screen and (max-width: 667px)
+@media screen and (max-width: 600px)
 {
+    body {
+        padding-top: 20px;
+    }
     .menulist
     {
         text-align: center;
@@ -329,6 +332,11 @@ footer span
     .container, .header, .task-controls, .new-task, .footer {
         flex-direction: column;
     }
+
+    footer {
+        text-align: center;
+    }
+
     .header {
         gap: 8px;
         margin-bottom: 20px;
@@ -340,15 +348,19 @@ footer span
     .thing {
         padding: 0;
     }
-    .navig
-    {
+    .navig {
         padding: 0;
     }
     .navig ul li
     {
         padding: 6.5px;
-        border: 1px solid #E57CD8;
+        border: 1px solid #2c1338;
     }
+
+    .nag_task h2 {
+        text-align: center;
+    }
+
     .tasks, .task-table {
         margin-bottom: 20px;
     }

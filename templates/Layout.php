@@ -17,8 +17,8 @@ class Layout
             <title>Über Clocker 3000</title>
             <meta charset="UTF-8">
             <link rel="stylesheet" href="../public/styles.css">
-            <meta http-equiv="X-UA-Compatible" content="IE-=edge"
-            <meta name="viewport" content="width=device-width, initial-scale=0.667">
+<!--            <meta http-equiv="X-UA-Compatible" content="IE-=edge"-->
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
             <?php
             if (isset($params['script'])) {
                 echo '<script src=' . $params["script"] . '></script>';
@@ -53,10 +53,11 @@ class Layout
     public static function footer()
     {
         ob_start();
+        global $config;
         ?>
         <div class="footer text-left">
             <footer>
-                <span>Contact us at <em><?= Dictionary\OfficialEmail::OFFICIAL_EMAIL ?></em></span><br>
+                <span>Contact us at <em><?= $config['officialEmail'] ?></em></span><br>
                 <span>Design &copy; 2021-2022 Über Clocker 3000 Team</span>
             </footer>
         </div>
