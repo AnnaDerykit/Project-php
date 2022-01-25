@@ -46,23 +46,27 @@ class QueryBuilder
             $val_counter = 0;
             $val_name = ':v';
             foreach ($this->statementParams['where'] as $condition) {
-                $str = $condition['column'] . ' ';
-                if (isset($condition['operator'])) {
-                    $str .= $condition['operator'] . ' ';
-                    $this->params[$val_name . strval($val_counter)] = $condition['value'];
-                    $str .= $val_name . $val_counter++;
+                if (isset($condition['column'])) {
+                    $str = $condition['column'] . ' ';
+                    if (isset($condition['operator'])) {
+                        $str .= $condition['operator'] . ' ';
+                        $this->params[$val_name . strval($val_counter)] = $condition['value'];
+                        $str .= $val_name . $val_counter++;
+                    } else {
+                        $str .= 'IN (' . $val_name;
+                        $str .= implode(', ' . $val_name, range($val_counter, $val_counter + count($condition['values']) - 1));
+                        $this->params = array_merge($this->params,
+                            array_combine(substr_replace(range($val_counter, $val_counter + count($condition['values']) - 1), $val_name, 0, 0),
+                                array_values($condition['values'])));
+                        $val_counter += count($condition['values']);
+                        $str .= ')';
+                    }
+                    $conditions[] = $str;
                 } else {
-                    $str .= 'IN (' . $val_name;
-                    $str .= implode(', ' . $val_name, range($val_counter, $val_counter + count($condition['values']) - 1));
-                    $this->params = array_merge($this->params,
-                        array_combine(substr_replace(range($val_counter, $val_counter + count($condition['values']) - 1), $val_name, 0, 0),
-                            array_values($condition['values'])));
-                    $val_counter += count($condition['values']);
-                    $str .= ')';
+                    $conditions[] = $condition;
                 }
-                $conditions[] = $str;
             }
-            $this->statement .= implode(' AND ', $conditions) . ' ';
+            $this->statement .= implode(' ', $conditions) . ' ';
         }
         if (isset($this->statementParams['groupBy'])) {
             $this->statement .= 'GROUP BY ';
@@ -134,17 +138,25 @@ class QueryBuilder
 
     /**
      * If operator is =, default is "WHERE ... IN ..." mode as opposed to "WHERE ... = ..." mode.
-     * Statements will be joined by "AND". No parenthesis allowed.
      * One column at the time.
      * @param $column
-     * @param $values
-     * @param null $operator
+     * @param string $operator
+     * @param array $values
+     * @param string $preposition
+     * @param bool $openBraces
+     * @param bool $closeBraces
      * @return $this
      */
-    public function where($column, $operator = '=', ...$values)
+    public function where($column, $operator = '=', $values = [], $preposition = '', $openBraces = false, $closeBraces = false)
     {
         if (!isset($this->statementParams['where'])) {
             $this->statementParams['where'] = array();
+        }
+        if ($openBraces) {
+            $this->statementParams['where'][] = '(';
+        }
+        if ($preposition) {
+            $this->statementParams['where'][] = $preposition;
         }
         if ($operator == '=') {
             $this->statementParams['where'][] = array(
@@ -158,6 +170,9 @@ class QueryBuilder
                 'value' => $values[0]
             );
         }
+        if ($closeBraces) {
+            $this->statementParams['where'][] = ')';
+        }
         return $this;
     }
 
@@ -167,7 +182,7 @@ class QueryBuilder
      * @param $column
      * @return $this
      */
-    public function orderBy($column, $order)
+    public function orderBy($column, $order = 'ASC')
     {
         if (!isset($this->statementParams['orderBy'])) {
             $this->statementParams['orderBy'] = array();
@@ -217,3 +232,18 @@ class QueryBuilder
     }
 
 }
+
+
+//$qb = new QueryBuilder();
+//$qb->select('id', 'count(*)')
+//    ->from('User u')->where('u.id', '=', [2, 3, 4], '', true)
+//    ->join('Task t', 'u.id = t.userId')
+//    ->where('u.username', '>', [2], 'OR', false, true)
+//    ->groupBy('u.username')
+//    ->orderBy('u.username')
+//    ->orderBy('u.id');
+//
+//$qb->prepareStatement();
+//print_r($qb->getStatementParams());
+//print_r($qb->getStatement());
+//print_r($qb->getParams());
