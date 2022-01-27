@@ -14,7 +14,7 @@ class UsersController
         $response = new Response();
         if (self::checkIfAdmin()) {
             $response->setContent(UsersView::render([
-                    'script' => '../../public/javascript/Users.js'
+                    'script' => 'javascript/Users.js'
                 ]
             ));
         } else {

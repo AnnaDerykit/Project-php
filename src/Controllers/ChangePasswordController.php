@@ -13,7 +13,7 @@ class ChangePasswordController
     {
         $response = new Response();
         $response->setContent(ChangePasswordView::render([
-                'script' => '../../public/javascript/ChangePassword.js'
+                'script' => 'javascript/ChangePassword.js'
             ]
         ));
         return $response;

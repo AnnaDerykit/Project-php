@@ -13,7 +13,7 @@ class TasksController
     {
         $response = new Response();
         $response->setContent(TasksView::render([
-                'script' => '../../public/javascript/Tasks.js'
+                'script' => 'javascript/Tasks.js'
             ]
         ));
         return $response;

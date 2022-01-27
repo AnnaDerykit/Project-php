@@ -16,7 +16,7 @@ class Layout
         <head>
             <title>Über Clocker 3000</title>
             <meta charset="UTF-8">
-            <link rel="stylesheet" href="../public/styles.css">
+            <link rel="stylesheet" href="styles.css">
 <!--            <meta http-equiv="X-UA-Compatible" content="IE-=edge"-->
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
             <?php
@@ -113,11 +113,11 @@ class Layout
         if ($days > 0) {
             $timeString .= "$days days ";
         }
-        $hours = (intval($seconds) / 3600) % 24;
+        $hours = intval(intval($seconds) / 3600) % 24;
         if ($hours > 0) {
             $timeString .= "$hours hours ";
         }
-        $minutes = (intval($seconds) / 60) % 60;
+        $minutes = intval(intval($seconds) / 60) % 60;
         if ($minutes > 0) {
             $timeString .= "$minutes minutes ";
         }

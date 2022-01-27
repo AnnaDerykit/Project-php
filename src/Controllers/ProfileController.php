@@ -11,7 +11,7 @@ class ProfileController
     {
         $response = new Response();
         $response->setContent(ProfileView::render([
-                'script' => '../../public/javascript/Profile.js'
+                'script' => 'javascript/Profile.js'
             ]
         ));
         return $response;

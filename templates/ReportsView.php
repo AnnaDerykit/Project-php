@@ -79,7 +79,7 @@ class ReportsView
                         $wage = $project ? $project->getWage() : null;
                         $durationInSec = $task->getStopTime() ? strtotime($task->getStopTime()) - strtotime($task->getStartTime()) : null;
                         $payout = ($durationInSec && $wage) ? number_format(round($wage * $durationInSec / 3600, 2), 2) : null;
-                        $timeFormatted = $durationInSec ? sprintf('%02d:%02d:%02d', ($durationInSec / 3600), ($durationInSec / 60 % 60), $durationInSec % 60) : null;
+                        $timeFormatted = $durationInSec ? sprintf('%02d:%02d:%02d', ($durationInSec / 3600), intval($durationInSec / 60) % 60, $durationInSec % 60) : null;
                         ?>
                             <td><?= $task->getTitle() ?></td>
                             <td><?= $project ? $project->getProjectName() : '' ?></td>

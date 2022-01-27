@@ -13,7 +13,7 @@ class ProjectsController
     {
         $response = new Response();
         $response->setContent(ProjectsView::render([
-                'script' => '../../public/javascript/Projects.js'
+                'script' => 'javascript/Projects.js'
             ]
         ));
         return $response;

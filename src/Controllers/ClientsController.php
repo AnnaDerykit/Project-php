@@ -12,7 +12,7 @@ class ClientsController
     {
         $response = new Response();
         $response->setContent(ClientsView::render([
-                'script' => '../../public/javascript/Clients.js'
+                'script' => 'javascript/Clients.js'
             ]
         ));
         return $response;
