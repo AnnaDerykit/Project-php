@@ -63,7 +63,7 @@ class ClientRepository extends AbstractRepository
     public function findByUserId($userId)
     {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Client WHERE userId = :userId";
+        $sql = "SELECT * FROM Client WHERE userId = :userId ORDER BY clientName";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('userId' => $userId));

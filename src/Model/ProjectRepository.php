@@ -68,7 +68,7 @@ class ProjectRepository extends AbstractRepository
     public function findByUserId($userId)
     {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Project WHERE userId = :userId";
+        $sql = "SELECT * FROM Project WHERE userId = :userId ORDER BY projectName";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('userId' => $userId));
