@@ -240,6 +240,7 @@ class QueryBuilder
 //    ->from('User u')
 //    ->where('lol', '=', ['xd'])
 //    ->where('u.id', '=', [2, 3, 4], 'AND', true)
+//    ->where('xd', 'IS NOT', ['NULL'], 'AND')
 //    ->join('Task t', 'u.id = t.userId')
 //    ->where('u.username', '>', [2], 'OR', false, true)
 //    ->groupBy('u.username')

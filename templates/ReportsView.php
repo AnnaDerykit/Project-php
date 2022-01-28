@@ -49,11 +49,13 @@ class ReportsView
                     </div>
                     <div class="started d-flex">
                         <div class="f-header">Started</div>
-                        <div class="item"><input type="datetime-local" name="startTime"></div>
+                        <div class="item"><input type="datetime-local" name="startFrom"></div>
+                        <div class="item"><input type="datetime-local" name="startTo"></div>
                     </div>
                     <div class="ended d-flex">
-                        <div class="f-header">Started</div>
-                        <div class="item"><input type="datetime-local" name="stopTime"></div>
+                        <div class="f-header">Ended</div>
+                        <div class="item"><input type="datetime-local" name="stopFrom"></div>
+                        <div class="item"><input type="datetime-local" name="stopTo"></div>
                     </div>
 
                 </form>

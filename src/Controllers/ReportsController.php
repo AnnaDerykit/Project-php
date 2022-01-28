@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Exception\QueryBuilderException;
 use App\Framework\Response;
 use App\Model\QueryBuilder;
 use App\Model\TaskRepository;
@@ -10,6 +11,9 @@ use Templates\ReportsView;
 
 class ReportsController
 {
+    /**
+     * @return Response
+     */
     public static function index()
     {
         $response = new Response();
@@ -19,18 +23,29 @@ class ReportsController
         return $response;
     }
 
+    /**
+     *oF cOUrsE it needs like 64273462 lines to do 1 (one) simple thing
+     * @return void
+     * @throws QueryBuilderException
+     */
     public static function filterData()
     {
         $projects = [];
         $clients = [];
-        $dateFrom = null;
-        $dateTo = null;
+        $startFrom = null;
+        $startTo = null;
+        $stopFrom = null;
+        $stopTo = null;
         $aggregate = false;
         foreach ($_POST as $key => $value) {
-            if ($key == 'startTime' && $value != '') {
-                $dateFrom = $value;
-            } elseif ($key == 'stopTime' && $value != '') {
-                $dateTo = $value;
+            if ($key == 'startFrom' && $value != '') {
+                $startFrom = $value;
+            } elseif ($key == 'startTo' && $value != '') {
+                $startTo = $value;
+            } elseif ($key == 'stopFrom' && $value != '') {
+                $stopFrom = $value;
+            } elseif ($key == 'stopTo' && $value != '') {
+                $stopTo = $value;
             } elseif (preg_match('/^p/', $key)) {
                 $projects[] = intval(ltrim($key, 'p'));
             } elseif (preg_match('/^c/', $key)) {
@@ -41,14 +56,10 @@ class ReportsController
         }
         $qb = new QueryBuilder();
         if ($aggregate) {
-            if ($projects && $clients) {
-                $qb->select('p.projectName, c.clientName, p.wage, SUM(p.wage) AS totalTime, SUM(10 * p.wage) AS totalPayout');
-                $qb->groupBy('c.clientName', 'p.projectName');
-            }
-            if ($projects && !$clients) {
+            if ($projects) {
                 $qb->select('p.projectName, c.clientName, p.wage, SUM(p.wage) AS totalTime, SUM(p.wage * 10) AS totalPayout');
-                $qb->groupBy('p.projectName');
-            } elseif ($clients && !$projects) {
+                $qb->groupBy('p.projectName, c.clientName, p.wage');
+            } elseif ($clients) {
                 $qb->select('c.clientName, SUM(p.wage) AS totalTime, SUM(10 * p.wage) AS totalPayout');
                 $qb->groupBy('c.clientName');
             } else {
@@ -60,27 +71,40 @@ class ReportsController
         $qb->from('Task t')
             ->join('Project p', 't.projectId = p.id')
             ->join('Client c', 'p.clientId = c.id')
-            ->where('t.userId', '=', [$_SESSION['uid']]);
+            ->where('t.userId', '=', [$_SESSION['uid']])
+            ->where('t.stopTime', 'IS NOT', [null], 'AND');
         if ($projects && $clients) {
-            $qb->where('p.id', '=', $projects, 'AND');
-            $qb->where('c.id', '=', $clients, 'OR');
+            $qb->where('p.id', '=', $projects, 'AND', true);
+            $qb->where('c.id', '=', $clients, 'OR', false, true);
         } elseif ($projects) {
             $qb->where('p.id', '=', $projects, 'AND');
         } elseif ($clients) {
             $qb->where('c.id', '=', $clients, 'AND');
         }
-        if ($dateFrom) {
-            $qb->where('t.startTime', '>', [$dateFrom], 'AND');
+        if ($startFrom) {
+            $qb->where('t.startTime', '>', [$startFrom], 'AND');
         }
-        if ($dateTo) {
-            $qb->where('t.startTime', '<', [$dateTo], 'AND');
+        if ($startTo) {
+            $qb->where('t.startTime', '<', [$startTo], 'AND');
+        }
+        if ($stopFrom) {
+            $qb->where('t.stopTime', '>', [$stopFrom], 'AND');
+        }
+        if ($stopTo) {
+            $qb->where('t.stopTime', '<', [$stopTo], 'AND');
         }
         $qb->prepareStatement();
         $taskRep = new TaskRepository();
-        $rows = $taskRep->executeQueryFromBuilder($qb);
-        $response = json_encode($rows);
+        try {
+            $rows = $taskRep->executeQueryFromBuilder($qb);
+            $response = json_encode($rows);
+        } catch (\Exception $e) {
+            $response = json_encode($e);
+        }
         header('Content-type: application/json');
         echo $response;
         exit;
     }
 }
+
+//ReportsController::filterData();

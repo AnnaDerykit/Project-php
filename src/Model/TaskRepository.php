@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Exception;
 use PDO;
 
 class TaskRepository extends AbstractRepository
@@ -177,6 +178,7 @@ class TaskRepository extends AbstractRepository
     /**
      * @param $queryBuilder
      * @return array
+     * @throws Exception
      */
     public function executeQueryFromBuilder($queryBuilder)
     {
