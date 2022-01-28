@@ -37,7 +37,7 @@ class QueryBuilder
         $this->statement .= 'FROM ' . $this->statementParams['from'] . ' ';
         if (isset($this->statementParams['join'])) {
             foreach ($this->statementParams['join'] as $join) {
-                $this->statement .= 'JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
+                $this->statement .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
             }
         }
         if (isset($this->statementParams['where'])) {
@@ -123,6 +123,7 @@ class QueryBuilder
 
     /**
      * e.g. join('Task t', 'u.id = t.userId');
+     * It's a left join because we don't need another one anyway.
      * @param $table
      * @param $condition
      * @return $this
@@ -152,11 +153,11 @@ class QueryBuilder
         if (!isset($this->statementParams['where'])) {
             $this->statementParams['where'] = array();
         }
-        if ($openBraces) {
-            $this->statementParams['where'][] = '(';
-        }
         if ($preposition) {
             $this->statementParams['where'][] = $preposition;
+        }
+        if ($openBraces) {
+            $this->statementParams['where'][] = '(';
         }
         if ($operator == '=') {
             $this->statementParams['where'][] = array(
@@ -236,7 +237,9 @@ class QueryBuilder
 
 //$qb = new QueryBuilder();
 //$qb->select('id', 'count(*)')
-//    ->from('User u')->where('u.id', '=', [2, 3, 4], '', true)
+//    ->from('User u')
+//    ->where('lol', '=', ['xd'])
+//    ->where('u.id', '=', [2, 3, 4], 'AND', true)
 //    ->join('Task t', 'u.id = t.userId')
 //    ->where('u.username', '>', [2], 'OR', false, true)
 //    ->groupBy('u.username')

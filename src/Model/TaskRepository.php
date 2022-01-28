@@ -173,4 +173,21 @@ class TaskRepository extends AbstractRepository
         $statement->execute(['id' => $id]);
         $this->closeDatabaseConnection();
     }
+
+    /**
+     * @param $queryBuilder
+     * @return array
+     */
+    public function executeQueryFromBuilder($queryBuilder)
+    {
+        $this->openDatabaseConnection();
+        $statement = $this->connection->prepare($queryBuilder->getStatement());
+        $statement->execute($queryBuilder->getParams());
+        $rows = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $rows[] = $row;
+        }
+        $this->closeDatabaseConnection();
+        return $rows;
+    }
 }

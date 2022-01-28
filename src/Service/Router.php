@@ -82,6 +82,10 @@ class Router
                 $controllerName = 'App\Controllers\RegisterController';
                 $actionName = 'index';
                 break;
+            case 'reports-filter':
+                $controllerName = ReportsController::class;
+                $actionName = 'filterData';
+                break;
             case 'show-clients':
                 $controllerName = 'App\Controllers\ClientsController';
                 $actionName = 'index';

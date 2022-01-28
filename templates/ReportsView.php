@@ -21,7 +21,11 @@ class ReportsView
             </div>
 
             <div class="f-form d-flex">
-                <form>
+                <form method="GET" id="form" action="index.php?action=reports-filter">
+                    <div class="project-name d-flex f-wrap">
+                    <div class="f-header">Aggregation</div>
+                        <label for="aggregation"></label><input type="checkbox" id="aggregation" name="aggregation" value="Aggregation">
+                    </div>
                     <div class="project-name d-flex f-wrap">
                         <div class="f-header">Project Name</div>
                         <?php
@@ -29,7 +33,7 @@ class ReportsView
                         $projects = $projectsRep->findByUserId($_SESSION['uid']);
                         foreach ($projects as $project):
                             ?>
-                            <div class="item"><input type="checkbox"><?= $project ? $project->getProjectName() : '' ?></div>
+                            <div class="item"><label for="<?= $project->getId() ?>"></label><input type="checkbox" id="<?= $project->getId() ?>" name="<?= 'p' . $project->getId() ?>"><?= $project->getProjectName() ?></div>
                         <?php endforeach; ?>
 
                     </div>
@@ -40,18 +44,23 @@ class ReportsView
                         $clients = $clientsRep->findByUserId($_SESSION['uid']);
                         foreach ($clients as $client):
                             ?>
-                            <div class="item"><input type="checkbox"><?= $client ? $client->getClientName() : '' ?></div>
+                            <div class="item"><label for="<?= $client->getId() ?>"></label><input type="checkbox" id="<?= $client->getId() ?>" name="<?= 'c' . $client->getId() ?>"><?= $client->getClientName() ?></div>
                         <?php endforeach; ?>
                     </div>
                     <div class="started d-flex">
                         <div class="f-header">Started</div>
-                        <div class="item"><input type="datetime-local"></div>
+                        <div class="item"><input type="datetime-local" name="startTime"></div>
                     </div>
                     <div class="ended d-flex">
                         <div class="f-header">Started</div>
-                        <div class="item"><input type="datetime-local"></div>
+                        <div class="item"><input type="datetime-local" name="stopTime"></div>
                     </div>
+
                 </form>
+            </div>
+
+            <div class="btn-re">
+                <input class="register btn btn-purple" type="submit" value="Filter" onclick="getResults()">
             </div>
         <div class="task-table">
             <table id="task">
@@ -93,9 +102,7 @@ class ReportsView
                     </tbody>
                 <?php endforeach; ?>
             </table>
-                <div class="btn-re">
-                    <input class="register btn btn-purple" type="submit" value="Generate">
-                </div>
+
         </div>
         </div>
         </div>
