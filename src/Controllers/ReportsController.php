@@ -64,9 +64,11 @@ class ReportsController
                 $qb->groupBy('c.clientName');
             } else {
                 $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+                $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
             }
         } else {
             $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+            $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
         }
         $qb->from('Task t')
             ->join('Project p', 't.projectId = p.id')
