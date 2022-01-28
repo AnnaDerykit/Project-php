@@ -57,16 +57,16 @@ class ReportsController
         $qb = new QueryBuilder();
         if ($aggregate) {
             if ($projects) {
-                $qb->select('p.projectName, c.clientName, p.wage, SUM(p.wage) AS totalTime, SUM(p.wage * 10) AS totalPayout');
+                $qb->select('p.projectName, c.clientName, p.wage, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
                 $qb->groupBy('p.projectName, c.clientName, p.wage');
             } elseif ($clients) {
-                $qb->select('c.clientName, SUM(p.wage) AS totalTime, SUM(10 * p.wage) AS totalPayout');
+                $qb->select('c.clientName, SUM(p.wage) AS totalTime, p.wage AS totalPayout');
                 $qb->groupBy('c.clientName');
             } else {
-                $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, 10 * p.wage AS totalTime, 20 * p.wage AS totalPayout');
+                $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, 10 * p.wage AS totalTime, p.wage AS totalPayout');
             }
         } else {
-            $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, 10 * p.wage AS totalTime, 20 * p.wage AS totalPayout');
+            $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, 10 * p.wage AS totalTime, p.wage AS totalPayout');
         }
         $qb->from('Task t')
             ->join('Project p', 't.projectId = p.id')
@@ -97,6 +97,10 @@ class ReportsController
         $taskRep = new TaskRepository();
         try {
             $rows = $taskRep->executeQueryFromBuilder($qb);
+            foreach ($rows as &$row) {
+                $row['totalPayout'] = number_format(round($row['wage'] * $row['totalTime'] / 3600, 2), 2);
+                $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
+            }
             $response = json_encode($rows);
         } catch (\Exception $e) {
             $response = json_encode($e);

@@ -18,7 +18,10 @@ abstract class AbstractRepository
         global $config;
 
         try {
-            $this->connection = new PDO($config['dsn'], $config['username'], $config['password']);
+            $this->connection = new PDO($config['dsn'],
+                $config['username'],
+                $config['password'],
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET sql_mode="TRADITIONAL"'));
         } catch (PDOException $e) {
             echo "PDOException was caught: {$e->getMessage()}";
             var_dump($e->getTraceAsString());
