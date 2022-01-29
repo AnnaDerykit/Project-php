@@ -109,6 +109,32 @@ class AddCurrentTaskController
     }
 
     public static function stop_task()
-    {   
+    {
+        $uid = $_SESSION['uid'];
+        $repository= new TaskRepository();
+        $tasks= $repository->findByUserId($uid);
+        $flag=0;
+        $Id=-1;
+        foreach($tasks as $task):
+            if($task->getProgress() == 'active'){
+                $flag=1;
+                $Id=$task->getId();
+            }
+        endforeach;
+        if($flag==0){
+            $response = new Response();
+            $response->setContent(TasksView::render());
+            return $response;
+        }else{
+            date_default_timezone_set("Europe/Warsaw");
+            $date = date('Y-m-d H:i:s');
+            $currentTask=$repository->findById($Id);
+            $currentTask->setProgress('inactive');
+            $currentTask->setStopTime($date);
+            $repository->save($currentTask);
+            $response = new Response();
+            $response->addHeader('Location', 'index.php?action=show-tasks');
+            return $response;
+        }   
     }
 }
