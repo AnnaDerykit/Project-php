@@ -17,30 +17,33 @@ class TaskRepository extends AbstractRepository
             ->setProjectId($row['projectId'])
             ->setTitle($row['title'])
             ->setStartTime($row['startTime'])
-            ->setStopTime($row['stopTime']);
+            ->setStopTime($row['stopTime'])
+            ->setProgress($row['progress']);
         return $task;
     }
 
     public function save($task)
     {
         if ($task->getId()) {
-            $sql = "UPDATE Task SET userId = :userId, projectId = :projectId, title = :title, startTime = :startTime, stopTime = :stopTime WHERE id = :id";
+            $sql = "UPDATE Task SET userId = :userId, projectId = :projectId, title = :title, startTime = :startTime, stopTime = :stopTime, progress = :progress WHERE id = :id";
             $params = [
                 'id' => $task->getId(),
                 'userId' => $task->getUserId(),
                 'projectId' => $task->getProjectId(),
                 'title' => $task->getTitle(),
                 'startTime' => $task->getStartTime(),
-                'stopTime' => $task->getStopTime()
+                'stopTime' => $task->getStopTime(),
+                'progress' => $task->getProgress()
             ];
         } else {
-            $sql = "INSERT INTO Task(userId, projectId, title, startTime, stopTime) VALUES (:userId, :projectId, :title, :startTime, :stopTime)";
+            $sql = "INSERT INTO Task(userId, projectId, title, startTime, stopTime, progress) VALUES (:userId, :projectId, :title, :startTime, :stopTime, :progress)";
             $params = [
                 'userId' => $task->getUserId(),
                 'projectId' => $task->getProjectId(),
                 'title' => $task->getTitle(),
                 'startTime' => $task->getStartTime(),
-                'stopTime' => $task->getStopTime()
+                'stopTime' => $task->getStopTime(),
+                'progress' => $task->getProgress()
             ];
         }
         $this->openDatabaseConnection();

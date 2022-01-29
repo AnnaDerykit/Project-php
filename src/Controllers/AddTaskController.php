@@ -106,6 +106,7 @@ class AddTaskController
             $task->setTitle($Task_title);
             $task->setStartTime($Time_start);
             $task->setStopTime($Time_stop);
+            $task->setProgress('inactive');
             $repository->save($task);
 
             $response = new Response();
@@ -119,6 +120,7 @@ class AddTaskController
         $task->setTitle($Task_title);
         $task->setStartTime($Time_start);
         $task->setStopTime($Time_stop);
+        $task->setProgress('inactive');
         $repository->save($task);
 
         $response = new Response();

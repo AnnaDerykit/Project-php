@@ -10,6 +10,7 @@ class Task
     private $title;
     private $startTime;
     private $stopTime;
+    private $progress;
 
     /**
      * @return mixed
@@ -116,6 +117,22 @@ class Task
     public function setStopTime($stopTime)
     {
         $this->stopTime = $stopTime;
+        return $this;
+    }
+
+    public function getProgress()
+    {
+        return $this->progress;
+    }
+
+    /**
+     * @param $progress
+     * @return Task
+     */
+
+    public function setProgress($progress)
+    {
+        $this->progress = $progress;
         return $this;
     }
 }
