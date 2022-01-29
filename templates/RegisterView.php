@@ -11,7 +11,7 @@ class RegisterView
         <?= Layout::header() ?>
         <div class="thing register">
             <div class="nag_task">
-                <h2>Register</h2>
+                <h2 class="text-center">Register</h2>
             </div>
 
             <div class="validation-errors">
@@ -22,7 +22,7 @@ class RegisterView
                 ?>
             </div>
 
-            <form method="POST" action="index.php?action=register-set">
+            <form method="POST" action="index.php?action=register-set" class="add-form">
                 <div class="data_re">
                     <div class="name_re">
                         <label for="username">Username: </label>
@@ -47,9 +47,9 @@ class RegisterView
                         <input type="password" id="repeat_password" name="repeat_password"
                                value="<?= !empty($params['values']['repeat_password']) ? $params['values']['repeat_password'] : ''; ?>">
                     </div>
-
+                    <p></p>
                     <div class="btm_re">
-                        <input class="register btn btn-purple" type="submit" value="Register">
+                        <input class="btn-rep" type="submit" value="Register">
                     </div>
 
                 </div>

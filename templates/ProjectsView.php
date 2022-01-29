@@ -18,7 +18,7 @@ class ProjectsView
                 <h2>List of projects</h2>
                 <div class="btn-pro">
                 <form method="POST" action="index.php?action=Show-Add-Project">
-                    <input type="submit" id="submit" class="btn btn-purple" name="submit" value="Add-Project">
+                    <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
                 </form>
                 </div>
             </div>
@@ -34,7 +34,7 @@ class ProjectsView
                 <div class="task-table">
                     <table id="task">
                         <tr>
-                            <th></th>
+                            <th class="trash"></th>
                             <th>Project name</th>
                             <th>Client</th>
                             <th>Wage</th>

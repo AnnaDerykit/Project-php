@@ -12,8 +12,8 @@ class AddClientView
         ?>
         <?= Layout::header() ?>
         <div class="thing register">
-            <div class="nag_Client">
-                <h2>Add Client</h2>
+            <div class="nag_task">
+                <h2 class="text-center">Add Client</h2>
             </div>
 
             <form method="POST" action="index.php?action=Add-Client">
@@ -24,7 +24,7 @@ class AddClientView
                     }
                     ?>
                 </div>
-            <table id="Client-Name">
+            <table id="task" class="add-form">
                     <tr>
                         <th>Client name</th>
                     </tr>
@@ -36,7 +36,8 @@ class AddClientView
                     </tr>
                     
                 </table>
-                <input type="submit" id="submit" class="btn-peach" value="ADD">
+                <p></p>
+                <input type="submit" id="submit" class="btn-rep" value="ADD">
             </form>
         </div>
         </div>

@@ -86,8 +86,8 @@ class Layout
                     $names = array('My profile', 'My tasks', 'My projects', 'My clients', 'Reports', 'Log out');
                     $actions = array('show-profile', 'show-tasks', 'show-projects', 'show-clients', 'show-reports', 'logout');
                     if ($role == 'admin') {
-                        array_splice($names, 4, 0, array('Users'));
-                        array_splice($actions, 4, 0, array('show-users'));
+                        array_splice($names, 5, 0, array('Users'));
+                        array_splice($actions, 5, 0, array('show-users'));
                     }
                     foreach (array_combine($actions, $names) as $action => $name): ?>
                         <li <?php if ($_GET['action'] == $action) {

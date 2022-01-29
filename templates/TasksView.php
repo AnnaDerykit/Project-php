@@ -30,13 +30,14 @@ class TasksView
                     </div>
                 </div>
             </div>
-
+            <form method="POST" action="index.php?action=Show-Add-Task">
+                <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
+                <p></p>
+            </form>
             <div class="task-table">
                 <table id="task">
                     <thead>
-                    <th><form method="POST" action="index.php?action=Show-Add-Task">
-                                <input type="submit" id="submit" class="btn-purple add" name="submit" value="Add">
-                        </form></th>
+                    <th class="trash"></th>
                     <th>Title</th>
                     <th>Project</th>
                     <th>Client</th>
@@ -47,13 +48,14 @@ class TasksView
                     <th>Payout</th>
                     </tr>
                     </thead>
+                    <tbody>
                     <?php
                     $tasksRep = new TaskRepository();
                     $tasks = $tasksRep->findByUserId($_SESSION['uid']);
                     foreach ($tasks as $task):
                         $id = $task->getId();
                         ?>
-                        <tbody>
+
                         <tr contenteditable="true" onfocusout=editOnFocusOut(<?= $id ?>) id=<?= $id ?>>
                             <?php
                             $project = $tasksRep->getProjectByTaskId($task->getId());
@@ -97,8 +99,9 @@ class TasksView
                             <td contenteditable="false" class="duration_tsk"><?= $timeFormatted ?: '' ?></td>
                             <td contenteditable="false" class="payout_tsk"><?= $payout ?: '' ?></td>
                         </tr>
-                        </tbody>
+
                     <?php endforeach ?>
+                    </tbody>
                 </table>
             </div>
         </div>

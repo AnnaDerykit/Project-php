@@ -23,7 +23,7 @@ class ChangePasswordView
                     $userRep = new UserRepository();
                     $u = $userRep->findById($changeId);
                     $username = $u->getUsername();?>
-                    <h2><?= 'Change password for ' . $username ?></h2>
+                    <h2 class="text-center"><?= 'Change password for ' . $username ?></h2>
                 <?php } ?>
             </div>
 
@@ -41,7 +41,7 @@ class ChangePasswordView
             $id = $user->getId();
             ?>
 
-            <form method="POST" action="?action=change-password">
+            <form method="POST" action="?action=change-password" class="add-form">
                 <input type="hidden" id="id" name="id" value=<?=$changeId?>>
                 <div class="data_log" id=<?=$id?>>
                     <div class="haslo_re">
@@ -53,9 +53,9 @@ class ChangePasswordView
                         <label for="repeat_password">Repeat new password:</label>
                         <input type="password" id="repeat_password" name="repeat_password">
                     </div>
-
+                    <p></p>
                     <div class="btm_re">
-                        <input class="register btn btn-purple" type="submit" value="Submit">
+                        <input class="btn-rep" type="submit" value="Submit">
                     </div>
                 </div>
             </form>

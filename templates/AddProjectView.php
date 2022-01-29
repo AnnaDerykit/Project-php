@@ -13,7 +13,7 @@ class AddProjectView
         <?= Layout::header() ?>
         <div class="thing register">
             <div class="nag_task">
-                <h2>Add Project</h2>
+                <h2 class="text-center">Add Project</h2>
             </div>
 
             <form method="POST" action="index.php?action=Add-Project">
@@ -24,7 +24,7 @@ class AddProjectView
                     }
                     ?>
                 </div>
-            <table id="task">
+            <table id="task" class="add-form">
                     <tr>
                         <th>Project name</th>
                         <th>Client name</th>
@@ -54,7 +54,8 @@ class AddProjectView
                     </tr>
                     
                 </table>
-                <input type="submit" id="submit" class="btn-peach" value="ADD">
+                <p></p>
+                <input type="submit" id="submit" class="btn-rep" value="ADD">
             </form>
         </div>
         </div>

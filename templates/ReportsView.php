@@ -16,8 +16,15 @@ class ReportsView
         <?= Layout::header($params) ?>
         <?= Layout::navbar() ?>
         <div class="thing reports-main">
-            <div class="nag_task">
-                <h2>Reports</h2>
+            <div class="d-flex export">
+                <div class="f-header">Generate report:</div>
+                <div class="switch-field">
+                    <input type="radio" id="csv-btn" name="format-choice" value="csv" checked/>
+                    <label for="csv-btn">.csv</label>
+                    <input type="radio" id="xls-btn" name="format-choice" value="xls" />
+                    <label for="xls-btn">.xls</label>
+                </div>
+                <input class="btn-rep" type="submit" value="Generate">
             </div>
 
             <div class="task-table">
@@ -34,11 +41,12 @@ class ReportsView
                         <th>Payout</th>
                     </tr>
                     </thead>
+                    <tbody>
                     <?php
                     $tasksRep = new TaskRepository();
                     $tasks = $tasksRep->findByUserId($_SESSION['uid']);
                     foreach ($tasks as $task): ?>
-                        <tbody>
+
                         <tr>
                             <?php
                             $project = $tasksRep->getProjectByTaskId($task->getId());
@@ -57,8 +65,9 @@ class ReportsView
                             <td><?= $timeFormatted ?: '' ?></td>
                             <td><?= $payout ?: '' ?></td>
                         </tr>
-                        </tbody>
+
                     <?php endforeach; ?>
+                    </tbody>
                 </table>
 
             </div>
@@ -66,10 +75,12 @@ class ReportsView
         <div class="nag_task reports-bar">
             <div class="f-form">
                 <form method="GET" id="form" action="index.php?action=reports-filter">
-                    <div class="f-header">Aggregation</div>
-                    <div class="project-name d-flex f-wrap">
 
-                        <div class="item">
+                    <div class="project-name d-flex f-wrap">
+                        <div class="item-rep">
+                            <div class="f-header">Collective report</div>
+                        </div>
+                        <div class="item-rep">
                             <label for="aggregation" class="switch">
                                 <input type="checkbox" id="aggregation" name="aggregation" value="Aggregation">
                                 <span class="slider round"></span>
@@ -85,7 +96,8 @@ class ReportsView
                             ?>
                             <div class="item-rep">
                                 <label for="<?= 'p' . $project->getId() ?>" class="switch-bubble">
-                                <input type="checkbox" id="<?= 'p' . $project->getId() ?>" name="<?= 'p' . $project->getId() ?>">
+                                    <input type="checkbox" id="<?= 'p' . $project->getId() ?>"
+                                           name="<?= 'p' . $project->getId() ?>">
                                     <span class="bubble"><?= $project->getProjectName() ?></span>
                                 </label>
                             </div>
@@ -102,30 +114,31 @@ class ReportsView
                             ?>
                             <div class="item-rep">
                                 <label for="<?= 'c' . $client->getId() ?>" class="switch-bubble">
-                                <input type="checkbox" id="<?= 'c' . $client->getId() ?>" name="<?= 'c' . $client->getId() ?>">
-                                <span class="bubble"><?= $client->getClientName() ?></span>
+                                    <input type="checkbox" id="<?= 'c' . $client->getId() ?>"
+                                           name="<?= 'c' . $client->getId() ?>">
+                                    <span class="bubble"><?= $client->getClientName() ?></span>
                                 </label>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="f-header">Started</div>
+
+                    <div class="f-header">Started between:</div>
                     <div class="started">
-
-                        <div class="item"><label for="startFrom">From:</label>
-                                <input type="datetime-local" class="input-compact" name="startFrom" id="startFrom">
-                            </div>
-                        <div class="item"><label for="startTo">To:</label>
-                                <input type="datetime-local" class="input-compact" name="startTo" id="startTo">
-                            </div>
+                        <div class="item-rep">
+                            <input type="datetime-local" class="input-compact reports-date" name="startFrom"
+                                   id="startFrom">
+                        </div>
+                        <div class="item-rep">
+                            <input type="datetime-local" class="input-compact reports-date" name="startTo" id="startTo">
+                        </div>
                     </div>
-                    <div class="f-header">Ended</div>
+                    <div class="f-header">Ended between:</div>
                     <div class="ended">
-
-                        <div class="item"><label>
-                                <input type="datetime-local" class="input-compact" name="stopFrom">
+                        <div class="item-rep"><label>
+                                <input type="datetime-local" class="input-compact reports-date" name="stopFrom">
                             </label></div>
-                        <div class="item"><label>
-                                <input type="datetime-local" class="input-compact" name="stopTo">
+                        <div class="item-rep"><label>
+                                <input type="datetime-local" class="input-compact reports-date" name="stopTo">
                             </label></div>
                     </div>
 
@@ -133,7 +146,7 @@ class ReportsView
             </div>
 
             <div class="btn-re">
-                <input class="register btn btn-purple" type="submit" value="Filter" onclick="getResults()">
+                <input class="btn-rep" type="submit" value="Filter" onclick="getResults()">
             </div>
         </div>
         </div>

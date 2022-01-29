@@ -91,10 +91,12 @@ body
 .btn-purple {
     background-color: #412a4c;
     color: #fff;
+    cursor: pointer;
 }
 .btn-peach {
     background: white;
     color: #412a4c;
+    cursor: pointer;
 }
 .btn-pro {
     margin-bottom: 30px;
@@ -122,6 +124,7 @@ body
     border-radius: 50px;
     justify-content: center;
     font-weight: 700;
+    transition-duration: 0.4s;
 }
 .btn:hover {
     border: 1px solid #fff;
@@ -129,6 +132,31 @@ body
 .btn-peach:hover, .btn-purple:hover {
     background: none;
     color: #412a4c;
+}
+
+.btn-rep {
+    display: block;
+    height: 40px;
+    width: 150px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #412a4c;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 6px #999;
+}
+
+.btn-rep:hover {background-color: #2C1338}
+
+.btn-rep:active {
+    background-color: #2C1338;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 /* header */
@@ -187,6 +215,16 @@ input {
 }
 
 /* content */
+
+.add-form {
+    width: 50% !important;
+    margin: 0 auto;
+}
+
+.add-form + h2 {
+    text-align: center !important;
+}
+
 .input-compact {
     display: block;
     margin: 0 auto;
@@ -208,18 +246,23 @@ input {
     line-height: 1.5;
     font-size: clamp( 1rem * 0.95, 1vw, 1rem );
     flex-basis:90%;
+    min-height: calc(100vh - 295px);
     /*overflow-y:scroll;*/
     /*overflow-x:hidden;*/
 }
 
 .reports-main {
-    flex-basis:80%;
+    flex-basis:65%;
 }
 
 .reports-bar {
-    flex-basis:10%;
+    flex-basis:25%;
     background-color: #fad0b9;
     padding: 25px;
+}
+
+.reports-date {
+    max-width: 255px;
 }
 
 .new-tab {
@@ -246,6 +289,10 @@ input {
 .new-task {
     background-color: #fad0b9;
     padding: 20px;
+}
+
+.trash {
+    width: 20px;
 }
 
 /* table */
@@ -304,7 +351,7 @@ footer span
     text-align: center !important;
 }
 
-/* raport filter */
+/* report filter */
 .f-wrap {
     flex-wrap: wrap;
 }
@@ -323,7 +370,9 @@ footer span
     font-size: clamp( 1.125rem * 0.9, 1.28vw, 1.125rem );
     color: initial;
     padding-left: 15px;
+    margin-right: 15px;
     text-align: left;
+
     /*background-color: #fad0b9;*/
     /*color: #FDF1EC;*/
     font-weight: 600;
@@ -338,6 +387,12 @@ footer span
 .item-rep {
     margin: 10px 0 5px 0;
     padding: 10px 0 5px 0;
+}
+
+.export {
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
 }
 
 /* toggle switch */
@@ -373,7 +428,7 @@ footer span
     height: 17px;
     width: 17px;
     left: 3px;
-    bottom: 1px;
+    bottom: 2px;
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
@@ -381,10 +436,6 @@ footer span
 
 input:checked + .slider {
     background-color: #2C1338;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #2C1338;
 }
 
 input:checked + .slider:before {
@@ -430,6 +481,56 @@ input:checked + .bubble {
     background-color: #412A4C;
     color: #FDF1EC;
 }
+
+/* insane switch */
+.switch-field {
+    display: flex;
+    margin-left: 3px;
+    margin-right: 20px;
+}
+
+.switch-field input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+    background-color: #ccc;
+    color: initial;
+    text-align: center;
+    padding: 8px 16px;
+    transition: .1s;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 6px #999;
+}
+
+.switch-field label:hover {
+    cursor: pointer;
+}
+
+.switch-field label:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.switch-field input:checked + label {
+    background-color: #412A4C;
+    color: #FDF1EC;
+}
+
+.switch-field label:first-of-type {
+    border-radius: 15px 0 0 15px;
+}
+
+.switch-field label:last-of-type {
+    border-radius: 0 15px 15px 0;
+}
+
 
 /* respons */
 @media screen and (max-width: 600px)

@@ -16,12 +16,14 @@ class ClientsView
             <div class="nag_task">
                 <h2>List of clients</h2>
             </div>
+            <form method="POST" action="index.php?action=Show-Add-Client">
+                <input type="submit" id="submit" class="btn-rep client" name="submit" value="Add">
+            </form>
+            <p></p>
             <div class="task-table">
                 <table id="task">
                     <tr>
-                        <th><form method="POST" action="index.php?action=Show-Add-Client">
-                                <input type="submit" id="submit" class="btn-purple client" name="submit" value="Add">
-                        </form></th>
+                        <th class="trash"></th>
                         <th>Client name</th>
                     </tr>
                     <?php
