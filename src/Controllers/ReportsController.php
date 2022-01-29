@@ -18,7 +18,7 @@ class ReportsController
     {
         $response = new Response();
         $response->setContent(ReportsView::render([
-            'script' => 'javascript/Reports.js'
+            'script' => 'javascript/Reports.js async'
         ]));
         return $response;
     }
