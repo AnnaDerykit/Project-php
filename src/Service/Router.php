@@ -59,6 +59,10 @@ class Router
                 $controllerName = UsersController::class;
                 $actionName = 'editUserExceptPassword';
                 break;
+            case 'filter-clients':
+                $controllerName = ClientsController::class;
+                $actionName = 'filterClients';
+                break;
             case 'login-set':
                 $controllerName = LoginController::class;
                 $actionName = 'set';
