@@ -112,6 +112,23 @@ class ProjectRepository extends AbstractRepository
         return ClientRepository::clientFromRow($row);
     }
 
+    public function filterForUser($userId, $name) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Project WHERE userId = :userId AND LOWER(projectName) LIKE :name ORDER BY projectName";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array(
+            'userId' => $userId,
+            'name' => '%' . strtolower($name) . '%'
+        ));
+        $projects = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $projects[] = $this->projectFromRow($row);
+        }
+        $this->closeDatabaseConnection();
+        return $projects;
+    }
+
     function deleteById($id)
     {
         $this->openDatabaseConnection();

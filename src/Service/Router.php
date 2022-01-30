@@ -59,6 +59,22 @@ class Router
                 $controllerName = UsersController::class;
                 $actionName = 'editUserExceptPassword';
                 break;
+            case 'filter-clients':
+                $controllerName = ClientsController::class;
+                $actionName = 'filterClients';
+                break;
+            case 'filter-projects':
+                $controllerName = ProjectsController::class;
+                $actionName = 'filterProjects';
+                break;
+            case 'filter-tasks':
+                $controllerName = TasksController::class;
+                $actionName = 'filterTasks';
+                break;
+            case 'filter-users':
+                $controllerName = UsersController::class;
+                $actionName = 'filterUsers';
+                break;
             case 'login-set':
                 $controllerName = LoginController::class;
                 $actionName = 'set';
@@ -134,10 +150,6 @@ class Router
             case 'Add-Client':
                 $controllerName=AddClientController::class;
                 $actionName='add_client';
-                break;
-            case 'Show-Add-Current-Task':
-                $controllerName='App\Controllers\AddCurrentTaskController';
-                $actionName='index';
                 break;
             case 'Add-Current-Task':
                 $controllerName=AddCurrentTaskController::class;

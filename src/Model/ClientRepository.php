@@ -76,6 +76,23 @@ class ClientRepository extends AbstractRepository
         return $clients;
     }
 
+    public function filterForUser($userId, $name) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Client WHERE userId = :userId AND LOWER(clientName) LIKE :name ORDER BY clientName";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array(
+            'userId' => $userId,
+            'name' => '%' . strtolower($name) . '%'
+        ));
+        $clients = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $clients[] = $this->clientFromRow($row);
+        }
+        $this->closeDatabaseConnection();
+        return $clients;
+    }
+
     function deleteById($id)
     {
         $this->openDatabaseConnection();

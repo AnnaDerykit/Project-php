@@ -43,4 +43,19 @@ class ClientsController
 
         return $response;
     }
+
+    public static function filterClients()
+    {
+        $uid = $_SESSION['uid'];
+        $name = $_POST['clientName'];
+        $clientsRep = new ClientRepository();
+        $clients = $clientsRep->filterForUser($uid, $name);
+        $response = new Response();
+        $response->setContent(ClientsView::render([
+            'script' => 'javascript/Clients.js',
+            'clients' => $clients,
+            'phrase' => $name
+        ]));
+        return $response;
+    }
 }

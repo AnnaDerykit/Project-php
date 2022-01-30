@@ -16,9 +16,17 @@ class ClientsView
             <div class="nag_task">
                 <h2>List of clients</h2>
             </div>
-            <form method="POST" action="index.php?action=Show-Add-Client">
-                <input type="submit" id="submit" class="btn-rep client" name="submit" value="Add">
-            </form>
+            <div class="d-flex f-wrap">
+                 <form method="POST" action="index.php?action=filter-clients" class="d-flex">
+                     <input type="text" name="clientName" id="clientName" class="input-compact-text"
+                            placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
+                     <input type="submit" class="btn-rep" name="submit" value="Search">
+                 </form>
+                <div class="filler"></div>
+                <form method="POST" action="index.php?action=Show-Add-Client">
+                    <input type="submit" id="submit" class="btn-rep client" name="submit" value="Add">
+                </form>
+            </div>
             <p></p>
             <div class="task-table">
                 <table id="task">
@@ -27,8 +35,12 @@ class ClientsView
                         <th>Client name</th>
                     </tr>
                     <?php
-                    $clientsRep = new ClientRepository();
-                    $clients = $clientsRep->findByUserId($_SESSION['uid']);
+                    if (isset($params['clients'])) {
+                        $clients = $params['clients'];
+                    } else {
+                        $clientsRep = new ClientRepository();
+                        $clients = $clientsRep->findByUserId($_SESSION['uid']);
+                    }
                     foreach ($clients as $client):
                         $id = $client->getId();
                         ?>

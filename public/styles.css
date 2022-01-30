@@ -233,6 +233,18 @@ input {
     padding: 5px;
     text-overflow: ellipsis;
 }
+.input-compact-text {
+    display: block;
+    margin: 0px 5px;
+    width: 250px;
+    padding: 5px;
+    text-overflow: ellipsis;
+}
+
+.filler {
+    width: 5px;
+}
+
 .nag_task h2 {
     color: #2C1338;
     font-weight: 700;
@@ -271,6 +283,37 @@ input {
 .link-clear, .link-clear:link, .link-clear:visited, .link-clear:hover, .link-clear:active {
     text-decoration: none;
     color: inherit;
+}
+
+/* frontpage */
+.stats {
+    background-color: #412A4C;
+    color: white;
+    border-radius: 100px;
+    height: 90px;
+    padding: 3px 10px 3px 10px;
+    margin: 20px;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px #666;
+    transition: 1s;
+}
+
+.stats:hover {
+    transform: translateY(-10px) scale(1.2);
+    background-color: #2C1338;
+}
+
+.big-text {
+    font-size: clamp( 4rem * 0.95, 1vw, 1rem );
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    max-width: 120px;
+    margin-left: 5px;
 }
 
 /* tasks */

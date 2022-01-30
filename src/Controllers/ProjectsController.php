@@ -67,4 +67,19 @@ class ProjectsController
 
         return $response;
     }
+
+    public static function filterProjects()
+    {
+        $uid = $_SESSION['uid'];
+        $name = $_POST['projectName'];
+        $projectsRep = new ProjectRepository();
+        $projects = $projectsRep->filterForUser($uid, $name);
+        $response = new Response();
+        $response->setContent(ProjectsView::render([
+            'script' => 'javascript/Projects.js',
+            'projects' => $projects,
+            'phrase' => $name
+        ]));
+        return $response;
+    }
 }

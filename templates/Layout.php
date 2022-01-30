@@ -127,4 +127,15 @@ class Layout
         }
         return $timeString;
     }
+
+    public static function secondsToHours($seconds)
+    {
+        if (!$seconds) {
+            return "0";
+        }
+        $timeString = "";
+        $hours = intval(intval($seconds) / 3600);
+        $timeString .= $hours;
+        return $timeString;
+    }
 }
