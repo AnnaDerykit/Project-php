@@ -78,6 +78,26 @@ class UsersController
         return $response;
     }
 
+    public static function filterUsers()
+    {
+        if (self::checkIfAdmin()) {
+            $uid = $_SESSION['uid'];
+            $name = $_POST['username'];
+            $usersRep = new UserRepository();
+            $users = $usersRep->filterForUser($uid, $name);
+            $response = new Response();
+            $response->setContent(UsersView::render([
+                'script' => 'javascript/Users.js',
+                'users' => $users,
+                'phrase' => $name
+            ]));
+        } else {
+            $response = new Response();
+            $response->addHeader('Location', 'index.php?action=show-profile');
+        }
+        return $response;
+    }
+
     public static function checkIfAdmin()
     {
         if (isset($_SESSION['uid'])) {

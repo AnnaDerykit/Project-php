@@ -35,6 +35,11 @@ class TasksView
                     </div>
                 </div>
             </div>
+            <form method="POST" action="index.php?action=filter-tasks" class="d-flex">
+                <input type="text" name="title" id="title" class="input-compact-text"
+                       placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
+                <input type="submit" class="btn-rep" name="submit" value="Search">
+            </form>
             <form method="POST" action="index.php?action=Show-Add-Task">
                 <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
                 <p></p>
@@ -55,8 +60,13 @@ class TasksView
                     </thead>
                     <tbody>
                     <?php
-                    $tasksRep = new TaskRepository();
-                    $tasks = $tasksRep->findByUserId($_SESSION['uid']);
+                    if (isset($params['tasks'])) {
+                        $tasks = $params['tasks'];
+                        $tasksRep = new TaskRepository();
+                    } else {
+                        $tasksRep = new TaskRepository();
+                        $tasks = $tasksRep->findByUserId($_SESSION['uid']);
+                    }
                     foreach ($tasks as $task):
                         $id = $task->getId();
                         ?>

@@ -68,4 +68,19 @@ class TasksController
 
         return $response;
     }
+
+    public static function filterTasks()
+    {
+        $uid = $_SESSION['uid'];
+        $name = $_POST['title'];
+        $tasksRep = new TaskRepository();
+        $tasks = $tasksRep->filterForUser($uid, $name);
+        $response = new Response();
+        $response->setContent(TasksView::render([
+            'script' => 'javascript/Tasks.js',
+            'tasks' => $tasks,
+            'phrase' => $name
+        ]));
+        return $response;
+    }
 }

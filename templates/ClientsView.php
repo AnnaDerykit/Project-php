@@ -18,7 +18,7 @@ class ClientsView
             </div>
             <div class="d-flex f-wrap">
                  <form method="POST" action="index.php?action=filter-clients" class="d-flex">
-                     <input type="text" name="clientName" id="clientName" class="input-compact"
+                     <input type="text" name="clientName" id="clientName" class="input-compact-text"
                             placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
                      <input type="submit" class="btn-rep" name="submit" value="Search">
                  </form>

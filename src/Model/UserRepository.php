@@ -268,6 +268,23 @@ class UserRepository extends AbstractRepository
         return $user;
     }
 
+    public function filterForUser($userId, $name) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM User WHERE id <> :userId AND LOWER(username) LIKE :name ORDER BY username";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array(
+            'userId' => $userId,
+            'name' => '%' . strtolower($name) . '%'
+        ));
+        $users = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $users[] = $this->userFromRow($row);
+        }
+        $this->closeDatabaseConnection();
+        return $users;
+    }
+
     function deleteById($id)
     {
         $this->openDatabaseConnection();

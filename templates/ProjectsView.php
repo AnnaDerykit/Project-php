@@ -17,6 +17,11 @@ class ProjectsView
             <div class="nag_task">
                 <h2>List of projects</h2>
                 <div class="btn-pro">
+                <form method="POST" action="index.php?action=filter-projects" class="d-flex">
+                    <input type="text" name="projectName" id="projectName" class="input-compact-text"
+                           placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
+                    <input type="submit" class="btn-rep" name="submit" value="Search">
+                </form>
                 <form method="POST" action="index.php?action=Show-Add-Project">
                     <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
                 </form>
@@ -40,9 +45,13 @@ class ProjectsView
                             <th>Wage</th>
                         </tr>
                         <?php
-                        $projectsRep = new ProjectRepository();
-                        $clientsRep = new ClientRepository();
-                        $projects = $projectsRep->findByUserId($_SESSION['uid']);
+                        if (isset($params['projects'])) {
+                            $projects = $params['projects'];
+                            $projectsRep = new ProjectRepository();
+                        } else {
+                            $projectsRep = new ProjectRepository();
+                            $projects = $projectsRep->findByUserId($_SESSION['uid']);
+                        }
                         foreach ($projects as $project):
                             $id = $project->getId();
                             ?>
