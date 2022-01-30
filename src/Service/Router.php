@@ -151,10 +151,6 @@ class Router
                 $controllerName=AddClientController::class;
                 $actionName='add_client';
                 break;
-            case 'Show-Add-Current-Task':
-                $controllerName='App\Controllers\AddCurrentTaskController';
-                $actionName='index';
-                break;
             case 'Add-Current-Task':
                 $controllerName=AddCurrentTaskController::class;
                 $actionName='add_task';

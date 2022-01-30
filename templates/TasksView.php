@@ -17,10 +17,30 @@ class TasksView
 
         <div class="thing">
             <div class="tasks">
+                <form method="POST" action="index.php?action=Add-Current-Task">
                 <div class="new-task d-flex">
-                    <div class="task-name">Do roboty team!</div>
+                
                     <div class="task-controls d-flex">
-                        <form method="POST" action="index.php?action=Show-Add-Current-Task">
+                        
+                            <div class="task-name">
+                                <input type="text" name="Task-Title" id="Task-Title" class="input-compact-text"
+                                    placeholder="Task Title" value="<?= isset($params['values']['Task-Title']) ? $params['values']['Task-Title'] : null ?>">
+                            </div>
+                            <div class="project-name">
+                                <input type="text" list="Projects" name="Project_Name" id="Project_Name" class="input-compact-text" name="Project_Name"
+                                    placeholder="Project Name" value="<?= isset($params['values']['Project_Name']) ? $params['values']['Project_Name'] : null ?>">
+                                    <datalist id="Projects">
+                                            <?php
+                                            $projectsRep = new ProjectRepository();
+                                            $projects = $projectsRep->findByUserId($_SESSION['uid']);
+                                            foreach ($projects as $project): ?>
+                                                <option><?= $project->getProjectName() ?></option>
+                                            <?php endforeach ?>
+                                        </datalist>
+                            </div>
+                    </div>
+                    <div class="task-controls d-flex">
+                        
                             <div class="btn btn-peach">
                                         <input type="image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMTQ0LDEyNC45TDM1My44LDI1NkwxNDQsMzg3LjFWMTI0LjkgTTEyOCw5NnYzMjBsMjU2LTE2MEwxMjgsOTZMMTI4LDk2eiIvPjwvZz48L3N2Zz4="
                                         class="icon" name="submit"> Start
