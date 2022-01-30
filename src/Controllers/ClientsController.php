@@ -48,22 +48,14 @@ class ClientsController
     {
         $uid = $_SESSION['uid'];
         $name = $_POST['clientName'];
+        $clientsRep = new ClientRepository();
+        $clients = $clientsRep->filterForUser($uid, $name);
         $response = new Response();
-        $message = '';
-        if (strlen($name) < 51) {
-            $clientsRep = new ClientRepository();
-            $clients = $clientsRep->filterForUser($uid, $name);
-            $response->setContent(ClientsView::render([
-                'script' => 'javascript/Clients.js',
-                'clients' => $clients,
-                'phrase' => $name
-            ]));
-        } else {
-            $message = 'The searched phrase can be up to 50 characters long.';
-            $response->setContent(ClientsView::render([
-                'message' => $message
-            ]));
-        }
+        $response->setContent(ClientsView::render([
+            'script' => 'javascript/Clients.js',
+            'clients' => $clients,
+            'phrase' => $name
+        ]));
         return $response;
     }
 }

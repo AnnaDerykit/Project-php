@@ -16,18 +16,9 @@ class ProjectsView
         <div class="thing">
             <div class="nag_task">
                 <h2>List of projects</h2>
-
-                <div class="validation-errors">
-                    <?php
-                    if (!empty($params['message'])) {
-                        echo '<p class="color-red text-center">' . $params['message'] . '</p>';
-                    }
-                    ?>
-                </div>
-
                 <div class="d-flex f-wrap">
                     <form method="POST" action="index.php?action=filter-projects" class="d-flex">
-                        <input type="text" name="projectName" id="projectName" class="input-compact-text"
+                        <input type="text" name="projectName" id="projectName" class="input-compact-text" maxlength="50"
                                placeholder="Type here to search..."
                                value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
                         <input type="submit" class="btn-rep" name="submit" value="Search">
