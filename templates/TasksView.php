@@ -46,6 +46,12 @@ class TasksView
                                         class="icon" name="submit"> Start
                             </div>
                         </form>
+                        <form name="form_main">
+                        <div>
+                            <span id="hour">00</span>:<span id="minute">00</span>:<span id="second">00</span>
+                        </div>
+                        <br />
+                        </form>
                         <form method="POST" action="index.php?action=Stop-Task">
                             <div class="btn btn-purple "><input type="image"
                                         src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkNhcGFfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAwIDEwMDsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik04MC4xLDgxaC02MGMtMC42LDAtMS0wLjQtMS0xVjIwYzAtMC42LDAuNC0xLDEtMWg2MGMwLjYsMCwxLDAuNCwxLDF2NjBDODEuMSw4MC42LDgwLjcsODEsODAuMSw4MXogTTIxLjEsNzloNThWMjFoLTU4Vjc5ICB6Ii8+PC9zdmc+"
@@ -144,6 +150,79 @@ class TasksView
             </div>
         </div>
         </div>
+        <script>
+            <?php
+                $uid = $_SESSION['uid'];
+                $repository= new TaskRepository();
+                $tasks= $repository->findByUserId($uid);
+                $Task=0;
+                $flag=0;
+                foreach($tasks as $task):
+                    if($task->getProgress() == 'active'){
+                        $flag=1;
+                        $Task=$task->getStartTime();
+                    }
+                endforeach;
+                if($flag==1){
+                    date_default_timezone_set("Europe/Warsaw");
+                    $date = date('Y-m-d H:i:s');
+                    $durationInSec = strtotime($date) - strtotime($Task);
+                    $timeFormatted = $durationInSec ? sprintf('%02d:%02d:%02d', intval($durationInSec / 3600), intval($durationInSec / 60) % 60, $durationInSec % 60) : null;
+                    $sec= substr($timeFormatted,-2);
+                    $min=substr($timeFormatted,-5,-3);
+                    $sep=0;
+                    for ($i = 0; $i < strlen($timeFormatted); $i++) {
+                        if($timeFormatted[$i]==":"){
+                            $sep=$i;
+                            $i=strlen($timeFormatted);
+                        }
+                    }
+                    $hours=substr($timeFormatted,0,$sep);
+                }
+                
+            ?>
+            var flag = "<?php echo $flag; ?>";
+            if(flag==1){
+                var php_sec = "<?php echo $sec; ?>";
+                var php_min = "<?php echo $min; ?>";
+                var php_hour = "<?php echo $hours; ?>";
+                
+                "use strict";
+
+                let hour = parseInt(php_hour);
+                let minute = parseInt(php_min);
+                let second = parseInt(php_sec);
+                let millisecond = 0;
+
+                let cron;
+                start();
+
+                function start() {
+                cron = setInterval(() => { timer(); }, 1000);
+                }
+
+                function timer() {
+                if ((second += 1) == 60){
+                    second = 0;
+                    minute++;
+                }
+                if (minute == 60) {
+                    minute = 0;
+                    hour++;
+                }
+                document.getElementById('hour').innerText = returnData(hour);
+                document.getElementById('minute').innerText = returnData(minute);
+                document.getElementById('second').innerText = returnData(second);
+                }
+                function returnData(input) {
+                return input >= 10 ? input : `0${input}`
+                }
+                
+            }
+            
+
+
+        </script>
         <?= Layout::footer() ?>
         <?php
         $html = ob_get_clean();
