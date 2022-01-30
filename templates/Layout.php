@@ -17,7 +17,7 @@ class Layout
             <title>Über Clocker 3000</title>
             <meta charset="UTF-8">
             <link rel="stylesheet" href="styles.css">
-<!--            <meta http-equiv="X-UA-Compatible" content="IE-=edge"-->
+<!--            <meta http-equiv="X-UA-Compatible" content="ie=edge"-->
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
             <?php
             if (isset($params['script'])) {

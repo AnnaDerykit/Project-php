@@ -32,44 +32,56 @@ function getResults() {
     }).then(response => response.text())
         .then(text => {
             try {
-
                 const data = JSON.parse(text);
                 fillTable(data);
-                //console.log(data);
-                // Do your JSON handling here
-            } catch(err) {
-                // It is text, do you text handling here
-            }
+                check();
+            } catch(err) {}
         });
 }
 
-//convert every JSON object to a table record and insert it into the main table
-function fillTable(data) {
+		//jeszcze nad tym pracuje
+function check()
+{
+    let x= document.getElementById("task").rows.length-1;
+    console.log("found " + x + " elements");
+
     console.log(table);
+}
+
+function fillTable(data)
+{
     table.innerHTML = '';
     let keys = Object.keys(data[0]);
     let map = keys.includes('title') ? namesMapDetailed : namesMapAggregated;
     let thead = document.createElement('thead');
     let tr = document.createElement('tr');
-    for (let key of keys) {
+
+    for (let key of keys)
+    {
         let th = document.createElement('th');
         th.innerText = map[key];
         tr.appendChild(th);
     }
     thead.appendChild(tr);
 
-    //tutaj tworzysz tbody
-    for (let row of data) {
-        //tutaj tworzysz tr
-        console.log(row);
-        for (let key in row) {
-            //tutaj tworzysz td i ustawiasz mu innerText
-            console.log(key);
-            console.log(row[key]);
-            //tutaj dołączas td do tr
+    let tbody = document.createElement('tbody');
+
+    for (let row of data)
+    {
+    let tr = document.createElement('tr');
+
+    for (let key in row)
+        {
+        let td = document.createElement('td');
+        td.innerText = row[key];
+        tr.appendChild(td);
+
+        tr.appendChild(td);
         }
-        //tutaj dołączasz tr do tbody
+
+    tbody.appendChild(tr);
     }
-    table.appendChild(thead);
-    //tutaj dołączasz tbody do table
+table.appendChild(thead);
+
+table.appendChild(tbody);
 }
