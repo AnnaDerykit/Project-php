@@ -73,14 +73,22 @@ class TasksController
     {
         $uid = $_SESSION['uid'];
         $name = $_POST['ttitle'];
-        $tasksRep = new TaskRepository();
-        $tasks = $tasksRep->filterForUser($uid, $name);
         $response = new Response();
-        $response->setContent(TasksView::render([
-            'script' => 'javascript/Tasks.js',
-            'tasks' => $tasks,
-            'phrase' => $name
-        ]));
+        $message = '';
+        if (strlen($name) < 201) {
+            $tasksRep = new TaskRepository();
+            $tasks = $tasksRep->filterForUser($uid, $name);
+            $response->setContent(TasksView::render([
+                'script' => 'javascript/Tasks.js',
+                'tasks' => $tasks,
+                'phrase' => $name
+            ]));
+        } else {
+            $message = 'The searched phrase can be up to 200 characters long.';
+            $response->setContent(TasksView::render([
+                'message' => $message
+            ]));
+        }
         return $response;
     }
 }

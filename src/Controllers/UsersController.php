@@ -83,14 +83,22 @@ class UsersController
         if (self::checkIfAdmin()) {
             $uid = $_SESSION['uid'];
             $name = $_POST['username'];
-            $usersRep = new UserRepository();
-            $users = $usersRep->filterForUser($uid, $name);
             $response = new Response();
-            $response->setContent(UsersView::render([
-                'script' => 'javascript/Users.js',
-                'users' => $users,
-                'phrase' => $name
-            ]));
+            $message = '';
+            if (strlen($name) < 51) {
+                $usersRep = new UserRepository();
+                $users = $usersRep->filterForUser($uid, $name);
+                $response->setContent(UsersView::render([
+                    'script' => 'javascript/Users.js',
+                    'users' => $users,
+                    'phrase' => $name
+                ]));
+            } else {
+                $message = 'The searched phrase can be up to 200 characters long.';
+                $response->setContent(UsersView::render([
+                    'message' => $message
+                ]));
+            }
         } else {
             $response = new Response();
             $response->addHeader('Location', 'index.php?action=show-profile');

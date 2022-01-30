@@ -72,14 +72,22 @@ class ProjectsController
     {
         $uid = $_SESSION['uid'];
         $name = $_POST['projectName'];
-        $projectsRep = new ProjectRepository();
-        $projects = $projectsRep->filterForUser($uid, $name);
         $response = new Response();
-        $response->setContent(ProjectsView::render([
-            'script' => 'javascript/Projects.js',
-            'projects' => $projects,
-            'phrase' => $name
-        ]));
+        $message = '';
+        if (strlen($name) < 51) {
+            $projectsRep = new ProjectRepository();
+            $projects = $projectsRep->filterForUser($uid, $name);
+            $response->setContent(ProjectsView::render([
+                'script' => 'javascript/Projects.js',
+                'projects' => $projects,
+                'phrase' => $name
+            ]));
+        } else {
+            $message = 'The searched phrase can be up to 50 characters long.';
+            $response->setContent(ProjectsView::render([
+                'message' => $message
+            ]));
+        }
         return $response;
     }
 }

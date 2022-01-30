@@ -18,6 +18,15 @@ class UsersView
             <div class="nag_task">
                 <h2>List of users</h2>
             </div>
+
+            <div class="validation-errors">
+                <?php
+                if (!empty($params['message'])) {
+                    echo '<p class="color-red text-center">' . $params['message'] . '</p>';
+                }
+                ?>
+            </div>
+
             <div class="d-flex f-wrap">
                 <form method="POST" action="index.php?action=filter-users" class="d-flex">
                     <input type="text" name="username" id="username" class="input-compact-text"
