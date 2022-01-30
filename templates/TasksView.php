@@ -35,15 +35,18 @@ class TasksView
                     </div>
                 </div>
             </div>
-            <form method="POST" action="index.php?action=filter-tasks" class="d-flex">
-                <input type="text" name="title" id="title" class="input-compact-text"
-                       placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
-                <input type="submit" class="btn-rep" name="submit" value="Search">
-            </form>
-            <form method="POST" action="index.php?action=Show-Add-Task">
-                <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
-                <p></p>
-            </form>
+            <div class="d-flex f-wrap">
+                <form method="POST" action="index.php?action=filter-tasks" class="d-flex">
+                    <input type="text" name="ttitle" id="ttitle" class="input-compact-text"
+                           placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
+                    <input type="submit" class="btn-rep" name="submit" value="Search">
+                </form>
+                <div class="filler"></div>
+                <form method="POST" action="index.php?action=Show-Add-Task">
+                    <input type="submit" id="submit" class="btn-rep" name="submit" value="Add">
+                </form>
+            </div>
+            <p></p>
             <div class="task-table">
                 <table id="task">
                     <thead>

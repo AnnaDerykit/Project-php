@@ -28,43 +28,44 @@ class FrontpageView
             <div class="nag_task">
                 <h2>Our statistics</h2>
             </div>
-
-            <div class="numberus">
-                <p class="p1">Number of registered users: <?php
+            <div class="d-flex f-wrap">
+            <div class="stats d-flex" draggable="true">
+                <p class="big-text"><?php
                     $usersRep = new UserRepository();
                     echo $usersRep->getNumberOfUsers();
-                    ?></p>
+                    ?></p><p class="box">registered users</p>
             </div>
 
-            <div class="numdertas">
-                <p class="p2">Number of submitted tasks: <?php
+            <div class="stats d-flex">
+                <p class="big-text"> <?php
                     $tasksRep = new TaskRepository();
                     echo $tasksRep->getNumberOfTasks();
-                    ?></p>
+                    ?></p><p class="box">submitted tasks</p>
             </div>
 
-            <div class="week">
-                <p class="p3">Time reported this week: <?php
-                    echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('week'));
-                    ?></p>
+            <div class="stats d-flex">
+                <p class="big-text"><?php
+                    echo Layout::secondsToHours($tasksRep->getTotalTasksTimeThisPeriod('week'));
+                    ?> </p><p class="box">hours reported this week</p>
             </div>
 
-            <div class="month">
-                <p class="p4">Time reported this month: <?php
-                    echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('month'));
-                    ?></p>
+            <div class="stats d-flex">
+                <p class="big-text"><?php
+                    echo Layout::secondsToHours($tasksRep->getTotalTasksTimeThisPeriod('month'));
+                    ?> </p><p class="box">hours reported this month</p>
             </div>
 
-            <div class="year">
-                <p class="p5">Time reported this year: <?php
-                    echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod('year'));
-                    ?></p>
+            <div class="stats d-flex">
+                <p class="big-text"><?php
+                    echo Layout::secondsToHours($tasksRep->getTotalTasksTimeThisPeriod('year'));
+                    ?> </p><p class="box">hours reported this year</p>
             </div>
 
-            <div class="totaltime">
-                <p class="p6">Total time reported: <?php
-                    echo Layout::secondsToDays($tasksRep->getTotalTasksTimeThisPeriod());
-                    ?></p>
+            <div class="stats d-flex">
+                <p class="big-text"><?php
+                    echo Layout::secondsToHours($tasksRep->getTotalTasksTimeThisPeriod());
+                    ?></p><p class="box">hours reported in total</p>
+            </div>
             </div>
         </div>
         </div>

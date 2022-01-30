@@ -72,7 +72,7 @@ class TasksController
     public static function filterTasks()
     {
         $uid = $_SESSION['uid'];
-        $name = $_POST['title'];
+        $name = $_POST['ttitle'];
         $tasksRep = new TaskRepository();
         $tasks = $tasksRep->filterForUser($uid, $name);
         $response = new Response();

@@ -18,13 +18,14 @@ class UsersView
             <div class="nag_task">
                 <h2>List of users</h2>
             </div>
-            <div class="btn-pro">
+            <div class="d-flex f-wrap">
                 <form method="POST" action="index.php?action=filter-users" class="d-flex">
                     <input type="text" name="username" id="username" class="input-compact-text"
                            placeholder="Type here to search..." value="<?= isset($params['phrase']) ? $params['phrase'] : null ?>">
                     <input type="submit" class="btn-rep" name="submit" value="Search">
                 </form>
             </div>
+            <p></p>
             <div class="task-table">
                 <table id="task">
                     <tr>

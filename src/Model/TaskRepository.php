@@ -76,7 +76,7 @@ class TaskRepository extends AbstractRepository
     public function findByUserId($userId)
     {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Task WHERE userId = :userId";
+        $sql = "SELECT * FROM Task WHERE userId = :userId ORDER BY startTime DESC";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array('userId' => $userId));
@@ -171,7 +171,7 @@ class TaskRepository extends AbstractRepository
 
     public function filterForUser($userId, $name) {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Task WHERE userId = :userId AND LOWER(title) LIKE :name ORDER BY startTime";
+        $sql = "SELECT * FROM Task WHERE userId = :userId AND LOWER(title) LIKE :name ORDER BY startTime DESC";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array(
