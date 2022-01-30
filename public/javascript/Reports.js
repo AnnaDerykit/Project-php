@@ -2,24 +2,24 @@
 const table = document.getElementById('task');
 
 const namesMapDetailed = {
-    'title' : 'Title',
-    'projectName' : 'Project name',
-    'clientName' : 'Client name',
-    'wage' : 'Wage',
-    'startTime' : 'Started',
-    'stopTime' : 'Ended',
-    'totalTime' : 'Duration',
-    'totalPayout' : 'Payout'
+    'title': 'Title',
+    'projectName': 'Project name',
+    'clientName': 'Client name',
+    'wage': 'Wage',
+    'startTime': 'Started',
+    'stopTime': 'Ended',
+    'totalTime': 'Duration',
+    'totalPayout': 'Payout'
 };
 
 const namesMapAggregated = {
-    'projectName' : 'Project name',
-    'clientName' : 'Client name',
-    'wage' : 'Wage',
-    'startTime' : 'Started',
-    'stopTime' : 'Ended',
-    'totalTime' : 'Total time',
-    'totalPayout' : 'Total payout'
+    'projectName': 'Project name',
+    'clientName': 'Client name',
+    'wage': 'Wage',
+    'startTime': 'Started',
+    'stopTime': 'Ended',
+    'totalTime': 'Total time',
+    'totalPayout': 'Total payout'
 };
 
 function getResults() {
@@ -34,54 +34,50 @@ function getResults() {
             try {
                 const data = JSON.parse(text);
                 fillTable(data);
-                check();
-            } catch(err) {}
+            } catch (err) {
+            }
         });
 }
 
-		//jeszcze nad tym pracuje
-function check()
-{
-    let x= document.getElementById("task").rows.length-1;
-    console.log("found " + x + " elements");
-
-    console.log(table);
-}
-
-function fillTable(data)
-{
+function fillTable(data) {
     table.innerHTML = '';
-    let keys = Object.keys(data[0]);
-    let map = keys.includes('title') ? namesMapDetailed : namesMapAggregated;
-    let thead = document.createElement('thead');
-    let tr = document.createElement('tr');
 
-    for (let key of keys)
-    {
-        let th = document.createElement('th');
-        th.innerText = map[key];
-        tr.appendChild(th);
-    }
-    thead.appendChild(tr);
+    if (data.length > 0) {
+        let keys = Object.keys(data[0]);
+        let collective = ! keys.includes('title');
+        let map = collective ? namesMapDetailed : namesMapAggregated;
 
-    let tbody = document.createElement('tbody');
-
-    for (let row of data)
-    {
-    let tr = document.createElement('tr');
-
-    for (let key in row)
-        {
-        let td = document.createElement('td');
-        td.innerText = row[key];
-        tr.appendChild(td);
-
-        tr.appendChild(td);
+        let thead = document.createElement('thead');
+        let tr = document.createElement('tr');
+        for (let key of keys) {
+            let th = document.createElement('th');
+            th.innerText = map[key];
+            tr.appendChild(th);
         }
+        thead.appendChild(tr);
 
-    tbody.appendChild(tr);
+        let tbody = document.createElement('tbody');
+        for (let row of data) {
+            let tr = document.createElement('tr');
+
+            for (let key in row) {
+                let td = document.createElement('td');
+                if (key === 'projectName' && collective && !row[key]) {
+                    td.innerText = '\[undefined\]';
+                    td.classList.add('rep-undefined');
+                } else {
+                    td.innerText = row[key];
+                }
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+        table.appendChild(thead);
+        table.appendChild(tbody);
+    } else {
+        let message = document.createElement('div');
+        message.classList.add('f-header');
+        message.innerText = 'No matches found.';
+        table.appendChild(message);
     }
-table.appendChild(thead);
-
-table.appendChild(tbody);
 }
