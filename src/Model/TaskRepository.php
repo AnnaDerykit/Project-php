@@ -171,7 +171,7 @@ class TaskRepository extends AbstractRepository
 
     public function filterForUser($userId, $name) {
         $this->openDatabaseConnection();
-        $sql = "SELECT * FROM Task WHERE userId = :userId AND LOWER(title) LIKE :name ORDER BY startTime DESC";
+        $sql = "SELECT * FROM Task WHERE userId = :userId AND stopTime IS NOT NULL AND LOWER(title) LIKE :name ORDER BY startTime DESC";
         $statement = $this->connection->prepare($sql);
 
         $statement->execute(array(
@@ -211,5 +211,35 @@ class TaskRepository extends AbstractRepository
         }
         $this->closeDatabaseConnection();
         return $rows;
+    }
+
+    public function getUsersCurrentTask($id) {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Task WHERE userId = :userId AND progress = 'active'";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute(array('userId' => $id));
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        $task = $this->taskFromRow($row);
+        $this->closeDatabaseConnection();
+        return $task;
+    }
+
+    public function getUsersDoneTasks($userId)
+    {
+        $this->openDatabaseConnection();
+        $sql = "SELECT * FROM Task WHERE userId = :userId AND stopTime IS NOT NULL ORDER BY startTime DESC";
+        $statement = $this->connection->prepare($sql);
+
+        $statement->execute(array('userId' => $userId));
+        $tasks = [];
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $tasks[] = $this->taskFromRow($row);
+        }
+
+        $this->closeDatabaseConnection();
+        return $tasks;
     }
 }

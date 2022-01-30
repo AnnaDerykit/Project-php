@@ -241,6 +241,18 @@ input {
     text-overflow: ellipsis;
 }
 
+.counter {
+    margin-left: 7px;
+}
+
+.counter, .counter span {
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: clamp( 1.6rem * 0.95, 1vw, 1rem );
+    font-weight: 700;
+}
+
 .filler {
     width: 5px;
 }
@@ -318,7 +330,8 @@ input {
 
 /* tasks */
 .tasks {
-    margin-bottom: 100px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 .new-task:nth-child(even){
     background-color: #e7bea7;
@@ -332,6 +345,9 @@ input {
 .new-task {
     background-color: #fad0b9;
     padding: 20px;
+    box-shadow: 0 5px #999;
+    border-radius: 80px;
+    align-items: center;
 }
 
 .trash {
@@ -578,6 +594,9 @@ input:checked + .bubble {
     border-radius: 0 15px 15px 0;
 }
 
+.m0 {
+    margin: 0;
+}
 
 /* respons */
 @media screen and (max-width: 600px)
@@ -648,6 +667,10 @@ input:checked + .bubble {
     }
     .task-name {
         text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .m0 {
         margin-bottom: 20px;
     }
 }

@@ -159,6 +159,10 @@ class Router
                 $controllerName=AddCurrentTaskController::class;
                 $actionName='stop_task';
                 break;
+            case 'manage-current-task':
+                $controllerName=AddCurrentTaskController::class;
+                $actionName='manage';
+                break;
             default:
                 $controllerName = 'App\Controllers\FrontpageController';
                 $actionName = 'index';

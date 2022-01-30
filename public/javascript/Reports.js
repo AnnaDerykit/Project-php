@@ -45,7 +45,7 @@ function fillTable(data) {
     if (data.length > 0) {
         let keys = Object.keys(data[0]);
         let collective = ! keys.includes('title');
-        let map = collective ? namesMapDetailed : namesMapAggregated;
+        let map = collective ? namesMapAggregated : namesMapDetailed;
 
         let thead = document.createElement('thead');
         let tr = document.createElement('tr');

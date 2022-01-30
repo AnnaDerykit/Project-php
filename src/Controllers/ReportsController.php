@@ -56,19 +56,21 @@ class ReportsController
         }
         $qb = new QueryBuilder();
         if ($aggregate) {
-            if ($projects) {
+            if ($projects || !$clients) {
                 $qb->select('p.projectName, c.clientName, p.wage, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
                 $qb->groupBy('p.projectName, c.clientName, p.wage');
-            } elseif ($clients) {
+                $qb->orderBy('p.projectName');
+            } else {
                 $qb->select('c.clientName, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
                 $qb->groupBy('c.clientName');
-            } else {
-                $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
-                $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
             }
+            $qb->orderBy('c.clientName');
         } else {
             $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
             $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
+            $qb->orderBy('p.projectName');
+            $qb->orderBy('c.clientName');
+            $qb->orderBy('t.startTime', 'DESC');
         }
         $qb->from('Task t')
             ->join('Project p', 't.projectId = p.id')
