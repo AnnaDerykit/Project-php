@@ -45,6 +45,7 @@ class AddCurrentTaskController
             $task = new Task();
             if (empty($Task_title)) {
                 $response = new Response();
+                $response->addHeader('Location', 'index.php?action=show-tasks');
                 $response->setContent(TasksView::render([
                     'values' => [
                         'Project_Name' => $Projectname,
@@ -56,6 +57,7 @@ class AddCurrentTaskController
             if ($ProjectId == -1) {
                 if (!empty($Projectname)) {
                     $response = new Response();
+                    $response->addHeader('Location', 'index.php?action=show-tasks');
                     $response->setContent(TasksView::render([
                         'values' => [
                             'Project_Name' => $Projectname,
@@ -84,6 +86,7 @@ class AddCurrentTaskController
 
             $response = new Response();
             $response->addHeader('Location', 'index.php?action=show-tasks');
+            return $response;
 
         } else {
             $projectName = trim(htmlspecialchars($_POST['Project_Name']));
@@ -109,7 +112,9 @@ class AddCurrentTaskController
 
 
             $response = new Response();
+            $response->addHeader('Location', 'index.php?action=show-tasks');
             $response->setContent(TasksView::render());
+            return $response;
         }
         return $response;
     }
@@ -130,6 +135,7 @@ class AddCurrentTaskController
         endforeach;
         if ($flag == 0) {
             $response = new Response();
+            $response->addHeader('Location', 'index.php?action=show-tasks');
             $response->setContent(TasksView::render());
         } else {
             $projectName = trim(htmlspecialchars($_POST['Project_Name']));

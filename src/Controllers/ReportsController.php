@@ -192,10 +192,18 @@ class ReportsController
             header('Content-Type: application/csv');
             header('Content-Disposition: attachment; filename="' . $filename . '";');
             header('Content-Type: application/csv; charset=UTF-8');
+            echo "\xEF\xBB\xBF";
 
             $f = fopen('php://output', 'w');
+            $flag = 1;
+
             foreach ($rows as &$row) {
-                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
+                if ($flag) {
+                    $keys = array_keys($row);
+                    fputcsv($f, $keys, $delimiter);
+                    $flag = 0;
+                }
+                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2, '.', '');
                 $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
                 fputcsv($f, $row, $delimiter);
             }
@@ -205,9 +213,12 @@ class ReportsController
         else if($_POST['format-choice']=='xls') {
             function cleanData(&$str)
             {
-                $str = preg_replace("/\t/", "\\t", $str);
-                $str = preg_replace("/\r?\n/", "\\n", $str);
-                if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+                $str = $str ? preg_replace("/\t/", "\\t", $str) : $str;
+                $str = $str ? preg_replace("/\r?\n/", "\\n", $str) : $str;
+                if ($str) {
+                    if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+                    $str = mb_convert_encoding($str, 'UCS-2LE', 'UTF-8');
+                }
             }
             $delimiter = ";";
             $filename = "export.xls";
@@ -216,7 +227,7 @@ class ReportsController
 
             $flag = false;
             foreach ($rows as &$row) {
-                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
+                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2, '.', '');
                 $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
                 if(!$flag) {
                     // display field/column names as first row
