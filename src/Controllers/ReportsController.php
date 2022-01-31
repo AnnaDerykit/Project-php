@@ -113,6 +113,94 @@ class ReportsController
         echo $response;
         exit;
     }
+
+    public static function generateCsvOrXls()
+    {
+        $projects = [];
+        $clients = [];
+        $startFrom = null;
+        $startTo = null;
+        $stopFrom = null;
+        $stopTo = null;
+        $aggregate = false;
+        foreach ($_POST as $key => $value) {
+            if ($key == 'startFrom' && $value != '') {
+                $startFrom = $value;
+            } elseif ($key == 'startTo' && $value != '') {
+                $startTo = $value;
+            } elseif ($key == 'stopFrom' && $value != '') {
+                $stopFrom = $value;
+            } elseif ($key == 'stopTo' && $value != '') {
+                $stopTo = $value;
+            } elseif (preg_match('/^p/', $key)) {
+                $projects[] = intval(ltrim($key, 'p'));
+            } elseif (preg_match('/^c/', $key)) {
+                $clients[] = intval(ltrim($key, 'c'));
+            } elseif ($key == 'aggregation') {
+                $aggregate = true;
+            }
+        }
+        $qb = new QueryBuilder();
+        if ($aggregate) {
+            if ($projects) {
+                $qb->select('p.projectName, c.clientName, p.wage, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+                $qb->groupBy('p.projectName, c.clientName, p.wage');
+            } elseif ($clients) {
+                $qb->select('c.clientName, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+                $qb->groupBy('c.clientName');
+            } else {
+                $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+                $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
+            }
+        } else {
+            $qb->select('t.title, p.projectName, c.clientName, p.wage, t.startTime, t.stopTime, SUM(TIME_TO_SEC(TIMEDIFF(t.stopTime, t.startTime))) AS totalTime, p.wage AS totalPayout');
+            $qb->groupBy('t.title', 'p.projectName', 'c.clientName', 'p.wage', 't.startTime', 't.stopTime');
+        }
+        $qb->from('Task t')
+            ->join('Project p', 't.projectId = p.id')
+            ->join('Client c', 'p.clientId = c.id')
+            ->where('t.userId', '=', [$_SESSION['uid']])
+            ->where('t.stopTime', 'IS NOT', [null], 'AND');
+        if ($projects && $clients) {
+            $qb->where('p.id', '=', $projects, 'AND', true);
+            $qb->where('c.id', '=', $clients, 'OR', false, true);
+        } elseif ($projects) {
+            $qb->where('p.id', '=', $projects, 'AND');
+        } elseif ($clients) {
+            $qb->where('c.id', '=', $clients, 'AND');
+        }
+        if ($startFrom) {
+            $qb->where('t.startTime', '>', [$startFrom], 'AND');
+        }
+        if ($startTo) {
+            $qb->where('t.startTime', '<', [$startTo], 'AND');
+        }
+        if ($stopFrom) {
+            $qb->where('t.stopTime', '>', [$stopFrom], 'AND');
+        }
+        if ($stopTo) {
+            $qb->where('t.stopTime', '<', [$stopTo], 'AND');
+        }
+        $qb->prepareStatement();
+        $taskRep = new TaskRepository();
+
+        $rows = $taskRep->executeQueryFromBuilder($qb);
+        $filename = "export.csv";
+        $delimiter = ";";
+
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachment; filename="' . $filename . '";');
+        header('Content-Type: application/csv; charset=UTF-8');
+
+        $f = fopen('php://output', 'w');
+        foreach ($rows as &$row) {
+            $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
+            $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
+            fputcsv($f, $row, $delimiter);
+        }
+        fclose($f);
+        exit;
+    }
 }
 
 //ReportsController::filterData();

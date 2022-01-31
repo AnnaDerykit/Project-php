@@ -24,7 +24,7 @@ class ReportsView
                     <input type="radio" id="xls-btn" name="format-choice" value="xls" />
                     <label for="xls-btn">.xls</label>
                 </div>
-                <input class="btn-rep" type="submit" value="Generate">
+                <input class="btn-rep" type="submit" form="form" value="Generate">
             </div>
 
             <div class="task-table">
@@ -74,7 +74,7 @@ class ReportsView
         </div>
         <div class="nag_task reports-bar">
             <div class="f-form">
-                <form method="GET" id="form" action="index.php?action=reports-filter">
+                <form method="POST" id="form" action="index.php?action=reports-generate">
 
                     <div class="project-name d-flex f-wrap">
                         <div class="item-rep">

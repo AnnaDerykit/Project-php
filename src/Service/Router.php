@@ -103,6 +103,10 @@ class Router
                 $controllerName = ReportsController::class;
                 $actionName = 'filterData';
                 break;
+            case 'reports-generate':
+                $controllerName = ReportsController::class;
+                $actionName = 'generateCsvOrXls';
+                break;
             case 'show-clients':
                 $controllerName = 'App\Controllers\ClientsController';
                 $actionName = 'index';

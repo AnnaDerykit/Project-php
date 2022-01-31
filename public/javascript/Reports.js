@@ -39,6 +39,23 @@ function getResults() {
         });
 }
 
+function generateFiles() {
+    const form = new FormData(document.getElementById('form'));
+    fetch('index.php?action=reports-generate', {
+        method: 'POST',
+        mode: "same-origin",
+        credentials: "same-origin",
+        body: form
+    }).then(response => response.text())
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                console.log(data);
+            } catch (err) {
+            }
+        });
+}
+
 function fillTable(data) {
     table.innerHTML = '';
 
