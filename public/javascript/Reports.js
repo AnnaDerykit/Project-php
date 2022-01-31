@@ -33,9 +33,9 @@ function getResults() {
         .then(text => {
             try {
                 const data = JSON.parse(text);
+
                 fillTable(data);
-            } catch (err) {
-            }
+            } catch(err) {}
         });
 }
 
@@ -51,10 +51,13 @@ function generateFiles() {
             try {
                 const data = JSON.parse(text);
                 console.log(data);
+                fillTable(data);
             } catch (err) {
             }
         });
 }
+
+
 
 function fillTable(data) {
     table.innerHTML = '';

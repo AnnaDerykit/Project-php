@@ -19,9 +19,9 @@ class ReportsView
             <div class="d-flex export">
                 <div class="f-header">Generate report:</div>
                 <div class="switch-field">
-                    <input type="radio" id="csv-btn" name="format-choice" value="csv" checked/>
+                    <input type="radio" form="form" id="csv-btn" name="format-choice" value="csv" checked/>
                     <label for="csv-btn">.csv</label>
-                    <input type="radio" id="xls-btn" name="format-choice" value="xls" />
+                    <input type="radio" form="form" id="xls-btn" name="format-choice" value="xls" />
                     <label for="xls-btn">.xls</label>
                 </div>
                 <input class="btn-rep" type="submit" form="form" value="Generate">

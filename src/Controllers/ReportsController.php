@@ -185,22 +185,53 @@ class ReportsController
         $taskRep = new TaskRepository();
 
         $rows = $taskRep->executeQueryFromBuilder($qb);
-        $filename = "export.csv";
-        $delimiter = ";";
+        if($_POST['format-choice']=='csv'){
+            $filename = "export.csv";
+            $delimiter = ";";
 
-        header('Content-Type: application/csv');
-        header('Content-Disposition: attachment; filename="' . $filename . '";');
-        header('Content-Type: application/csv; charset=UTF-8');
+            header('Content-Type: application/csv');
+            header('Content-Disposition: attachment; filename="' . $filename . '";');
+            header('Content-Type: application/csv; charset=UTF-8');
 
-        $f = fopen('php://output', 'w');
-        foreach ($rows as &$row) {
-            $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
-            $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
-            fputcsv($f, $row, $delimiter);
+            $f = fopen('php://output', 'w');
+            foreach ($rows as &$row) {
+                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
+                $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
+                fputcsv($f, $row, $delimiter);
+            }
+            fclose($f);
+            exit;
         }
-        fclose($f);
-        exit;
+        else if($_POST['format-choice']=='xls') {
+            function cleanData(&$str)
+            {
+                $str = preg_replace("/\t/", "\\t", $str);
+                $str = preg_replace("/\r?\n/", "\\n", $str);
+                if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+            }
+            $delimiter = ";";
+            $filename = "export.xls";
+            header("Content-Disposition: attachment; filename=\"$filename\"");
+            header("Content-Type: application/vnd.ms-excel");
+
+            $flag = false;
+            foreach ($rows as &$row) {
+                $row['totalPayout'] = number_format(round($row['totalPayout'] * $row['totalTime'] / 3600, 2), 2);
+                $row['totalTime'] = sprintf('%02d:%02d:%02d', intval($row['totalTime'] / 3600), intval($row['totalTime'] / 60) % 60, $row['totalTime'] % 60);
+                if(!$flag) {
+                    // display field/column names as first row
+                    echo implode("\t", array_keys($row)) . "\r\n";
+                    $flag = true;
+                }
+                array_walk($row, __NAMESPACE__ . '\cleanData');
+                echo implode("\t", array_values($row)) . "\r\n";
+
+            }
+            exit;
+        }
+
     }
+
 }
 
-//ReportsController::filterData();
+//ReportsController::generateCsvOrXls();
